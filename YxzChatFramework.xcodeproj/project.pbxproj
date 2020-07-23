@@ -29,6 +29,7 @@
 		1CB2B48B24C940E00056107A /* YxzMsgGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B47A24C940DF0056107A /* YxzMsgGiftCell.m */; };
 		1CB2B48C24C940E00056107A /* YxzLeveBgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B47B24C940DF0056107A /* YxzLeveBgView.m */; };
 		1CB2B48D24C940E00056107A /* YxzChatListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B47C24C940DF0056107A /* YxzChatListTableView.m */; };
+		1CB2B49024C953900056107A /* YxzAdjustPositionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B48F24C953900056107A /* YxzAdjustPositionButton.m */; };
 		2119FA2EE144B62C9AE3277E /* libPods-YxzChatFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,8 @@
 		1CB2B47C24C940DF0056107A /* YxzChatListTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YxzChatListTableView.m; sourceTree = "<group>"; };
 		1CB2B47D24C940DF0056107A /* YxzChatListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzChatListTableView.h; sourceTree = "<group>"; };
 		1CB2B47E24C940DF0056107A /* YxzLeveBgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzLeveBgView.h; sourceTree = "<group>"; };
+		1CB2B48E24C953900056107A /* YxzAdjustPositionButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzAdjustPositionButton.h; sourceTree = "<group>"; };
+		1CB2B48F24C953900056107A /* YxzAdjustPositionButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzAdjustPositionButton.m; sourceTree = "<group>"; };
 		2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YxzChatFramework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2426B8A82B2879D2C96842 /* Pods-YxzChatFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.debug.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		F9A1EAF48E617D568F370A21 /* Pods-YxzChatFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.release.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.release.xcconfig"; sourceTree = "<group>"; };
@@ -153,18 +156,18 @@
 		1CB2B45E24C940DF0056107A /* mode */ = {
 			isa = PBXGroup;
 			children = (
+				1CB2B46924C940DF0056107A /* YXZConstant.h */,
 				1CB2B45F24C940DF0056107A /* YxzAttributeMsgFactory.h */,
-				1CB2B46024C940DF0056107A /* YxzMsgAttributeModel.h */,
-				1CB2B46124C940DF0056107A /* YxzGiftModel.m */,
-				1CB2B46224C940DF0056107A /* YXZMessageModel.m */,
-				1CB2B46324C940DF0056107A /* YxzUserModel.h */,
-				1CB2B46424C940DF0056107A /* YxzLevelManager.h */,
 				1CB2B46524C940DF0056107A /* YxzAttributeMsgFactory.m */,
+				1CB2B46324C940DF0056107A /* YxzUserModel.h */,
 				1CB2B46624C940DF0056107A /* YxzUserModel.m */,
 				1CB2B46724C940DF0056107A /* YXZMessageModel.h */,
+				1CB2B46224C940DF0056107A /* YXZMessageModel.m */,
 				1CB2B46824C940DF0056107A /* YxzGiftModel.h */,
-				1CB2B46924C940DF0056107A /* YXZConstant.h */,
+				1CB2B46124C940DF0056107A /* YxzGiftModel.m */,
+				1CB2B46024C940DF0056107A /* YxzMsgAttributeModel.h */,
 				1CB2B46A24C940DF0056107A /* YxzMsgAttributeModel.m */,
+				1CB2B46424C940DF0056107A /* YxzLevelManager.h */,
 				1CB2B46B24C940DF0056107A /* YxzLevelManager.m */,
 			);
 			path = mode;
@@ -181,10 +184,12 @@
 			isa = PBXGroup;
 			children = (
 				1CB2B46E24C940DF0056107A /* tableCell */,
-				1CB2B47B24C940DF0056107A /* YxzLeveBgView.m */,
-				1CB2B47C24C940DF0056107A /* YxzChatListTableView.m */,
 				1CB2B47D24C940DF0056107A /* YxzChatListTableView.h */,
+				1CB2B47C24C940DF0056107A /* YxzChatListTableView.m */,
 				1CB2B47E24C940DF0056107A /* YxzLeveBgView.h */,
+				1CB2B47B24C940DF0056107A /* YxzLeveBgView.m */,
+				1CB2B48E24C953900056107A /* YxzAdjustPositionButton.h */,
+				1CB2B48F24C953900056107A /* YxzAdjustPositionButton.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -192,17 +197,17 @@
 		1CB2B46E24C940DF0056107A /* tableCell */ = {
 			isa = PBXGroup;
 			children = (
-				1CB2B46F24C940DF0056107A /* YxzSubscriptionCell.m */,
-				1CB2B47024C940DF0056107A /* YxzCommenCell.h */,
 				1CB2B47124C940DF0056107A /* YxzMsgJoinCell.h */,
-				1CB2B47224C940DF0056107A /* YxzMsgGiftCell.h */,
+				1CB2B47724C940DF0056107A /* YxzMsgJoinCell.m */,
 				1CB2B47324C940DF0056107A /* YxzChatBaseCell.h */,
-				1CB2B47424C940DF0056107A /* YxzNormalCell.h */,
+				1CB2B47924C940DF0056107A /* YxzChatBaseCell.m */,
+				1CB2B47024C940DF0056107A /* YxzCommenCell.h */,
 				1CB2B47524C940DF0056107A /* YxzCommenCell.m */,
 				1CB2B47624C940DF0056107A /* YxzSubscriptionCell.h */,
-				1CB2B47724C940DF0056107A /* YxzMsgJoinCell.m */,
+				1CB2B46F24C940DF0056107A /* YxzSubscriptionCell.m */,
+				1CB2B47424C940DF0056107A /* YxzNormalCell.h */,
 				1CB2B47824C940DF0056107A /* YxzNormalCell.m */,
-				1CB2B47924C940DF0056107A /* YxzChatBaseCell.m */,
+				1CB2B47224C940DF0056107A /* YxzMsgGiftCell.h */,
 				1CB2B47A24C940DF0056107A /* YxzMsgGiftCell.m */,
 			);
 			path = tableCell;
@@ -222,7 +227,6 @@
 				EE2426B8A82B2879D2C96842 /* Pods-YxzChatFramework.debug.xcconfig */,
 				F9A1EAF48E617D568F370A21 /* Pods-YxzChatFramework.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -329,6 +333,7 @@
 				1CB2B48D24C940E00056107A /* YxzChatListTableView.m in Sources */,
 				1CB2B44724C940B80056107A /* ViewController.m in Sources */,
 				1CB2B48924C940E00056107A /* YxzNormalCell.m in Sources */,
+				1CB2B49024C953900056107A /* YxzAdjustPositionButton.m in Sources */,
 				1CB2B48224C940DF0056107A /* YxzAttributeMsgFactory.m in Sources */,
 				1CB2B48C24C940E00056107A /* YxzLeveBgView.m in Sources */,
 				1CB2B48324C940DF0056107A /* YxzUserModel.m in Sources */,

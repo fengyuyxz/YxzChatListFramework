@@ -52,7 +52,7 @@
         dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), 2.0*NSEC_PER_SEC/MAXCOUNT, 0);
         dispatch_source_set_event_handler(_timer, ^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf creatTestIMMsg:YxzMsgType_gift_text];
+                [weakSelf creatTestIMMsg:arc4random() % 7];
             });
         });
         dispatch_resume(_timer);

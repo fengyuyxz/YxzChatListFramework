@@ -10,6 +10,8 @@
 #import "YxzChatBaseCell.h"
 #import <pthread/pthread.h>
 #import "UIView+Frame.h"
+#import <Masonry/Masonry.h>
+#import "YxzAdjustPositionButton.h"
 // 最小刷新时间间隔
 #define reloadTimeSpan 0.5
 
@@ -31,7 +33,7 @@
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
 /** 底部更多未读按钮 */
-@property (nonatomic, strong) UIButton *moreButton;
+@property (nonatomic, strong) YxzAdjustPositionButton *moreButton;
 @end
 @implementation YxzChatListTableView
 
@@ -65,9 +67,29 @@
     self.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.tableView];
+    [self addSubview:self.moreButton];
+    [self.moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(0);
+        make.left.mas_equalTo(0);
+        if (self.moreButton.layoutStyle==AdjustPositionButtonStyleLeftTitleRightImage||self.moreButton.layoutStyle==AdjustPositionButtonStyleLeftImageRightTitle) {
+            make.height.mas_equalTo(25);
+        }else{
+            make.height.mas_equalTo(40);
+            make.width.mas_equalTo(60);
+        }
+        
+    }];
+    if (self.moreButton.layoutStyle==AdjustPositionButtonStyleLeftTitleRightImage||self.moreButton.layoutStyle==AdjustPositionButtonStyleLeftImageRightTitle) {
+         YxzViewRadius(self.moreButton, 25/2);
+    }else{
+        YxzViewRadius(self.moreButton, 20);
+    }
+   
+
 }
 -(void)layoutSubviews{
     self.tableView.frame=self.bounds;
+    
 }
 
 #pragma mark - 消息追加
@@ -111,7 +133,7 @@
     [self.tempMsgArray removeAllObjects];
     
     pthread_mutex_unlock(&_mutex);
-    
+    /*
     if (_AllHeight > MsgTableViewHeight) {
         if (self.tableView.height < MsgTableViewHeight) {
             self.tableView.y = 0;
@@ -120,10 +142,10 @@
     } else {
         self.tableView.y = MsgTableViewHeight - _AllHeight;
         self.tableView.height = _AllHeight;
-    }
+    }*/
     
     //执行插入动画并滚动
-    [self scrollToBottom:YES];
+    [self scrollToBottom:NO];
 }
 /** 执行插入动画并滚动 */
 - (void)scrollToBottom:(BOOL)animated {
@@ -143,9 +165,9 @@
 /** 新消息按钮可见状态 */
 - (void)updateMoreBtnHidden {
     if (self.inPending && self.tempMsgArray.count > 0) {
-//        self.moreButton.hidden = NO;
+        self.moreButton.hidden = NO;
     } else {
-//        self.moreButton.hidden = YES;
+        self.moreButton.hidden = YES;
     }
 }
 //清空消息重置
@@ -275,7 +297,9 @@
     YXZMessageModel *msgModel = self.msgArray[indexPath.row];
     
     YxzChatBaseCell *cell = [YxzChatBaseCell tableView:tableView cellForMsg:msgModel indexPath:indexPath delegate:self];
-
+    if (cell) {
+        return cell;
+    }
     return cell;
 }
 
@@ -288,7 +312,11 @@
     YXZMessageModel *msgModel = self.msgArray[indexPath.row];
     return msgModel.attributeModel.msgHeight + cellLineSpeing;
 }
-
+// 新消息按钮
+- (void)moreClick:(YxzAdjustPositionButton *)button {
+    [self appendAndScrollToBottom];
+    self.inPending = NO;
+}
 
 -(UITableView *)tableView{
     if (!_tableView) {
@@ -322,5 +350,22 @@
         _tempMsgArray = [NSMutableArray array];
     }
     return _tempMsgArray;
+}
+-(YxzAdjustPositionButton *)moreButton{
+    if (!_moreButton) {
+        _moreButton=[YxzAdjustPositionButton buttonWithType:UIButtonTypeCustom];
+        _moreButton.layoutStyle=AdjustPositionButtonStyleLeftTitleRightImage;
+        _moreButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_moreButton setTitle:@"新消息" forState:UIControlStateNormal];
+        [_moreButton setImage:[UIImage imageNamed:@"message_more"] forState:UIControlStateNormal];
+        
+        
+        [_moreButton setTitleColor:RGBA_OF(0xfee324) forState:normal];
+        _moreButton.backgroundColor = [UIColor purpleColor];
+        _moreButton.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
+        _moreButton.hidden=YES;
+        [_moreButton addTarget:self action:@selector(moreClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _moreButton;
 }
 @end

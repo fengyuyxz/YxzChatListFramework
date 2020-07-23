@@ -73,6 +73,7 @@
             }
                 break;
             default:
+                cell=[YxzChatBaseCell initMsgCell:tableView cellForType:type indexPath:indexPath];
                 break;
         }
         cell.delegate = delegate;

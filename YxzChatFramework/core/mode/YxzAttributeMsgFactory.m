@@ -276,7 +276,7 @@
  @param isShadow 是否添加文字投影效果
  */
 + (NSMutableAttributedString *)getAttributed:(NSString *)text font:(UIFont *)font color:(UIColor *)color tap:(BOOL)isTap shadow:(BOOL)isShadow tapCompletion:(AttributeTapBlock)tap{
-    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:text attributes:nil];
+    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:text?text:@"" attributes:nil];
     attribute.yy_font = font;
     attribute.yy_color = color;
     // 强制排版(从左到右)
