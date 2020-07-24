@@ -14,6 +14,7 @@
 @property(nonatomic,strong)YxzChatListTableView *listTableView;
 @property(nonatomic,strong)YxzInputBoxView *inputboxView;
 @property(nonatomic,assign)CGFloat inputBoxHight;
+@property(nonatomic,assign)CGFloat defaultINputBoxHight;
 @end
 @implementation YxzChatCompleteComponent
 - (instancetype)init
@@ -40,11 +41,12 @@
     _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds)-inputBoxDefaultHight, MsgTableViewWidth, inputBoxDefaultHight)];
     _inputboxView.delegate=self;
     [self addSubview:_inputboxView];
+    
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    [self layoutSubViewFrame];
+//    [self layoutSubViewFrame];
     
 }
 -(void)layoutSubViewFrame{
@@ -62,5 +64,13 @@
         
     });
 }
-
+-(void)inputBoxHightChange:(YxzInputBoxView *)boxView inputViewHight:(CGFloat)inputHight{
+    CGRect frame =self.inputboxView.frame;
+    frame.size.height=inputHight;
+    frame.origin.y=CGRectGetHeight(self.bounds)-inputHight;
+    self.inputboxView.frame=frame;
+    CGRect listTabeFrame=self.listTableView.frame;
+    listTabeFrame.size.height=CGRectGetHeight(self.bounds)-CGRectGetHeight(frame);
+    self.listTableView.frame=listTabeFrame;
+}
 @end

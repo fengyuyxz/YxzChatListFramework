@@ -9,12 +9,14 @@
 #import "YxzInputBoxView.h"
 #import "YxzGetBundleResouceTool.h"
 #import "YXZConstant.h"
+#import "YxzCalculateTextSizeTool.h"
+#import "UIView+Frame.h"
 #define MORE_BUT_CONTAINER_WIDTH 50
 #define INPUT_CONTAINER_MIN_SPCE 5
 #define INPUT_CONTAINER_INNER_MIN_SPCE 4
 
 #define MORE_BUT_WIDTH 30
-
+#define MAX_TEXTVIEW_HEIGHT 104
 @interface YxzInputBoxView()<YYTextViewDelegate>
 @property(nonatomic,strong)UIButton *faceBut;
 @property(nonatomic,strong)UIButton *moreBut;
@@ -22,6 +24,8 @@
 
 @property(nonatomic,assign)CGRect keyboardFrame;
 @property(nonatomic,assign)YxzInputStatus lastInputStatus;
+@property(nonatomic,assign)CGFloat defaultInputHight;
+
 @end
 @implementation YxzInputBoxView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -65,6 +69,7 @@
     self.faceBut.frame=faceRect;
     CGRect textFrame=CGRectMake(INPUT_CONTAINER_INNER_MIN_SPCE, INPUT_CONTAINER_INNER_MIN_SPCE,faceRect.origin.x-INPUT_CONTAINER_INNER_MIN_SPCE*2, faceWidth);
     self.textView.frame=textFrame;
+    self.defaultInputHight=faceWidth;
     YxzViewRadius(_inputContainerView,CGRectGetHeight(_inputContainerView.bounds)/2.0f);
     
     CGRect moreFrame=CGRectMake(CGRectGetWidth(self.bounds)-MORE_BUT_CONTAINER_WIDTH+(MORE_BUT_CONTAINER_WIDTH - MORE_BUT_WIDTH)/2.0f, CGRectGetHeight(self.bounds)/2.0f-MORE_BUT_WIDTH/2.0f, MORE_BUT_WIDTH, MORE_BUT_WIDTH);
@@ -81,10 +86,18 @@
     
 }
 -(void)keyboardWillHide:(NSNotification *)notify{
-    
+    CGFloat containerH=CGRectGetHeight(self.inputContainerView.frame)+INPUT_CONTAINER_MIN_SPCE*2;
+    CGFloat hight = containerH>inputBoxDefaultHight?containerH:inputBoxDefaultHight;
+    if (self.inputStatus==YxzInputStatus_keyborad) {
+        
+    }
+    if ([self.delegate respondsToSelector:@selector(inputBoxStatusChange:changeFromStatus:toStatus:changeHight:)]) {
+        [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:hight];
+    }
 }
 -(void)keyboardFrameWillChange:(NSNotification *)notification{
     self.keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSLog(@"keyboard h = %f",self.keyboardFrame.size.height);
     if (self.inputStatus==YxzInputStatus_keyborad&&CGRectGetHeight(self.keyboardFrame)<=inputBoxDefaultHight) {
         return;
     }
@@ -93,7 +106,8 @@
           return;
           
       }
-    CGFloat hight = inputBoxDefaultHight;
+    CGFloat containerH=CGRectGetHeight(self.inputContainerView.frame)+INPUT_CONTAINER_MIN_SPCE*2;
+    CGFloat hight = containerH>inputBoxDefaultHight?containerH:inputBoxDefaultHight;
     
     if (self.inputStatus==YxzInputStatus_keyborad) {
         hight+=CGRectGetHeight(self.keyboardFrame);
@@ -127,6 +141,27 @@
     if ([self.delegate respondsToSelector:@selector(clientInputing:)]) {
            [self.delegate clientInputing:YES];
        }
+    
+    NSString *text=textView.text;
+    NSMutableAttributedString *textAtributed=[YxzCalculateTextSizeTool getAttributed:text font:textView.font];
+    CGSize size= [YxzCalculateTextSizeTool YYTextLayoutSize:textAtributed width:CGRectGetWidth(textView.frame) minThresholdValueV:self.defaultInputHight];
+    CGFloat offsetHight =0;
+    
+    CGFloat textHight=size.height;
+    textHight = textHight > self.defaultInputHight ? textHight : self.defaultInputHight; // height大于 TextView 的高度 就取height 否则就取 TextView 的高度
+    
+    textHight = textHight < MAX_TEXTVIEW_HEIGHT ? textHight : CGRectGetHeight(self.textView.frame);  // height 小于 textView 的最大高度 104 就取出 height 不然就取出  textView.frameHeight
+    
+    CGRect textFrame=self.textView.frame;
+    textFrame.size.height=textHight;
+    CGRect inputContainerFrame=self.inputContainerView.frame;
+    inputContainerFrame.size.height=CGRectGetHeight(textFrame)+INPUT_CONTAINER_INNER_MIN_SPCE*2;
+    self.textView.frame=textFrame;
+    self.inputContainerView.frame=inputContainerFrame;
+    CGFloat curHeight = CGRectGetHeight(inputContainerFrame) + INPUT_CONTAINER_MIN_SPCE*2+CGRectGetHeight(self.keyboardFrame);
+    if ([self.delegate respondsToSelector:@selector(inputBoxHightChange:inputViewHight:)]) {
+        [self.delegate inputBoxHightChange:self inputViewHight:curHeight];
+    }
 }
 
 #pragma mark - but event  ===============================
