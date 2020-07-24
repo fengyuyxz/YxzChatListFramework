@@ -10,9 +10,10 @@
 #import "YxzChatListTableView.h"
 #import "YxzInputBoxView.h"
 #import "YXZConstant.h"
-@interface YxzChatCompleteComponent()
+@interface YxzChatCompleteComponent()<YxzInputViewDelegate>
 @property(nonatomic,strong)YxzChatListTableView *listTableView;
 @property(nonatomic,strong)YxzInputBoxView *inputboxView;
+@property(nonatomic,assign)CGFloat inputBoxHight;
 @end
 @implementation YxzChatCompleteComponent
 - (instancetype)init
@@ -32,16 +33,34 @@
     return self;
 }
 -(void)setupSubViews{
-    
+    self.inputBoxHight=inputBoxDefaultHight;
     _listTableView=[[YxzChatListTableView alloc]initWithFrame:CGRectMake(0, 0, MsgTableViewWidth, CGRectGetHeight(self.bounds)-inputBoxDefaultHight)];
     _listTableView.reloadType=YxzReloadLiveMsgRoom_Time;
     [self addSubview:_listTableView];
     _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds)-inputBoxDefaultHight, MsgTableViewWidth, inputBoxDefaultHight)];
+    _inputboxView.delegate=self;
     [self addSubview:_inputboxView];
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
-    self.listTableView.frame=CGRectMake(0, 0, MsgTableViewWidth, CGRectGetHeight(self.bounds)-inputBoxDefaultHight);
-    self.inputboxView.frame=CGRectMake(0, CGRectGetHeight(self.bounds)-inputBoxDefaultHight, MsgTableViewWidth, inputBoxDefaultHight);
+    
+    [self layoutSubViewFrame];
+    
 }
+-(void)layoutSubViewFrame{
+    CGRect frame =CGRectMake(0, CGRectGetHeight(self.bounds)-self.inputBoxHight, MsgTableViewWidth, self.inputBoxHight);
+    self.inputboxView.frame=frame;
+    CGRect listTabeFrame=self.listTableView.frame;
+    listTabeFrame.size.height-=CGRectGetHeight(frame);
+    self.listTableView.frame=listTabeFrame;
+}
+#pragma mark - YxzInputViewDelegate ======================
+-(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus changeHight:(CGFloat)hight{
+    self.inputBoxHight=hight;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self layoutSubViewFrame];
+        
+    });
+}
+
 @end

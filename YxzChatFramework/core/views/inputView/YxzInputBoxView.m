@@ -19,6 +19,9 @@
 @property(nonatomic,strong)UIButton *faceBut;
 @property(nonatomic,strong)UIButton *moreBut;
 @property(nonatomic,strong)UIView *inputContainerView;
+
+@property(nonatomic,assign)CGRect keyboardFrame;
+@property(nonatomic,assign)YxzInputStatus lastInputStatus;
 @end
 @implementation YxzInputBoxView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -26,9 +29,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupSubViews];
+        [self addKeyboardEventListen];
     }
     return self;
 }
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]  removeObserver:self];
+}
+-(void)addKeyboardEventListen{
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // 键盘的Frame值即将发生变化的时候创建的额监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+
+}
+
 -(void)setupSubViews{
     self.backgroundColor=[UIColor whiteColor];
     self.inputStatus=YxzInputStatus_nothing;
@@ -60,9 +76,45 @@
 }
 
 
-
-
+#pragma mark - 键盘通知事件 ============
+-(void)keyboardWillShow:(NSNotification *)notify{
+    
+}
+-(void)keyboardWillHide:(NSNotification *)notify{
+    
+}
+-(void)keyboardFrameWillChange:(NSNotification *)notification{
+    self.keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if (self.inputStatus==YxzInputStatus_keyborad&&CGRectGetHeight(self.keyboardFrame)<=inputBoxDefaultHight) {
+        return;
+    }
+    else if ((self.inputStatus == YxzInputStatus_showFace || self.inputStatus == YxzInputStatus_showMore)  &&CGRectGetHeight(self.keyboardFrame)<inputBoxDefaultHight) {
+          
+          return;
+          
+      }
+    CGFloat hight = inputBoxDefaultHight;
+    
+    if (self.inputStatus==YxzInputStatus_keyborad) {
+        hight+=CGRectGetHeight(self.keyboardFrame);
+    }else if (self.inputStatus==YxzInputStatus_showFace){
+        
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(inputBoxStatusChange:changeFromStatus:toStatus:changeHight:)]) {
+        [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:hight];
+    }
+}
 #pragma mark - textView delegate ========================
+- (BOOL)textViewShouldBeginEditing:(YYTextView *)textView{
+    self.lastInputStatus=self.inputStatus;
+    self.inputStatus=YxzInputStatus_keyborad;
+    return YES;
+}
+-(void)textViewDidBeginEditing:(YYTextView *)textView{
+    self.lastInputStatus=self.inputStatus;
+    self.inputStatus=YxzInputStatus_keyborad;
+}
 - (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     return YES;
 }
@@ -71,7 +123,7 @@
  *
  *  @param textView
  */
-- (void) textViewDidChange:(UITextView *)textView{
+- (void) textViewDidChange:(YYTextView *)textView{
     if ([self.delegate respondsToSelector:@selector(clientInputing:)]) {
            [self.delegate clientInputing:YES];
        }
@@ -79,16 +131,37 @@
 
 #pragma mark - but event  ===============================
 -(void)faceButPressed:(UIButton *)but{
+    self.lastInputStatus=self.inputStatus;
     but.selected=!but.selected;
     if (but.selected) {
         self.moreBut.selected=NO;
+        self.inputStatus=YxzInputStatus_showFace;
+        [self.textView resignFirstResponder];
+    }else{
+        self.inputStatus=YxzInputStatus_keyborad;
+        [self.textView becomeFirstResponder];
     }
+    
+  
 }
 -(void)moreButPressed:(UIButton *)but{
     but.selected=!but.selected;
     if (but.selected) {
         self.faceBut.selected=NO;
+        self.inputStatus=YxzInputStatus_showMore;
+        [self.textView resignFirstResponder];
+        
+    }else{
+        self.inputStatus=YxzInputStatus_keyborad;
+        [self.textView becomeFirstResponder];
     }
+    
+    if (!but.selected) {
+        
+    }else{
+        
+    }
+
 }
 
 

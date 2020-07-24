@@ -35,6 +35,7 @@
 		1CB2B49B24C98D770056107A /* YxzChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B49A24C98D770056107A /* YxzChatController.m */; };
 		1CB2B49E24C990CD0056107A /* YxzChatResouce.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1CB2B49D24C990CD0056107A /* YxzChatResouce.bundle */; };
 		1CB2B4A224C991F20056107A /* YxzGetBundleResouceTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4A124C991F20056107A /* YxzGetBundleResouceTool.m */; };
+		1CB2B4A524CA7EB60056107A /* YxzCalculateTextSizeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4A424CA7EB60056107A /* YxzCalculateTextSizeTool.m */; };
 		2119FA2EE144B62C9AE3277E /* libPods-YxzChatFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,8 @@
 		1CB2B49D24C990CD0056107A /* YxzChatResouce.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YxzChatResouce.bundle; sourceTree = "<group>"; };
 		1CB2B4A024C991F20056107A /* YxzGetBundleResouceTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzGetBundleResouceTool.h; sourceTree = "<group>"; };
 		1CB2B4A124C991F20056107A /* YxzGetBundleResouceTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzGetBundleResouceTool.m; sourceTree = "<group>"; };
+		1CB2B4A324CA7EB60056107A /* YxzCalculateTextSizeTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzCalculateTextSizeTool.h; sourceTree = "<group>"; };
+		1CB2B4A424CA7EB60056107A /* YxzCalculateTextSizeTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzCalculateTextSizeTool.m; sourceTree = "<group>"; };
 		2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YxzChatFramework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2426B8A82B2879D2C96842 /* Pods-YxzChatFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.debug.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		F9A1EAF48E617D568F370A21 /* Pods-YxzChatFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.release.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.release.xcconfig"; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 			children = (
 				1CB2B4A024C991F20056107A /* YxzGetBundleResouceTool.h */,
 				1CB2B4A124C991F20056107A /* YxzGetBundleResouceTool.m */,
+				1CB2B4A324CA7EB60056107A /* YxzCalculateTextSizeTool.h */,
+				1CB2B4A424CA7EB60056107A /* YxzCalculateTextSizeTool.m */,
 			);
 			path = tool;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 				1CB2B44424C940B80056107A /* SceneDelegate.m in Sources */,
 				1CB2B48024C940DF0056107A /* YxzGiftModel.m in Sources */,
 				1CB2B48824C940E00056107A /* YxzMsgJoinCell.m in Sources */,
+				1CB2B4A524CA7EB60056107A /* YxzCalculateTextSizeTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,7 +487,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -533,7 +539,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -553,7 +559,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jinjian.YxzChatFramework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinjiang.WHCustomerChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -571,7 +577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jinjian.YxzChatFramework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinjiang.WHCustomerChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

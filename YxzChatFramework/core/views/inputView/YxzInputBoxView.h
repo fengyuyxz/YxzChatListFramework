@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, YxzInputStatus) {
 @class YxzInputBoxView;
 @protocol YxzInputViewDelegate <NSObject>
 
--(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus;
+-(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus changeHight:(CGFloat)hight;
 
 /// 文字输入时 输入框高度变化
 /// @param boxView 输入框容器
@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, YxzInputStatus) {
 -(void)inputBoxHightChange:(YxzInputBoxView *)boxView inputViewHight:(CGFloat)inputHight;
 
 -(void)sendText:(NSString *)msgText;
-
+-(void)clientInputing:(BOOL)inputing;
 @end
 
 @interface YxzInputBoxView : UIView
