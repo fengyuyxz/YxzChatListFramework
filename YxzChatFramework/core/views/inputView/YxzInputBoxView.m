@@ -17,9 +17,13 @@
 
 #define MORE_BUT_WIDTH 30
 #define MAX_TEXTVIEW_HEIGHT 104
-@interface YxzInputBoxView()<YYTextViewDelegate>
+#define FACE_BUTTON_W 30
+#import <Masonry/Masonry.h>
+
+@interface YxzInputBoxView()<UITextFieldDelegate>
 @property(nonatomic,strong)UIButton *faceBut;
-@property(nonatomic,strong)UIButton *moreBut;
+//@property(nonatomic,strong)UIButton *moreBut;
+@property(nonatomic,strong)UIButton *sendButton;
 @property(nonatomic,strong)UIView *inputContainerView;
 
 @property(nonatomic,assign)CGRect keyboardFrame;
@@ -57,11 +61,13 @@
         
     [self addSubview:self.inputContainerView];
     
-    [self addSubview:self.moreBut];
+//    [self addSubview:self.moreBut];
     
     
     [_inputContainerView addSubview:self.textView];
     [_inputContainerView addSubview:self.faceBut];
+    [_inputContainerView addSubview:self.sendButton];
+    /*
     CGRect inputContainerFrame=CGRectMake(INPUT_CONTAINER_MIN_SPCE, INPUT_CONTAINER_MIN_SPCE, self.bounds.size.width-MORE_BUT_CONTAINER_WIDTH, CGRectGetHeight(self.bounds)-INPUT_CONTAINER_MIN_SPCE*2);
     self.inputContainerView.frame=inputContainerFrame;
     CGFloat faceWidth=CGRectGetHeight(inputContainerFrame)-INPUT_CONTAINER_INNER_MIN_SPCE*2;
@@ -74,12 +80,35 @@
     
     CGRect moreFrame=CGRectMake(CGRectGetWidth(self.bounds)-MORE_BUT_CONTAINER_WIDTH+(MORE_BUT_CONTAINER_WIDTH - MORE_BUT_WIDTH)/2.0f, CGRectGetHeight(self.bounds)/2.0f-MORE_BUT_WIDTH/2.0f, MORE_BUT_WIDTH, MORE_BUT_WIDTH);
     self.moreBut.frame=moreFrame;
+    */
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-    
+    [self layoutSubViewsConstraint];
 }
-
+-(void)layoutSubViewsConstraint{
+    [self.inputContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.equalTo(self);
+        make.height.equalTo(@(inputBoxDefaultHight));
+    }];
+    [self.faceBut mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(INPUT_CONTAINER_MIN_SPCE));
+        make.centerY.equalTo(self.inputContainerView.mas_centerY);
+        make.width.height.equalTo(@(FACE_BUTTON_W));
+    }];
+    [self.sendButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.inputContainerView.mas_centerY);
+        make.right.equalTo(self.mas_right).offset(0);
+        make.width.equalTo(@(MORE_BUT_CONTAINER_WIDTH));
+        make.height.equalTo(@(30));
+    }];
+    [self.textView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.inputContainerView.mas_centerY);
+        make.height.equalTo(@(inputBoxDefaultHight));
+        make.right.equalTo(self.sendButton.mas_left).offset(0);
+        make.left.equalTo(self.faceBut.mas_right).offset(INPUT_CONTAINER_INNER_MIN_SPCE);
+    }];
+}
 
 #pragma mark - 键盘通知事件 ============
 -(void)keyboardWillShow:(NSNotification *)notify{
@@ -119,19 +148,21 @@
         [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:hight];
     }
 }
-#pragma mark - textView delegate ========================
-- (BOOL)textViewShouldBeginEditing:(YYTextView *)textView{
+#pragma mark - textFieldS delegate ========================
+- (BOOL)textFieldShouldBeginEditing:(YYTextView *)textView{
+    
     self.lastInputStatus=self.inputStatus;
     self.inputStatus=YxzInputStatus_keyborad;
     return YES;
 }
--(void)textViewDidBeginEditing:(YYTextView *)textView{
+-(void)textFieldDidBeginEditing:(YYTextView *)textView{
     self.lastInputStatus=self.inputStatus;
     self.inputStatus=YxzInputStatus_keyborad;
 }
-- (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     return YES;
 }
+
 /**
  *  TextView 的输入内容一改变就调用这个方法，
  *
@@ -141,7 +172,7 @@
     if ([self.delegate respondsToSelector:@selector(clientInputing:)]) {
            [self.delegate clientInputing:YES];
        }
-    
+    /*
     NSString *text=textView.text;
     NSMutableAttributedString *textAtributed=[YxzCalculateTextSizeTool getAttributed:text font:textView.font];
     CGSize size= [YxzCalculateTextSizeTool YYTextLayoutSize:textAtributed width:CGRectGetWidth(textView.frame) minThresholdValueV:self.defaultInputHight];
@@ -162,6 +193,7 @@
     if ([self.delegate respondsToSelector:@selector(inputBoxHightChange:inputViewHight:)]) {
         [self.delegate inputBoxHightChange:self inputViewHight:curHeight];
     }
+     */
 }
 
 #pragma mark - but event  ===============================
@@ -169,7 +201,7 @@
     self.lastInputStatus=self.inputStatus;
     but.selected=!but.selected;
     if (but.selected) {
-        self.moreBut.selected=NO;
+//        self.moreBut.selected=NO;
         self.inputStatus=YxzInputStatus_showFace;
         [self.textView resignFirstResponder];
     }else{
@@ -178,6 +210,9 @@
     }
     
   
+}
+-(void)sendButtonPressed:(UIButton *)but{
+    
 }
 -(void)moreButPressed:(UIButton *)but{
     but.selected=!but.selected;
@@ -204,19 +239,19 @@
 -(UIView *)inputContainerView{
     if (!_inputContainerView) {
         _inputContainerView=[[UIView alloc]init];
-        _inputContainerView.backgroundColor=RGBAOF(0x000000,0.25);
+//        _inputContainerView.backgroundColor=RGBAOF(0x000000,0.25);
     }
     return _inputContainerView;
 }
--(YYTextView *)textView{
+-(UITextField *)textView{
     if (!_textView) {
-        _textView=[[YYTextView alloc]init];
-        _textView.placeholderText=@"点击输入内容...";
+        _textView=[[UITextField alloc]init];
+        _textView.placeholder=@"点击输入内容...";
         _textView.backgroundColor=[UIColor clearColor];
         _textView.delegate=self;
         [_textView setFont:[UIFont systemFontOfSize:16.0f]];
         
-        [_textView setScrollsToTop:NO];
+//        [_textView setScrollsToTop:NO];
     }
     return _textView;
 }
@@ -229,6 +264,17 @@
     }
     return _faceBut;
 }
+-(UIButton *)sendButton{
+    if (!_sendButton) {
+        _sendButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        [_sendButton setTitle:@"发送" forState:UIControlStateNormal];
+        [_sendButton setTitleColor:RGBA_OF(0X9A9A9D) forState:UIControlStateNormal];
+        _sendButton.titleLabel.font=[UIFont systemFontOfSize:14];
+        [_sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _sendButton;
+}
+/*
 -(UIButton *)moreBut{
     if (!_moreBut) {
         _moreBut=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -237,6 +283,6 @@
         [_moreBut addTarget:self action:@selector(moreButPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _moreBut;
-}
+}*/
 @end
 

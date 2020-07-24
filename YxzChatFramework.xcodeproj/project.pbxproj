@@ -36,6 +36,7 @@
 		1CB2B49E24C990CD0056107A /* YxzChatResouce.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1CB2B49D24C990CD0056107A /* YxzChatResouce.bundle */; };
 		1CB2B4A224C991F20056107A /* YxzGetBundleResouceTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4A124C991F20056107A /* YxzGetBundleResouceTool.m */; };
 		1CB2B4A524CA7EB60056107A /* YxzCalculateTextSizeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4A424CA7EB60056107A /* YxzCalculateTextSizeTool.m */; };
+		1CB2B4A924CAD1E00056107A /* YxzFaceContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4A824CAD1E00056107A /* YxzFaceContainerView.m */; };
 		2119FA2EE144B62C9AE3277E /* libPods-YxzChatFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +97,8 @@
 		1CB2B4A124C991F20056107A /* YxzGetBundleResouceTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzGetBundleResouceTool.m; sourceTree = "<group>"; };
 		1CB2B4A324CA7EB60056107A /* YxzCalculateTextSizeTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzCalculateTextSizeTool.h; sourceTree = "<group>"; };
 		1CB2B4A424CA7EB60056107A /* YxzCalculateTextSizeTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzCalculateTextSizeTool.m; sourceTree = "<group>"; };
+		1CB2B4A724CAD1E00056107A /* YxzFaceContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzFaceContainerView.h; sourceTree = "<group>"; };
+		1CB2B4A824CAD1E00056107A /* YxzFaceContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzFaceContainerView.m; sourceTree = "<group>"; };
 		2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YxzChatFramework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2426B8A82B2879D2C96842 /* Pods-YxzChatFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.debug.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		F9A1EAF48E617D568F370A21 /* Pods-YxzChatFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.release.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.release.xcconfig"; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 		1CB2B46D24C940DF0056107A /* views */ = {
 			isa = PBXGroup;
 			children = (
+				1CB2B4A624CAD1B60056107A /* faceView */,
 				1CB2B49224C979A30056107A /* inputView */,
 				1CB2B49124C979870056107A /* messageView */,
 				1CB2B49624C989F20056107A /* YxzChatCompleteComponent.h */,
@@ -271,6 +275,15 @@
 				1CB2B4A424CA7EB60056107A /* YxzCalculateTextSizeTool.m */,
 			);
 			path = tool;
+			sourceTree = "<group>";
+		};
+		1CB2B4A624CAD1B60056107A /* faceView */ = {
+			isa = PBXGroup;
+			children = (
+				1CB2B4A724CAD1E00056107A /* YxzFaceContainerView.h */,
+				1CB2B4A824CAD1E00056107A /* YxzFaceContainerView.m */,
+			);
+			path = faceView;
 			sourceTree = "<group>";
 		};
 		4D569B65079D2DD8BA3CC83F /* Frameworks */ = {
@@ -388,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CB2B48624C940E00056107A /* YxzSubscriptionCell.m in Sources */,
+				1CB2B4A924CAD1E00056107A /* YxzFaceContainerView.m in Sources */,
 				1CB2B48524C940E00056107A /* YxzLevelManager.m in Sources */,
 				1CB2B49524C979F10056107A /* YxzInputBoxView.m in Sources */,
 				1CB2B48A24C940E00056107A /* YxzChatBaseCell.m in Sources */,

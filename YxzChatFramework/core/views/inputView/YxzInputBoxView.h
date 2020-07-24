@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, YxzInputStatus) {
 
 @property(nonatomic,weak)id<YxzInputViewDelegate> delegate;
 @property(nonatomic,assign)YxzInputStatus inputStatus;
-@property(nonatomic,strong)YYTextView *textView;
+@property(nonatomic,strong)UITextField *textView;
 @end
 
 NS_ASSUME_NONNULL_END
