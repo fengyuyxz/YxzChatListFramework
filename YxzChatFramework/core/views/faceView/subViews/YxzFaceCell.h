@@ -1,5 +1,5 @@
 //
-//  YxzFaceContainerView.h
+//  YxzFaceCell.h
 //  YxzChatFramework
 //
 //  Created by 颜学宙 on 2020/7/24.
@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YxzFaceItem.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YxzFaceContainerView : UIView
-@property(nonatomic,assign)CGFloat faceContainerH;
--(void)showFace;
+@interface YxzFaceCell : UICollectionViewCell
+@property(nonatomic,strong)YxzFaceItem *item;
 @end
 
 NS_ASSUME_NONNULL_END

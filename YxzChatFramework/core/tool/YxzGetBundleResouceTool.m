@@ -7,6 +7,7 @@
 //
 
 #import "YxzGetBundleResouceTool.h"
+#import <MJExtension/MJExtension.h>
 @interface YxzGetBundleResouceTool()
 @property(nonatomic,strong)NSMutableDictionary<NSString *,UIImage *> *imageCahce;
 @end
@@ -50,5 +51,33 @@
     NSString *bundlePaht=[[NSBundle bundleForClass:[YxzGetBundleResouceTool class]] pathForResource:@"YxzChatResouce" ofType:@"bundle"];
     NSBundle *navigationBundle= [NSBundle bundleWithPath:bundlePaht];
     return navigationBundle;
+}
++(NSBundle *)faceBundler{
+    NSString *bundlePaht=[[NSBundle bundleForClass:[YxzGetBundleResouceTool class]] pathForResource:@"face" ofType:@"bundle"];
+    NSBundle *navigationBundle= [NSBundle bundleWithPath:bundlePaht];
+    return navigationBundle;
+}
+-(UIImage *)getFaceWithImageName:(NSString *)imageName{
+    UIImage *image=[self.imageCahce objectForKey:imageName];
+    if (!image) {
+        NSString *allImageName=imageName;
+        if (![imageName hasSuffix:@".png"]) {
+            allImageName=[NSString stringWithFormat:@"%@@2x.png",imageName];
+        }
+        NSString *imagePath = [[YxzGetBundleResouceTool faceBundler] pathForResource:allImageName ofType:nil];
+        image = [UIImage imageWithContentsOfFile:imagePath];
+        if (image) {
+            [self.imageCahce setValue:image forKey:imageName];
+        }
+    }
+    return image;
+}
+
++(NSArray<YxzFaceItem *> *)getBundlerFace{
+    
+    NSString *listPath=[[self faceBundler] pathForResource:@"vy_face" ofType:@"plist"];
+    NSArray *array= [NSArray arrayWithContentsOfFile:listPath];
+    NSArray *list=[[YxzFaceItem class]mj_objectArrayWithKeyValuesArray:array];
+    return list;
 }
 @end

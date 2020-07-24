@@ -11,6 +11,8 @@
 #import "YXZConstant.h"
 #import "YxzCalculateTextSizeTool.h"
 #import "UIView+Frame.h"
+#import <Masonry/Masonry.h>
+#import "YxzFaceContainerView.h"
 #define MORE_BUT_CONTAINER_WIDTH 50
 #define INPUT_CONTAINER_MIN_SPCE 5
 #define INPUT_CONTAINER_INNER_MIN_SPCE 4
@@ -18,7 +20,6 @@
 #define MORE_BUT_WIDTH 30
 #define MAX_TEXTVIEW_HEIGHT 104
 #define FACE_BUTTON_W 30
-#import <Masonry/Masonry.h>
 
 @interface YxzInputBoxView()<UITextFieldDelegate>
 @property(nonatomic,strong)UIButton *faceBut;
@@ -29,7 +30,7 @@
 @property(nonatomic,assign)CGRect keyboardFrame;
 @property(nonatomic,assign)YxzInputStatus lastInputStatus;
 @property(nonatomic,assign)CGFloat defaultInputHight;
-
+@property(nonatomic,strong)YxzFaceContainerView *faceContainerView;
 @end
 @implementation YxzInputBoxView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -67,24 +68,13 @@
     [_inputContainerView addSubview:self.textView];
     [_inputContainerView addSubview:self.faceBut];
     [_inputContainerView addSubview:self.sendButton];
-    /*
-    CGRect inputContainerFrame=CGRectMake(INPUT_CONTAINER_MIN_SPCE, INPUT_CONTAINER_MIN_SPCE, self.bounds.size.width-MORE_BUT_CONTAINER_WIDTH, CGRectGetHeight(self.bounds)-INPUT_CONTAINER_MIN_SPCE*2);
-    self.inputContainerView.frame=inputContainerFrame;
-    CGFloat faceWidth=CGRectGetHeight(inputContainerFrame)-INPUT_CONTAINER_INNER_MIN_SPCE*2;
-    CGRect faceRect=CGRectMake(CGRectGetWidth(inputContainerFrame)-faceWidth-INPUT_CONTAINER_INNER_MIN_SPCE*2, INPUT_CONTAINER_INNER_MIN_SPCE, faceWidth, faceWidth);
-    self.faceBut.frame=faceRect;
-    CGRect textFrame=CGRectMake(INPUT_CONTAINER_INNER_MIN_SPCE, INPUT_CONTAINER_INNER_MIN_SPCE,faceRect.origin.x-INPUT_CONTAINER_INNER_MIN_SPCE*2, faceWidth);
-    self.textView.frame=textFrame;
-    self.defaultInputHight=faceWidth;
-    YxzViewRadius(_inputContainerView,CGRectGetHeight(_inputContainerView.bounds)/2.0f);
     
-    CGRect moreFrame=CGRectMake(CGRectGetWidth(self.bounds)-MORE_BUT_CONTAINER_WIDTH+(MORE_BUT_CONTAINER_WIDTH - MORE_BUT_WIDTH)/2.0f, CGRectGetHeight(self.bounds)/2.0f-MORE_BUT_WIDTH/2.0f, MORE_BUT_WIDTH, MORE_BUT_WIDTH);
-    self.moreBut.frame=moreFrame;
-    */
+    [self layoutSubViewsConstraint];
+  
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-    [self layoutSubViewsConstraint];
+    
 }
 -(void)layoutSubViewsConstraint{
     [self.inputContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -108,17 +98,33 @@
         make.right.equalTo(self.sendButton.mas_left).offset(0);
         make.left.equalTo(self.faceBut.mas_right).offset(INPUT_CONTAINER_INNER_MIN_SPCE);
     }];
+    
 }
 
+-(void)showFaceView{
+    
+    [self addSubview:self.faceContainerView];
+    [self.faceContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.right.equalTo(self.mas_right);
+        make.bottom.equalTo(self.mas_bottom);
+        make.height.equalTo(@(self.faceContainerView.faceContainerH));
+    }];
+}
+-(void)hiddenFaceView{
+    [self.faceContainerView removeFromSuperview];
+}
 #pragma mark - 键盘通知事件 ============
 -(void)keyboardWillShow:(NSNotification *)notify{
     
 }
 -(void)keyboardWillHide:(NSNotification *)notify{
-    CGFloat containerH=CGRectGetHeight(self.inputContainerView.frame)+INPUT_CONTAINER_MIN_SPCE*2;
-    CGFloat hight = containerH>inputBoxDefaultHight?containerH:inputBoxDefaultHight;
+    
+    CGFloat hight = inputBoxDefaultHight;
     if (self.inputStatus==YxzInputStatus_keyborad) {
         
+    }else if(self.inputStatus==YxzInputStatus_showFace){
+        hight+=self.faceContainerView.faceContainerH;
     }
     if ([self.delegate respondsToSelector:@selector(inputBoxStatusChange:changeFromStatus:toStatus:changeHight:)]) {
         [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:hight];
@@ -130,7 +136,7 @@
     if (self.inputStatus==YxzInputStatus_keyborad&&CGRectGetHeight(self.keyboardFrame)<=inputBoxDefaultHight) {
         return;
     }
-    else if ((self.inputStatus == YxzInputStatus_showFace || self.inputStatus == YxzInputStatus_showMore)  &&CGRectGetHeight(self.keyboardFrame)<inputBoxDefaultHight) {
+    else if ((self.inputStatus == YxzInputStatus_showFace)  &&CGRectGetHeight(self.keyboardFrame)<inputBoxDefaultHight) {
           
           return;
           
@@ -172,28 +178,7 @@
     if ([self.delegate respondsToSelector:@selector(clientInputing:)]) {
            [self.delegate clientInputing:YES];
        }
-    /*
-    NSString *text=textView.text;
-    NSMutableAttributedString *textAtributed=[YxzCalculateTextSizeTool getAttributed:text font:textView.font];
-    CGSize size= [YxzCalculateTextSizeTool YYTextLayoutSize:textAtributed width:CGRectGetWidth(textView.frame) minThresholdValueV:self.defaultInputHight];
-    CGFloat offsetHight =0;
-    
-    CGFloat textHight=size.height;
-    textHight = textHight > self.defaultInputHight ? textHight : self.defaultInputHight; // height大于 TextView 的高度 就取height 否则就取 TextView 的高度
-    
-    textHight = textHight < MAX_TEXTVIEW_HEIGHT ? textHight : CGRectGetHeight(self.textView.frame);  // height 小于 textView 的最大高度 104 就取出 height 不然就取出  textView.frameHeight
-    
-    CGRect textFrame=self.textView.frame;
-    textFrame.size.height=textHight;
-    CGRect inputContainerFrame=self.inputContainerView.frame;
-    inputContainerFrame.size.height=CGRectGetHeight(textFrame)+INPUT_CONTAINER_INNER_MIN_SPCE*2;
-    self.textView.frame=textFrame;
-    self.inputContainerView.frame=inputContainerFrame;
-    CGFloat curHeight = CGRectGetHeight(inputContainerFrame) + INPUT_CONTAINER_MIN_SPCE*2+CGRectGetHeight(self.keyboardFrame);
-    if ([self.delegate respondsToSelector:@selector(inputBoxHightChange:inputViewHight:)]) {
-        [self.delegate inputBoxHightChange:self inputViewHight:curHeight];
-    }
-     */
+ 
 }
 
 #pragma mark - but event  ===============================
@@ -203,10 +188,21 @@
     if (but.selected) {
 //        self.moreBut.selected=NO;
         self.inputStatus=YxzInputStatus_showFace;
+        [self showFaceView];
         [self.textView resignFirstResponder];
+        CGFloat hight = inputBoxDefaultHight;
+        
+        hight+=self.faceContainerView.faceContainerH;
+        
+        if ([self.delegate respondsToSelector:@selector(inputBoxStatusChange:changeFromStatus:toStatus:changeHight:)]) {
+            [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:hight];
+        }
+        [self.faceContainerView showFace];
     }else{
         self.inputStatus=YxzInputStatus_keyborad;
+        
         [self.textView becomeFirstResponder];
+        [self hiddenFaceView];
     }
     
   
@@ -273,6 +269,12 @@
         [_sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sendButton;
+}
+-(YxzFaceContainerView *)faceContainerView{
+    if (!_faceContainerView) {
+        _faceContainerView=[[YxzFaceContainerView alloc]init];
+    }
+    return _faceContainerView;
 }
 /*
 -(UIButton *)moreBut{

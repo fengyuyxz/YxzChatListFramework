@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
 
 target 'YxzChatFramework' do
    pod 'YYModel', '~> 1.0.4'
@@ -7,4 +7,5 @@ target 'YxzChatFramework' do
    pod 'YYText', '~> 1.0.7'
    pod 'SDWebImage', '~> 4.3.3'
    pod 'Masonry', '~> 1.1.0'
+   pod 'MJExtension'
 end
