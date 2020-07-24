@@ -8,6 +8,7 @@
 
 #ifndef YXZConstant_h
 #define YXZConstant_h
+
 #import <UIKit/UIKit.h>
 /** 消息类型 */
 typedef NS_ENUM(NSUInteger, YxzMsgType) {
@@ -20,9 +21,11 @@ typedef NS_ENUM(NSUInteger, YxzMsgType) {
     YxzMsgType_Subscription,//关注订阅
     YxzMsgType_Announcement,   // 系统公告信息
 };
+#define inputBoxDefaultHight 50
+
 #define cellLineSpeing  3
 
-#define MsgTableViewWidth 300
+#define MsgTableViewWidth [UIScreen mainScreen].bounds.size.width
 #define MsgTableViewHeight 400
 #define RGBA_OF(rgbValue)   [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 

@@ -88,6 +88,7 @@
 
 }
 -(void)layoutSubviews{
+    [super layoutSubviews];
     self.tableView.frame=self.bounds;
     
 }
