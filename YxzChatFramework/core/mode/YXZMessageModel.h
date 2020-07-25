@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) YxzUserModel *user;
 @property(nonatomic,copy)NSString *content;// 消息内容
 
+@property(nonatomic,copy)NSString *faceImageUrl;
 
 @property (nonatomic, copy) NSString *quantity;
 @property (nonatomic, copy) NSString *msgID;

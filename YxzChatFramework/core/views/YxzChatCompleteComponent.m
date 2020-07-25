@@ -64,6 +64,21 @@
         
     });
 }
+//发送消息
+-(void)sendText:(NSString *)msgText faceImage:(NSString *)faceImageUrlStr{
+    YXZMessageModel *model=[YXZMessageModel new];
+    model.msgType=YxzMsgType_barrage;
+    model.content=msgText;
+    model.faceImageUrl=faceImageUrlStr;
+    YxzUserModel *user=[YxzUserModel new];
+    user.nickName=@"fengyuyxz";
+    user.level=7;
+    model.user=user;
+    model.msgID = [NSString stringWithFormat:@"msgID_%u", arc4random() % 10000];
+    // 生成富文本模型
+    [model initMsgAttribute];
+    [self.listTableView addNewMsg:model];
+}
 -(void)inputBoxHightChange:(YxzInputBoxView *)boxView inputViewHight:(CGFloat)inputHight{
     CGRect frame =self.inputboxView.frame;
     frame.size.height=inputHight;

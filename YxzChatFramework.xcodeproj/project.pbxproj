@@ -41,6 +41,7 @@
 		1CB2B4B124CB1E0A0056107A /* YxzFaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B024CB1E0A0056107A /* YxzFaceCell.m */; };
 		1CB2B4B324CB21350056107A /* face.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B224CB21350056107A /* face.bundle */; };
 		1CB2B4B624CBB4430056107A /* YxzShowSelectedFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B524CBB4430056107A /* YxzShowSelectedFaceView.m */; };
+		1CB2B4B924CBDED90056107A /* NSString+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B824CBDED90056107A /* NSString+Empty.m */; };
 		2119FA2EE144B62C9AE3277E /* libPods-YxzChatFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +111,8 @@
 		1CB2B4B224CB21350056107A /* face.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = face.bundle; sourceTree = "<group>"; };
 		1CB2B4B424CBB4430056107A /* YxzShowSelectedFaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzShowSelectedFaceView.h; sourceTree = "<group>"; };
 		1CB2B4B524CBB4430056107A /* YxzShowSelectedFaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzShowSelectedFaceView.m; sourceTree = "<group>"; };
+		1CB2B4B724CBDED90056107A /* NSString+Empty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Empty.h"; sourceTree = "<group>"; };
+		1CB2B4B824CBDED90056107A /* NSString+Empty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Empty.m"; sourceTree = "<group>"; };
 		2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YxzChatFramework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2426B8A82B2879D2C96842 /* Pods-YxzChatFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.debug.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		F9A1EAF48E617D568F370A21 /* Pods-YxzChatFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.release.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.release.xcconfig"; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 			children = (
 				1CB2B45C24C940DF0056107A /* UIView+Frame.m */,
 				1CB2B45D24C940DF0056107A /* UIView+Frame.h */,
+				1CB2B4B724CBDED90056107A /* NSString+Empty.h */,
+				1CB2B4B824CBDED90056107A /* NSString+Empty.m */,
 			);
 			path = catagory;
 			sourceTree = "<group>";
@@ -438,6 +443,7 @@
 				1CB2B48624C940E00056107A /* YxzSubscriptionCell.m in Sources */,
 				1CB2B4A924CAD1E00056107A /* YxzFaceContainerView.m in Sources */,
 				1CB2B48524C940E00056107A /* YxzLevelManager.m in Sources */,
+				1CB2B4B924CBDED90056107A /* NSString+Empty.m in Sources */,
 				1CB2B49524C979F10056107A /* YxzInputBoxView.m in Sources */,
 				1CB2B48A24C940E00056107A /* YxzChatBaseCell.m in Sources */,
 				1CB2B48424C940E00056107A /* YxzMsgAttributeModel.m in Sources */,

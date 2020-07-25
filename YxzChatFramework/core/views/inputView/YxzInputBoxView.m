@@ -235,7 +235,13 @@
   
 }
 -(void)sendButtonPressed:(UIButton *)but{
-    
+    if ([self.delegate respondsToSelector:@selector(sendText:faceImage:)]) {
+        NSString *text=self.textView.text;
+        self.faceImage=@"https://showme-livecdn.9yiwums.com/gift/gift/20190225/b9a2dc3f1bef436598dfa470eada6a60.png";
+        [self.delegate sendText:text faceImage:self.faceImage];
+    }
+    self.faceImage=nil;
+    [self.showSelectedFaceView removeFromSuperview];
 }
 -(void)moreButPressed:(UIButton *)but{
     but.selected=!but.selected;

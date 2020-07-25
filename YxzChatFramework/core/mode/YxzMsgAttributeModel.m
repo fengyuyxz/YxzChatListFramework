@@ -10,6 +10,7 @@
 #import "YxzAttributeMsgFactory.h"
 #import "YXZMessageModel.h"
 #import "YxzLevelManager.h"
+#import "NSString+Empty.h"
 #import <YYText/YYText.h>
 #import <YYImage/YYImage.h>
 #import <SDWebImage/SDImageCache.h>
@@ -24,6 +25,8 @@
 @property (nonatomic, strong) UIImage *giftImage;
 /** 礼物缩略图下载结束 */
 @property (nonatomic, assign) BOOL finishDownloadGiftImg;
+
+@property (nonatomic,assign)BOOL finishDownloadFaceImage;
 
 
 ///////////////////////////////// 附加属性 /////////////////////////////////
@@ -99,6 +102,42 @@
     [self.tempLoads addObject:sdLoad];
 }
 
+-(void)downloadFaceImage{
+    NSString *urlStr=self.msgModel.faceImageUrl;
+    if (!urlStr || urlStr.length < 1) {
+        return;
+    }
+    if (self.finishDownloadFaceImage) {
+        return;
+    }
+    self.finishDownloadFaceImage = YES;
+    self.faceImage=[self cacheImage:urlStr];
+    if (self.faceImage) {
+        return;
+    }
+    // 2. 下载远程图片
+    NSURL *url = [NSURL URLWithString:urlStr];
+    __weak typeof(self) weakSelf =  self;
+    id sdLoad = [[SDWebImageManager sharedManager] loadImageWithURL:url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        
+    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+        if (image){
+            // 刷新UI
+            weakSelf.faceImage = image;
+            // 更新属性文字
+            [weakSelf downloadFaceImageFinsh];
+        }
+    }];
+    [self.tempLoads addObject:sdLoad];
+}
+-(void)downloadFaceImageFinsh{
+    // 更新属性文字
+    [self msgUpdateAttribute];
+    // 通知代理刷新属性文字
+    if (self.delegate && [self.delegate respondsToSelector:@selector(attributeUpdated:)]) {
+        [self.delegate attributeUpdated:self];
+    }
+}
 - (void)downloadTagImageFinish {
     // 更新属性文字
     [self msgUpdateAttribute];
@@ -121,7 +160,7 @@
         case YxzMsgType_Subscription: { // 关注
             self.bgColor = NormalBgColor;
 
-            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage tapCompletion:AttributeTapBlock];
+            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage faceImage:nil tapCompletion:AttributeTapBlock];
            
             
 
@@ -130,23 +169,29 @@
             break;
         case YxzMsgType_Share: { // 分享
             self.bgColor = NormalBgColor;
-            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage tapCompletion:AttributeTapBlock];
+            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage faceImage:nil tapCompletion:AttributeTapBlock];
         }
             break;
         case YxzMsgType_Other:
         case YxzMsgType_barrage: { // 弹幕消息
             // 下载标签图片
             [self downloadTagImage];
+            
+            if (![NSString isEmpty: self.msgModel.faceImageUrl]) {
+                [self downloadFaceImage];
+            }
+            
+            
             self.bgColor = NormalBgColor;
             
-            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage tapCompletion:AttributeTapBlock];
+            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage faceImage:self.faceImage tapCompletion:AttributeTapBlock];
         }
             break;
         case YxzMsgType_memberEnter: { // 用户进入直播间
             // 下载标签图片
             [self downloadTagImage];
             self.bgColor = NormalBgColor;
-            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage tapCompletion:AttributeTapBlock];
+            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage faceImage:nil tapCompletion:AttributeTapBlock];
         }
             break;
         case YxzMsgType_gift_text: {   // 礼物弹幕(文本)消息
@@ -155,12 +200,12 @@
             // 下载礼物图片
             [self downloadGiftImage];
             self.bgColor = NormalBgColor;
-            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage tapCompletion:AttributeTapBlock];
+            msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage faceImage:nil tapCompletion:AttributeTapBlock];
         }
             break;
         case YxzMsgType_Announcement: { // 系统公告信息
             self.bgColor = NormalBgColor;
-             msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage tapCompletion:AttributeTapBlock];
+             msgTxt=[YxzAttributeMsgFactory generateAttribute:self.msgModel.msgType font:self.font msgModel:self.msgModel tipImages:self.tipImages giftImage:self.giftImage faceImage:nil tapCompletion:AttributeTapBlock];
                    
         }
             break;

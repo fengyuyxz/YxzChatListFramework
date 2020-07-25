@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YxzAttributeMsgFactory : NSObject
 typedef void(^AttributeTapBlock)(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect);
-+(NSMutableAttributedString *)generateAttribute:(YxzMsgType)msgType font:(UIFont *)font msgModel:(YXZMessageModel *)msgModel  tipImages:(NSArray<id> *)tipImages giftImage:(UIImage *)giftImage tapCompletion:(AttributeTapBlock)tap ;
++(NSMutableAttributedString *)generateAttribute:(YxzMsgType)msgType font:(UIFont *)font msgModel:(YXZMessageModel *)msgModel  tipImages:(NSArray<id> *)tipImages giftImage:(UIImage *)giftImage    faceImage:(UIImage *)faceImage tapCompletion:(AttributeTapBlock)tap  ;
 + (CGSize)YYTextLayoutSize:(NSMutableAttributedString *)attribText;
 @end
 

@@ -12,9 +12,10 @@
 #import <YYImage/YYImage.h>
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImage/SDWebImageManager.h>
+#import "NSString+Empty.h"
 @implementation YxzAttributeMsgFactory
 
-+(NSMutableAttributedString *)generateAttribute:(YxzMsgType)msgType font:(UIFont *)font msgModel:(YXZMessageModel *)msgModel  tipImages:(NSArray<id> *)tipImages giftImage:(UIImage *)giftImage tapCompletion:(AttributeTapBlock)tap {
++(NSMutableAttributedString *)generateAttribute:(YxzMsgType)msgType font:(UIFont *)font msgModel:(YXZMessageModel *)msgModel  tipImages:(NSArray<id> *)tipImages giftImage:(UIImage *)giftImage    faceImage:(UIImage *)faceImage tapCompletion:(AttributeTapBlock)tap {
     NSMutableAttributedString *msgAtrribute;
     switch (msgType) {
             case YxzMsgType_Subscription: { // 关注
@@ -27,7 +28,7 @@
                 break;
             case YxzMsgType_Other:
             case YxzMsgType_barrage: { // 弹幕消息
-                msgAtrribute=[self commentfont:font msgModel:msgModel tipImages:tipImages tapCompletion:tap];
+                msgAtrribute=[self commentfont:font msgModel:msgModel tipImages:tipImages faceImage:faceImage tapCompletion:tap];
             }
                 break;
             case YxzMsgType_memberEnter: { // 用户进入直播间
@@ -147,7 +148,7 @@
     return welcomeAttribText;
 }
 // 聊天
-+ (NSMutableAttributedString *)commentfont:(UIFont *)font msgModel:(YXZMessageModel *)msgModel tipImages:(NSArray<id> *)tipImages tapCompletion:(AttributeTapBlock)tap {
++ (NSMutableAttributedString *)commentfont:(UIFont *)font msgModel:(YXZMessageModel *)msgModel tipImages:(NSArray<id> *)tipImages faceImage:(UIImage *)faceImage tapCompletion:(AttributeTapBlock)tap {
     NSMutableParagraphStyle *paraStyle = [self paragraphStyle];
     paraStyle.lineSpacing = 3.0f;//行间距
     // 首行缩进
@@ -176,8 +177,17 @@
     // 内容
     NSMutableAttributedString *content = [self getAttributed:msgModel.content font:font color:MsgTitleColor tap:NO shadow:YES tapCompletion:nil];
     
+    
+    // 表情
+    if(faceImage){
+        NSMutableAttributedString *faceAtri=[self getAttributed:@"\n" font:font color:MsgNameColor tap:NO shadow:NO tapCompletion:nil];
+        [self addFaceImage:content font:font faceImage:faceImage];
+        [content appendAttributedString:faceAtri];
+    }
+    
     [textView appendAttributedString:name];
     [textView appendAttributedString:content];
+    
     textView.yy_paragraphStyle = paraStyle;
     
     return textView;
@@ -212,6 +222,19 @@
         [attachText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     }
 }
+
++(void)addFaceImage:(NSMutableAttributedString *)attachText font:(UIFont *)font faceImage:(UIImage *)faceImg{
+    CGFloat lineH = 30;
+    if([faceImg isKindOfClass:[UIImage class]]){
+        CGFloat scale = faceImg.size.height / lineH;
+        CGSize size = CGSizeMake(faceImg.size.width / scale, lineH);
+        UIImage *newImage = [self scaleToSize:size image:faceImg];
+        NSMutableAttributedString *labs = [self getAttachText:newImage font:font tap:NO tapCompletion:nil];
+        [attachText appendAttributedString:labs];
+        [attachText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    }
+}
+
 #pragma mark ----- 图片、view生成富文本
 + (NSMutableAttributedString *)getAttachText:(UIImage *)image font:(UIFont *)font tap:(BOOL)isTap tapCompletion:(AttributeTapBlock)tap{
     NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:image contentMode:UIViewContentModeCenter attachmentSize:image.size alignToFont:font alignment:YYTextVerticalAlignmentCenter];

@@ -25,6 +25,9 @@
 @end
 
 @interface YxzMsgAttributeModel : NSObject
+
+@property (nonatomic,strong)UIImage *faceImage;
+
 @property (nonatomic, weak) YXZMessageModel *msgModel;
 @property (nonatomic, weak) id<YxzMsgAttributeModelDelegate> delegate;
 
