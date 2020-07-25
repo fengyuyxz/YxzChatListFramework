@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@protocol YxzFaceSeletedDelegate <NSObject>
 
+-(void)didSelectedFace:(NSString *)imgurl;
+
+@end
 @interface YxzFaceContainerView : UIView
+@property(nonatomic,weak)id<YxzFaceSeletedDelegate> delegate;
 @property(nonatomic,assign)CGFloat faceContainerH;
 -(void)showFace;
 @end

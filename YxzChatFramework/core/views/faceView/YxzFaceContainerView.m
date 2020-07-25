@@ -111,7 +111,13 @@
     cell.item=item;
     return cell;
 }
-
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    YxzFaceItem *item=self.faceDataSouce[indexPath.row];
+    if ([self.delegate respondsToSelector:@selector(didSelectedFace:)]) {
+        NSString *url=[[item.face_name stringByReplacingOccurrencesOfString:@"[" withString:@""] stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        [self.delegate didSelectedFace:url];
+    }
+}
 -(UIView *)bottomFaceTool{
     if (!_bottomFaceTool) {
         _bottomFaceTool=[[UIView alloc]init];

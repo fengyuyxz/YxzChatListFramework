@@ -13,6 +13,7 @@
 #import "UIView+Frame.h"
 #import <Masonry/Masonry.h>
 #import "YxzFaceContainerView.h"
+#import "YxzShowSelectedFaceView.h"
 #define MORE_BUT_CONTAINER_WIDTH 50
 #define INPUT_CONTAINER_MIN_SPCE 5
 #define INPUT_CONTAINER_INNER_MIN_SPCE 4
@@ -21,7 +22,7 @@
 #define MAX_TEXTVIEW_HEIGHT 104
 #define FACE_BUTTON_W 30
 
-@interface YxzInputBoxView()<UITextFieldDelegate>
+@interface YxzInputBoxView()<UITextFieldDelegate,ShowSelectedFaceDelegate,YxzFaceSeletedDelegate>
 @property(nonatomic,strong)UIButton *faceBut;
 //@property(nonatomic,strong)UIButton *moreBut;
 @property(nonatomic,strong)UIButton *sendButton;
@@ -31,6 +32,9 @@
 @property(nonatomic,assign)YxzInputStatus lastInputStatus;
 @property(nonatomic,assign)CGFloat defaultInputHight;
 @property(nonatomic,strong)YxzFaceContainerView *faceContainerView;
+@property(nonatomic,strong)YxzShowSelectedFaceView *showSelectedFaceView;
+
+@property(nonatomic,copy)NSString *faceImage;
 @end
 @implementation YxzInputBoxView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -69,6 +73,7 @@
     [_inputContainerView addSubview:self.faceBut];
     [_inputContainerView addSubview:self.sendButton];
     
+    
     [self layoutSubViewsConstraint];
   
 }
@@ -100,7 +105,7 @@
     }];
     
 }
-
+#pragma mark - show face 相关 方法 =============
 -(void)showFaceView{
     
     [self addSubview:self.faceContainerView];
@@ -113,6 +118,20 @@
 }
 -(void)hiddenFaceView{
     [self.faceContainerView removeFromSuperview];
+}
+-(void)displaySelectedFaceView:(NSString *)faceImg{
+    if (!self.showSelectedFaceView.superview) {
+        if (self.superview) {
+            [self.superview addSubview:self.showSelectedFaceView];
+            [self.showSelectedFaceView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(self.mas_top);
+                make.left.equalTo(self.mas_left);
+                make.right.equalTo(self.mas_right);
+                make.height.equalTo(@(60));
+            }];
+        }
+    }
+    self.showSelectedFaceView.imageURLStr=faceImg;
 }
 #pragma mark - 键盘通知事件 ============
 -(void)keyboardWillShow:(NSNotification *)notify{
@@ -154,6 +173,15 @@
         [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:hight];
     }
 }
+#pragma mark - show face view delegate========
+-(void)delSelectedFaceImg{
+    self.faceImage=nil;
+    [self.showSelectedFaceView removeFromSuperview];
+}
+-(void)didSelectedFace:(NSString *)imgurl{
+    self.faceImage=imgurl;
+    [self displaySelectedFaceView:self.faceImage];
+}
 #pragma mark - textFieldS delegate ========================
 - (BOOL)textFieldShouldBeginEditing:(YYTextView *)textView{
     
@@ -172,7 +200,6 @@
 /**
  *  TextView 的输入内容一改变就调用这个方法，
  *
- *  @param textView
  */
 - (void) textViewDidChange:(YYTextView *)textView{
     if ([self.delegate respondsToSelector:@selector(clientInputing:)]) {
@@ -273,8 +300,16 @@
 -(YxzFaceContainerView *)faceContainerView{
     if (!_faceContainerView) {
         _faceContainerView=[[YxzFaceContainerView alloc]init];
+        _faceContainerView.delegate=self;
     }
     return _faceContainerView;
+}
+-(YxzShowSelectedFaceView *)showSelectedFaceView{
+    if (!_showSelectedFaceView) {
+        _showSelectedFaceView=[[YxzShowSelectedFaceView alloc]init];
+        _showSelectedFaceView.delegate=self;
+    }
+    return _showSelectedFaceView;
 }
 /*
 -(UIButton *)moreBut{
