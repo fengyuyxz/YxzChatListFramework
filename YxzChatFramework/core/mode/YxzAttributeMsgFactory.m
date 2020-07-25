@@ -180,8 +180,8 @@
     
     // 表情
     if(faceImage){
-        NSMutableAttributedString *faceAtri=[self getAttributed:@"\n" font:font color:MsgNameColor tap:NO shadow:NO tapCompletion:nil];
-        [self addFaceImage:content font:font faceImage:faceImage];
+        NSMutableAttributedString *faceAtri=[self getAttributed:[NSString stringWithFormat:@"\n "] font:font color:MsgNameColor tap:NO shadow:NO tapCompletion:nil];
+        [self addFaceImage:faceAtri font:font faceImage:faceImage];
         [content appendAttributedString:faceAtri];
     }
     
@@ -224,7 +224,7 @@
 }
 
 +(void)addFaceImage:(NSMutableAttributedString *)attachText font:(UIFont *)font faceImage:(UIImage *)faceImg{
-    CGFloat lineH = 30;
+    CGFloat lineH = 40;
     if([faceImg isKindOfClass:[UIImage class]]){
         CGFloat scale = faceImg.size.height / lineH;
         CGSize size = CGSizeMake(faceImg.size.width / scale, lineH);
