@@ -43,7 +43,7 @@
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
-        make.height.equalTo(@(50));
+        make.height.equalTo(@(70));
     }];
     [self.videoContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);

@@ -68,6 +68,12 @@
         image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
             [self.imageCahce setValue:image forKey:imageName];
+        }else{
+            if (![imageName hasSuffix:@".png"]) {
+                allImageName=[NSString stringWithFormat:@"%@@3x.png",imageName];
+            }
+            NSString *imagePath = [[YxzGetBundleResouceTool faceBundler] pathForResource:allImageName ofType:nil];
+            image = [UIImage imageWithContentsOfFile:imagePath];
         }
     }
     return image;
