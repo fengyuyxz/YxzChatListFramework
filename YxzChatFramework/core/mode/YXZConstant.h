@@ -25,7 +25,10 @@ typedef NS_ENUM(NSUInteger, YxzMsgType) {
 
 #define cellLineSpeing  3
 
-#define MsgTableViewWidth [UIScreen mainScreen].bounds.size.width
+
+#define device_sceen_width [UIScreen mainScreen].bounds.size.width
+
+#define MsgTableViewWidth 300
 #define MsgTableViewHeight 400
 #define RGBA_OF(rgbValue)   [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -44,7 +47,6 @@ view.layer.masksToBounds = YES;
 
 // 背景颜色 黑色 透明度0.24
 #define NormalBgColor   RGBAOF(0x000000, 0.24)
-
 
 #endif /* YXZConstant_h */
 

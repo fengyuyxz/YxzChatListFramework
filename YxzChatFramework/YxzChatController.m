@@ -8,6 +8,7 @@
 
 #import "YxzChatController.h"
 #import "YxzChatCompleteComponent.h"
+#import <Masonry/Masonry.h>
 @interface YxzChatController ()
 @property(nonatomic,strong)YxzChatCompleteComponent *chatComponentView;
 @end
@@ -19,6 +20,12 @@
     self.view.backgroundColor=[UIColor blackColor];
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:_chatComponentView];
+    [self.chatComponentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self.view);
+    }];
 }
-
+- (BOOL)shouldAutorotate
+{
+return YES;
+}
 @end

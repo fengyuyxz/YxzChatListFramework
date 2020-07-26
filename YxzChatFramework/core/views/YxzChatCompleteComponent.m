@@ -10,6 +10,7 @@
 #import "YxzChatListTableView.h"
 #import "YxzInputBoxView.h"
 #import "YXZConstant.h"
+#import <Masonry/Masonry.h>
 @interface YxzChatCompleteComponent()<YxzInputViewDelegate>
 @property(nonatomic,strong)YxzChatListTableView *listTableView;
 @property(nonatomic,strong)YxzInputBoxView *inputboxView;
@@ -35,26 +36,61 @@
 }
 -(void)setupSubViews{
     self.inputBoxHight=inputBoxDefaultHight;
-    _listTableView=[[YxzChatListTableView alloc]initWithFrame:CGRectMake(0, 0, MsgTableViewWidth, CGRectGetHeight(self.bounds)-inputBoxDefaultHight)];
+    _listTableView=[[YxzChatListTableView alloc]initWithFrame:CGRectZero];
     _listTableView.reloadType=YxzReloadLiveMsgRoom_Time;
     [self addSubview:_listTableView];
-    _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds)-inputBoxDefaultHight, MsgTableViewWidth, inputBoxDefaultHight)];
+    _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectZero];
     _inputboxView.delegate=self;
     [self addSubview:_inputboxView];
+    [self layoutSubViewConstraint];
     
 }
+-(void)layoutSubViewConstraint{
+    [self.listTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.top.equalTo(self.mas_top);
+        if ([self isPortrait]) {
+            make.right.equalTo(self.mas_right);
+        }else{
+            make.width.equalTo(@(MsgTableViewWidth));
+        }
+        make.bottom.equalTo(self.mas_bottom);
+    }];
+    [self.inputboxView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.width.equalTo(self.mas_width);
+        make.bottom.equalTo(self.mas_bottom);
+        make.height.equalTo(@(inputBoxDefaultHight));
+    }];
+}
+
+
+-(BOOL)isPortrait{
+    UIDeviceOrientation orientaition=[UIDevice currentDevice].orientation;
+    BOOL flag=YES;
+    if (orientaition==UIDeviceOrientationLandscapeLeft||orientaition==UIDeviceOrientationLandscapeLeft) {
+        flag=NO;
+    }
+    return flag;
+}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
+//    [self layoutSubViewConstraint];
 //    [self layoutSubViewFrame];
     
 }
 -(void)layoutSubViewFrame{
-    CGRect frame =CGRectMake(0, CGRectGetHeight(self.bounds)-self.inputBoxHight, MsgTableViewWidth, self.inputBoxHight);
+    /*
+    CGRect frame =CGRectMake(0, CGRectGetHeight(self.bounds)-self.inputBoxHight, device_sceen_width, self.inputBoxHight);
+    
+    
     self.inputboxView.frame=frame;
     CGRect listTabeFrame=self.listTableView.frame;
-    listTabeFrame.size.height-=CGRectGetHeight(frame);
+    listTabeFrame.size.height=CGRectGetHeight(self.bounds)-CGRectGetHeight(frame);
     self.listTableView.frame=listTabeFrame;
+    
+    */
 }
 #pragma mark - YxzInputViewDelegate ======================
 -(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus changeHight:(CGFloat)hight{
@@ -69,7 +105,7 @@
     YXZMessageModel *model=[YXZMessageModel new];
     model.msgType=YxzMsgType_barrage;
     model.content=msgText;
-    model.faceImageUrl=faceImageUrlStr;
+   // model.faceImageUrl=faceImageUrlStr;
     YxzUserModel *user=[YxzUserModel new];
     user.nickName=@"fengyuyxz";
     user.level=7;
