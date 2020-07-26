@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0D9B0524CD2DE100F4F017 /* YxzLiveVideoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D9B0424CD2DE100F4F017 /* YxzLiveVideoContainerView.m */; };
+		1C0D9B0924CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D9B0824CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m */; };
 		1CB2B44124C940B80056107A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44024C940B80056107A /* AppDelegate.m */; };
 		1CB2B44424C940B80056107A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44324C940B80056107A /* SceneDelegate.m */; };
 		1CB2B44724C940B80056107A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44624C940B80056107A /* ViewController.m */; };
@@ -46,6 +48,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C0D9B0324CD2DE100F4F017 /* YxzLiveVideoContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzLiveVideoContainerView.h; sourceTree = "<group>"; };
+		1C0D9B0424CD2DE100F4F017 /* YxzLiveVideoContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzLiveVideoContainerView.m; sourceTree = "<group>"; };
+		1C0D9B0724CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzVideoLooksBasicInfoView.h; sourceTree = "<group>"; };
+		1C0D9B0824CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzVideoLooksBasicInfoView.m; sourceTree = "<group>"; };
 		1CB2B43C24C940B80056107A /* YxzChatFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YxzChatFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB2B43F24C940B80056107A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1CB2B44024C940B80056107A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -130,6 +136,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C0D9B0224CD2D8300F4F017 /* liveVideo */ = {
+			isa = PBXGroup;
+			children = (
+				1C0D9B0624CD2E1300F4F017 /* views */,
+			);
+			path = liveVideo;
+			sourceTree = "<group>";
+		};
+		1C0D9B0624CD2E1300F4F017 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				1C0D9B0324CD2DE100F4F017 /* YxzLiveVideoContainerView.h */,
+				1C0D9B0424CD2DE100F4F017 /* YxzLiveVideoContainerView.m */,
+				1C0D9B0724CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.h */,
+				1C0D9B0824CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		1CB2B43324C940B80056107A = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +197,7 @@
 		1CB2B45A24C940DF0056107A /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1C0D9B0224CD2D8300F4F017 /* liveVideo */,
 				1CB2B49F24C9919F0056107A /* tool */,
 				1CB2B49C24C990890056107A /* resouce */,
 				1CB2B45B24C940DF0056107A /* catagory */,
@@ -443,6 +469,7 @@
 				1CB2B48624C940E00056107A /* YxzSubscriptionCell.m in Sources */,
 				1CB2B4A924CAD1E00056107A /* YxzFaceContainerView.m in Sources */,
 				1CB2B48524C940E00056107A /* YxzLevelManager.m in Sources */,
+				1C0D9B0924CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m in Sources */,
 				1CB2B4B924CBDED90056107A /* NSString+Empty.m in Sources */,
 				1CB2B49524C979F10056107A /* YxzInputBoxView.m in Sources */,
 				1CB2B48A24C940E00056107A /* YxzChatBaseCell.m in Sources */,
@@ -460,6 +487,7 @@
 				1CB2B48324C940DF0056107A /* YxzUserModel.m in Sources */,
 				1CB2B44124C940B80056107A /* AppDelegate.m in Sources */,
 				1CB2B48124C940DF0056107A /* YXZMessageModel.m in Sources */,
+				1C0D9B0524CD2DE100F4F017 /* YxzLiveVideoContainerView.m in Sources */,
 				1CB2B49824C989F20056107A /* YxzChatCompleteComponent.m in Sources */,
 				1CB2B48B24C940E00056107A /* YxzMsgGiftCell.m in Sources */,
 				1CB2B49B24C98D770056107A /* YxzChatController.m in Sources */,

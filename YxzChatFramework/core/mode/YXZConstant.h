@@ -42,6 +42,8 @@ view.layer.masksToBounds = YES;
 #define MsgLbColor          RGBA_OF(0xFFF7AA)
 // 内容颜色
 #define MsgTitleColor       RGBA_OF(0xFFFFFF)
+
+#define baseBlackColor       RGBA_OF(0x222229)
 // 名字颜色
 #define MsgNameColor        RGBAOF(0xFFFFFF, 0.85)
 
