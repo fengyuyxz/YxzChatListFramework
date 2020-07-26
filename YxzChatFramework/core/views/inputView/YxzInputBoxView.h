@@ -41,6 +41,7 @@ typedef NS_ENUM(NSUInteger, YxzInputStatus) {
 
 -(void)clickFace;
 -(void)clickTextField;
+-(void)hiddenInput;
 @end
 
 NS_ASSUME_NONNULL_END

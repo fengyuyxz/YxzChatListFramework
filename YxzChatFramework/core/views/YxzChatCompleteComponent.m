@@ -11,7 +11,7 @@
 #import "YxzInputBoxView.h"
 #import "YXZConstant.h"
 #import <Masonry/Masonry.h>
-@interface YxzChatCompleteComponent()<YxzInputViewDelegate,YxzListViewInputDelegate>
+@interface YxzChatCompleteComponent()<YxzInputViewDelegate,YxzListViewInputDelegate,RoomMsgListDelegate>
 @property(nonatomic,strong)YxzChatListTableView *listTableView;
 @property(nonatomic,strong)YxzInputBoxView *inputboxView;
 @property(nonatomic,assign)CGFloat inputBoxHight;
@@ -37,6 +37,7 @@
 -(void)setupSubViews{
     self.inputBoxHight=inputBoxDefaultHight;
     _listTableView=[[YxzChatListTableView alloc]initWithFrame:CGRectZero];
+    _listTableView.delegate=self;
     _listTableView.listInputView.delegate=self;
     _listTableView.reloadType=YxzReloadLiveMsgRoom_Time;
     [self addSubview:_listTableView];
@@ -100,7 +101,10 @@
 -(void)inputClick{
     [self.inputboxView clickTextField];
 }
-
+#pragma mark - RoomMsgListDelegate =================
+-(void)tapBackgroundView{
+    [self.inputboxView hiddenInput];
+}
 #pragma mark - YxzInputViewDelegate ======================
 -(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus changeHight:(CGFloat)hight{
     self.inputBoxHight=hight;

@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, YxzReloadLiveMsgRoomType) {
 - (void)didRemindShare;
 - (void)didRemindGifts;
 - (void)didCopyWithText:(NSString *)text;
+- (void)tapBackgroundView;
 @end
 
 

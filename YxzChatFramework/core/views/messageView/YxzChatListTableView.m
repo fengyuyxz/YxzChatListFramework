@@ -135,6 +135,8 @@
 
 /** 底部更多未读按钮 */
 @property (nonatomic, strong) YxzAdjustPositionButton *moreButton;
+
+@property(nonatomic,strong)UITapGestureRecognizer *tapRecognizer;
 @end
 @implementation YxzChatListTableView
 
@@ -199,13 +201,19 @@
     }else{
         YxzViewRadius(self.moreButton, 20);
     }
-   
-
+    self.tapRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick)];
+    [self addGestureRecognizer:self.tapRecognizer];
+    [self.tableView  addGestureRecognizer:self.tapRecognizer];
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
 //    self.tableView.frame=self.bounds;
     
+}
+-(void)tapClick{
+    if ([self.delegate respondsToSelector:@selector(tapBackgroundView)]) {
+        [self.delegate tapBackgroundView];
+    }
 }
 
 #pragma mark - 消息追加

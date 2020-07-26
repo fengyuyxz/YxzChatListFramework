@@ -133,6 +133,13 @@
     }
     self.showSelectedFaceView.imageURLStr=faceImg;
 }
+-(void)hiddenInput{
+    [self endEditing:YES];
+    self.inputStatus=YxzInputStatus_nothing;
+    if ([self.delegate respondsToSelector:@selector(inputBoxStatusChange:changeFromStatus:toStatus:changeHight:)]) {
+        [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:inputBoxDefaultHight];
+    }
+}
 #pragma mark - 键盘通知事件 ============
 -(void)keyboardWillShow:(NSNotification *)notify{
     
@@ -251,6 +258,7 @@
     }
     self.faceImage=nil;
     [self.showSelectedFaceView removeFromSuperview];
+    self.textView.text=@"";
 }
 -(void)moreButPressed:(UIButton *)but{
     but.selected=!but.selected;
