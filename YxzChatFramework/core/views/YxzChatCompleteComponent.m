@@ -11,7 +11,7 @@
 #import "YxzInputBoxView.h"
 #import "YXZConstant.h"
 #import <Masonry/Masonry.h>
-@interface YxzChatCompleteComponent()<YxzInputViewDelegate>
+@interface YxzChatCompleteComponent()<YxzInputViewDelegate,YxzListViewInputDelegate>
 @property(nonatomic,strong)YxzChatListTableView *listTableView;
 @property(nonatomic,strong)YxzInputBoxView *inputboxView;
 @property(nonatomic,assign)CGFloat inputBoxHight;
@@ -37,6 +37,7 @@
 -(void)setupSubViews{
     self.inputBoxHight=inputBoxDefaultHight;
     _listTableView=[[YxzChatListTableView alloc]initWithFrame:CGRectZero];
+    _listTableView.listInputView.delegate=self;
     _listTableView.reloadType=YxzReloadLiveMsgRoom_Time;
     [self addSubview:_listTableView];
     _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectZero];
@@ -46,7 +47,7 @@
     
 }
 -(void)layoutSubViewConstraint{
-    [self.listTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.top.equalTo(self.mas_top);
         if ([self isPortrait]) {
@@ -56,10 +57,10 @@
         }
         make.bottom.equalTo(self.mas_bottom);
     }];
-    [self.inputboxView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.width.equalTo(self.mas_width);
-        make.bottom.equalTo(self.mas_bottom);
+        make.bottom.equalTo(self.mas_bottom).offset(inputBoxDefaultHight);
         make.height.equalTo(@(inputBoxDefaultHight));
     }];
 }
@@ -92,13 +93,44 @@
     
     */
 }
+#pragma mark - YxzListViewInputDelegate =================
+-(void)faceClick{
+    [self.inputboxView clickFace];
+}
+-(void)inputClick{
+    [self.inputboxView clickTextField];
+}
+
 #pragma mark - YxzInputViewDelegate ======================
 -(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus changeHight:(CGFloat)hight{
     self.inputBoxHight=hight;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self layoutSubViewFrame];
-        
-    });
+    if (toStatus==YxzInputStatus_keyborad||toStatus==YxzInputStatus_showFace) {
+        [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.mas_bottom).offset(0);
+            make.height.equalTo(@(hight));
+        }];
+        [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.mas_bottom).offset(-(hight-inputBoxDefaultHight));
+        }];
+        [UIView animateWithDuration:.5 animations:^{
+
+            [self layoutIfNeeded];
+
+        }];
+    }else if (toStatus==YxzInputStatus_nothing){
+        [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.mas_bottom).offset(inputBoxDefaultHight);
+            make.height.equalTo(@(inputBoxDefaultHight));
+        }];
+        [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
+                   make.bottom.equalTo(self.mas_bottom).offset(0);
+               }];
+        [UIView animateWithDuration:.5 animations:^{
+
+            [self layoutIfNeeded];
+
+        }];
+    }
 }
 //发送消息
 -(void)sendText:(NSString *)msgText faceImage:(NSString *)faceImageUrlStr{

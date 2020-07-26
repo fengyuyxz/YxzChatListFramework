@@ -7,15 +7,116 @@
 //
 
 #import "YxzChatListTableView.h"
+#import <Masonry/Masonry.h>
 #import "YxzChatBaseCell.h"
 #import <pthread/pthread.h>
 #import "UIView+Frame.h"
 #import <Masonry/Masonry.h>
 #import "YxzAdjustPositionButton.h"
+#import "YxzGetBundleResouceTool.h"
 // 最小刷新时间间隔
 #define reloadTimeSpan 0.5
 
 #define RoomMsgScroViewTag      1002
+
+
+@interface YxzListViewInputView()
+@property(nonatomic,strong)UIButton *faceBut;
+@property(nonatomic,strong)UIButton *inputBut;
+@property(nonatomic,strong)UILabel *inputTextLabel;
+@property(nonatomic,strong)UIView *containerView;
+@end
+@implementation YxzListViewInputView
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setupView];
+    }
+    return self;
+}
+-(void)setupView{
+    self.backgroundColor=[UIColor whiteColor];
+    [self addSubview:self.containerView];
+    [self.containerView addSubview:self.faceBut];
+    [self.containerView addSubview:self.inputTextLabel];
+    [self.containerView addSubview:self.inputBut];
+    [self layoutSubViewConstraint];
+}
+-(void)layoutSubViewConstraint{
+    [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left).offset(10);
+        make.top.equalTo(self.mas_top).offset(5);
+        make.bottom.equalTo(self.mas_bottom).offset(-5);
+        make.width.equalTo(@(250));
+    }];
+    [self.faceBut mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.containerView.mas_centerY);
+        make.left.equalTo(self.containerView.mas_left).offset(10);
+        make.width.height.equalTo(@(25));
+    }];
+    [self.inputTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.containerView.mas_centerY);
+        make.left.equalTo(self.faceBut.mas_right).offset(10);
+    }];
+    [self.inputBut mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.faceBut.mas_right).offset(10);
+        make.top.equalTo(self.containerView.mas_top);
+        make.bottom.equalTo(self.containerView.mas_bottom);
+        make.right.equalTo(self.containerView.mas_right);
+    }];
+}
+-(void)faceButPressed:(UIButton *)b{
+    if ([self.delegate respondsToSelector:@selector(faceClick)]) {
+        [self.delegate faceClick];
+    }
+}
+-(void)inputbutTap:(UIButton *)but{
+    if ([self.delegate respondsToSelector:@selector(inputClick)]) {
+        [self.delegate inputClick];
+    }
+     
+}
+-(UIView *)containerView{
+    if(!_containerView){
+        _containerView=[[UIView alloc]init];
+        _containerView.backgroundColor=RGBA_OF(0x34343B);
+    }
+    return _containerView;
+}
+-(UILabel *)inputTextLabel{
+    if (!_inputTextLabel) {
+        _inputTextLabel=[[UILabel alloc]init];
+        _inputTextLabel.font=[UIFont systemFontOfSize:12];
+        _inputTextLabel.textAlignment=NSTextAlignmentLeft;
+        _inputTextLabel.textColor=RGBA_OF(0x9a9a9d);
+        _inputTextLabel.text=@"请进行对话";
+    }
+    return _inputTextLabel;;
+}
+-(UIButton *)inputBut{
+    if (!_inputBut) {
+           _inputBut=[UIButton buttonWithType:UIButtonTypeCustom];
+           
+           
+           [_inputBut addTarget:self action:@selector(inputbutTap:) forControlEvents:UIControlEventTouchUpInside];
+       }
+       return _inputBut;
+}
+-(UIButton *)faceBut{
+    if (!_faceBut) {
+        _faceBut=[UIButton buttonWithType:UIButtonTypeCustom];
+        [_faceBut setBackgroundImage:[[YxzGetBundleResouceTool shareInstance]getImageWithImageName:@"faceTool"] forState:UIControlStateNormal];
+        
+        [_faceBut addTarget:self action:@selector(faceButPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _faceBut;
+}
+@end
+
+
+
 
 @interface YxzChatListTableView()<UITableViewDelegate, UITableViewDataSource,MsgCellGesDelegate>{
     pthread_mutex_t _mutex; // 互斥锁
@@ -67,9 +168,23 @@
     self.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.tableView];
+    [self addSubview:self.listInputView];
     [self addSubview:self.moreButton];
+    [self.listInputView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.bottom.equalTo(self.mas_bottom);
+        make.height.equalTo(@(54));
+        make.right.equalTo(self.mas_right);
+    }];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.left.equalTo(self.mas_left);
+        make.right.equalTo(self.mas_right);
+        make.top.equalTo(self.mas_top);
+        make.bottom.equalTo(self.listInputView.mas_top);
+        
+    }];
     [self.moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(0);
+        make.bottom.equalTo(self.tableView.mas_bottom);
         make.left.mas_equalTo(0);
         if (self.moreButton.layoutStyle==AdjustPositionButtonStyleLeftTitleRightImage||self.moreButton.layoutStyle==AdjustPositionButtonStyleLeftImageRightTitle) {
             make.height.mas_equalTo(25);
@@ -89,7 +204,7 @@
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-    self.tableView.frame=self.bounds;
+//    self.tableView.frame=self.bounds;
     
 }
 
@@ -351,6 +466,12 @@
         _tempMsgArray = [NSMutableArray array];
     }
     return _tempMsgArray;
+}
+-(YxzListViewInputView *)listInputView{
+    if (!_listInputView) {
+        _listInputView=[[YxzListViewInputView alloc]init];
+    }
+    return _listInputView;
 }
 -(YxzAdjustPositionButton *)moreButton{
     if (!_moreButton) {

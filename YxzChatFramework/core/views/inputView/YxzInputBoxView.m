@@ -141,7 +141,8 @@
     
     CGFloat hight = inputBoxDefaultHight;
     if (self.inputStatus==YxzInputStatus_keyborad) {
-        
+        self.lastInputStatus=self.inputStatus;
+        self.inputStatus=YxzInputStatus_nothing;
     }else if(self.inputStatus==YxzInputStatus_showFace){
         hight+=self.faceContainerView.faceContainerH;
     }
@@ -206,6 +207,14 @@
            [self.delegate clientInputing:YES];
        }
  
+}
+
+-(void)clickFace{
+    [self faceButPressed:self.faceBut];
+}
+
+-(void)clickTextField{
+    [self.textView becomeFirstResponder];
 }
 
 #pragma mark - but event  ===============================

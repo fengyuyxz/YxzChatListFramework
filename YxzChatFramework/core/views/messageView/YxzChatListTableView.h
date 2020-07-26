@@ -28,10 +28,25 @@ typedef NS_ENUM(NSUInteger, YxzReloadLiveMsgRoomType) {
 - (void)didRemindGifts;
 - (void)didCopyWithText:(NSString *)text;
 @end
+
+
+@protocol YxzListViewInputDelegate <NSObject>
+
+-(void)faceClick;
+-(void)inputClick;
+
+@end
+
+@interface YxzListViewInputView : UIView
+@property(nonatomic,weak)id<YxzListViewInputDelegate> delegate;
+@end
+
 @interface YxzChatListTableView : UIView
 @property (nonatomic, weak) id<RoomMsgListDelegate> delegate;
 @property (nonatomic, assign) YxzReloadLiveMsgRoomType reloadType;
 @property (nonatomic, strong) UITableView *tableView;
+@property(nonatomic,strong)YxzListViewInputView *listInputView;
+
 /** 添加新的消息 */
 - (void)addNewMsg:(YXZMessageModel *)msgModel;
 
