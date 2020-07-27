@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "TXLiteAVSDK_Professional/TXLivePlayer.h"
+//#import "TXLiteAVSDK_Professional/TXLivePlayListener.h"
 
 @interface LivePlayerController : NSObject
 @property(nonatomic,strong,readonly)TXLivePlayer *livePlayer;

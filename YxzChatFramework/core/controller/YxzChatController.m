@@ -18,7 +18,9 @@
 @end
 
 @implementation YxzChatController
-
+-(void)dealloc{
+    [self.livePlayerController stop];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
