@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XQe-fO-N2i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="apr-mU-PvO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,6 +8,51 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="mRs-gL-eUP">
+            <objects>
+                <navigationController id="apr-mU-PvO" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iTj-i4-TSi">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Wow-YU-eRE" kind="relationship" relationship="rootViewController" id="QTH-yd-BLT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JSX-lG-3RN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1628" y="160"/>
+        </scene>
+        <!--FirstVC-->
+        <scene sceneID="V7p-W5-Qg4">
+            <objects>
+                <viewController id="Wow-YU-eRE" customClass="FirstVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TNR-f0-Psu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZp-FZ-kuL">
+                                <rect key="frame" x="176" y="433" width="62" height="30"/>
+                                <state key="normal" title="进入直播"/>
+                                <connections>
+                                    <action selector="pushRoom:" destination="Wow-YU-eRE" eventType="touchUpInside" id="EUy-4t-4Ub"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="WZp-FZ-kuL" firstAttribute="centerX" secondItem="TNR-f0-Psu" secondAttribute="centerX" id="edh-WE-FCd"/>
+                            <constraint firstItem="WZp-FZ-kuL" firstAttribute="centerY" secondItem="TNR-f0-Psu" secondAttribute="centerY" id="nxm-Ns-AaO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="C5O-IK-b0f"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="z9a-js-VC8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cz3-K1-Cca" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-960" y="163"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -31,21 +76,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="138"/>
-        </scene>
-        <!--Yxz Chat Controller-->
-        <scene sceneID="L8v-4A-oLC">
-            <objects>
-                <viewController id="XQe-fO-N2i" customClass="YxzChatController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QEc-A0-cSZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="1ib-34-JVx"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Czg-ZX-sfW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="832" y="138"/>
         </scene>
     </scenes>
     <resources>

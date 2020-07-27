@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YxzLiveVideoContainerView : UIView
-
+@property(nonatomic,strong)UIView *videoContainerView;
 @end
 
 NS_ASSUME_NONNULL_END

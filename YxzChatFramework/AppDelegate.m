@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "YxzLevelManager.h"
+#import "LivePlayerInitializeController.h"
 @interface AppDelegate ()
 
 @end
@@ -18,6 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YxzLevelManager sharedInstance]setup];
+    [LivePlayerInitializeController loadLivePlayLicenceUrlAndLincenceKey];
     return YES;
 }
 

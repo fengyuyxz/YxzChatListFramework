@@ -1,8 +1,8 @@
 //
-//  YxzChatController.h
+//  FirstVC.h
 //  YxzChatFramework
 //
-//  Created by 颜学宙 on 2020/7/23.
+//  Created by 颜学宙 on 2020/7/27.
 //  Copyright © 2020 颜学宙. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YxzChatController : UIViewController
+@interface FirstVC : UIViewController
 
 @end
 
