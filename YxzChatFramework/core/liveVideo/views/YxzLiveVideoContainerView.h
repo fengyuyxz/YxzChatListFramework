@@ -8,19 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "YXZConstant.h"
+#import "YxzLiveVideoSuspensionView.h"
+
 NS_ASSUME_NONNULL_BEGIN
-
-//外层界面
-@protocol LiveRoomOutPageDelegate <NSObject>
-
--(void)zoomRotatStyle:(YxzLiveVideoScreenStyle)style;
-
-@end
 
 
 @interface YxzLiveVideoContainerView : UIView
-@property(nonatomic,weak)id<LiveRoomOutPageDelegate> delegate;
-@property(nonatomic,strong)UIView *videoContainerView;
+
+@property(nonatomic,strong)YxzLiveVideoSuspensionView *videoContainerView;
 @end
 
 NS_ASSUME_NONNULL_END

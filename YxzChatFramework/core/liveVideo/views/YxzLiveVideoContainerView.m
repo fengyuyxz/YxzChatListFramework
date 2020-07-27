@@ -39,7 +39,7 @@
     [self addSubview:self.basicInfoView];
     [self addSubview:self.videoContainerView];
     
-    [self.videoContainerView addSubview:self.zoomRotatBut];
+    
     [self layoutSubViewConstraint];
 }
 -(void)layoutSubViewConstraint{
@@ -49,32 +49,19 @@
         make.bottom.equalTo(self.mas_bottom);
         make.height.equalTo(@(70));
     }];
-    [self.videoContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.videoContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.top.equalTo(self.mas_top);
         make.bottom.equalTo(self.basicInfoView.mas_top);
     }];
-    [self.zoomRotatBut mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.equalTo(@(40));
-        make.right.equalTo(self.videoContainerView.mas_right).offset(-10);
-        make.bottom.equalTo(self.videoContainerView.mas_bottom).offset(-10);
-    }];
+    
 }
 
--(void)zoomRotatButPressed:(UIButton *)but{
-    YxzLiveVideoScreenStyle sytle=YxzLiveVideoScreenStyle_portarait;
-    if (!but.selected) {
-        sytle=YxzLiveVideoScreenStyle_landscape;
-    }
-    if ([self.delegate respondsToSelector:@selector(zoomRotatStyle:)]) {
-        [self.delegate zoomRotatStyle:sytle];
-    }
-    but.selected=!but.selected;
-}
+
 -(UIView *)videoContainerView{
     if (!_videoContainerView) {
-        _videoContainerView=[[UIView alloc]init];
+        _videoContainerView=[[YxzLiveVideoSuspensionView alloc]init];
     }
     return _videoContainerView;
 }
@@ -84,15 +71,5 @@
     }
     return _basicInfoView;
 }
--(UIButton *)zoomRotatBut{
-    if (!_zoomRotatBut) {
-        _zoomRotatBut=[UIButton buttonWithType:UIButtonTypeCustom];
-        [_zoomRotatBut setTitle:@"放大" forState:UIControlStateNormal];
-        [_zoomRotatBut setTitle:@"缩小" forState:UIControlStateSelected];
-        [_zoomRotatBut setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-        [_zoomRotatBut setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
-        [_zoomRotatBut addTarget:self action:@selector(zoomRotatButPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _zoomRotatBut;
-}
+
 @end

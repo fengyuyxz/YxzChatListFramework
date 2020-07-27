@@ -14,21 +14,25 @@
 @interface YxzChatController ()<LiveRoomOutPageDelegate>
 @property(nonatomic,strong)YxzChatCompleteComponent *chatComponentView;
 @property(nonatomic,strong)YxzLiveVideoContainerView *videoContainerView;
-@property(nonatomic,strong)LivePlayerController *livePlayerController;//直播控制器
+
 @end
 
 @implementation YxzChatController
 -(void)dealloc{
-    [self.livePlayerController stop];
+    if (![LivePlayerController sharedInstance].isSuspend) {
+        [[LivePlayerController sharedInstance] stop];
+    }
+    
 }
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
     [self.view addSubview:self.videoContainerView];
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:_chatComponentView];
-    self.videoContainerView.delegate=self;
-    [self.livePlayerController setPlayerViewToContainerView:self.videoContainerView.videoContainerView];
+    self.videoContainerView.videoContainerView.delegate=self;
+    
      [self layoutSubViewConstraint];
     [self startPlayAndJoinChatRoom];
     
@@ -36,7 +40,7 @@
 
 -(void)startPlayAndJoinChatRoom{
     if (self.roomBaseInfo) {
-        [self.livePlayerController play:self.roomBaseInfo.payLiveUrl];
+        [[LivePlayerController sharedInstance] play:self.roomBaseInfo.payLiveUrl];
         
     }
 }
@@ -66,11 +70,11 @@
 }
 - (BOOL)shouldAutorotate
 {
-return NO;
+return YES;
 }
 
 -(void)zoomRotatStyle:(YxzLiveVideoScreenStyle)style{
-    [self.livePlayerController setRotatStyle:style];
+//    [self.livePlayerController setRotatStyle:style];
 }
 
 -(YxzLiveVideoContainerView *)videoContainerView{
@@ -79,10 +83,5 @@ return NO;
     }
     return _videoContainerView;
 }
--(LivePlayerController *)livePlayerController{
-    if (!_livePlayerController) {
-        _livePlayerController=[[LivePlayerController alloc]init];
-    }
-    return _livePlayerController;
-}
+
 @end

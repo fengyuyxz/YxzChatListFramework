@@ -13,6 +13,7 @@
 		1C2CBE1024CE6C510079BFD1 /* LivePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE0F24CE6C510079BFD1 /* LivePlayerController.m */; };
 		1C2CBE6224CE9EC20079BFD1 /* FirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE6124CE9EC20079BFD1 /* FirstVC.m */; };
 		1C2CBE6624CEA03E0079BFD1 /* RoomBaseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE6524CEA03E0079BFD1 /* RoomBaseInfo.m */; };
+		1C2CBEA024CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE9F24CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.m */; };
 		1CB2B44124C940B80056107A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44024C940B80056107A /* AppDelegate.m */; };
 		1CB2B44424C940B80056107A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44324C940B80056107A /* SceneDelegate.m */; };
 		1CB2B44724C940B80056107A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44624C940B80056107A /* ViewController.m */; };
@@ -64,6 +65,8 @@
 		1C2CBE6124CE9EC20079BFD1 /* FirstVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstVC.m; sourceTree = "<group>"; };
 		1C2CBE6424CEA03E0079BFD1 /* RoomBaseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBaseInfo.h; sourceTree = "<group>"; };
 		1C2CBE6524CEA03E0079BFD1 /* RoomBaseInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomBaseInfo.m; sourceTree = "<group>"; };
+		1C2CBE9E24CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzLiveVideoSuspensionView.h; sourceTree = "<group>"; };
+		1C2CBE9F24CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzLiveVideoSuspensionView.m; sourceTree = "<group>"; };
 		1CB2B43C24C940B80056107A /* YxzChatFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YxzChatFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB2B43F24C940B80056107A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1CB2B44024C940B80056107A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -164,6 +167,8 @@
 				1C0D9B0424CD2DE100F4F017 /* YxzLiveVideoContainerView.m */,
 				1C0D9B0724CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.h */,
 				1C0D9B0824CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m */,
+				1C2CBE9E24CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.h */,
+				1C2CBE9F24CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -511,6 +516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CB2B48624C940E00056107A /* YxzSubscriptionCell.m in Sources */,
+				1C2CBEA024CEDEBF0079BFD1 /* YxzLiveVideoSuspensionView.m in Sources */,
 				1CB2B4A924CAD1E00056107A /* YxzFaceContainerView.m in Sources */,
 				1CB2B48524C940E00056107A /* YxzLevelManager.m in Sources */,
 				1C0D9B0924CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m in Sources */,
