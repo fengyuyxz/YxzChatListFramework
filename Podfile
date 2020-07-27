@@ -8,4 +8,5 @@ target 'YxzChatFramework' do
    pod 'SDWebImage', '~> 4.3.3'
    pod 'Masonry', '~> 1.1.0'
    pod 'MJExtension'
+   pod 'TXLiteAVSDK_Professional', :podspec => 'http://pod-1252463788.cosgz.myqcloud.com/liteavsdkspec/TXLiteAVSDK_Professional.podspec'
 end

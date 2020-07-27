@@ -12,6 +12,11 @@
 #import "YxzGetBundleResouceTool.h"
 @interface YxzVideoLooksBasicInfoView()
 
+@property(nonatomic,strong)UIView *playStyleView;
+@property(nonatomic,strong)UILabel *playStyleLabel;
+
+@property(nonatomic,strong)UILabel *roomNameLabel;//播放室名称
+
 @property(nonatomic,strong)UIImageView *playTimesImageView;//播放次数或在线人数imageView
 @property(nonatomic,strong)UIImageView *likeImage;//收藏 或点赞数码
 @property(nonatomic,strong)UIImageView *giveAGiftImageView;//收到礼物
@@ -48,6 +53,28 @@
         make.height.equalTo(topView.mas_height);
         make.left.bottom.right.equalTo(self);
     }];
+    
+    
+    [topView addSubview:self.playStyleView];
+    [self.playStyleView addSubview:self.playStyleLabel];
+    [topView addSubview:self.roomNameLabel];
+    [self.playStyleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(topView.mas_centerY);
+        make.left.equalTo(topView.mas_left).offset(10);
+    }];
+    [self.playStyleLabel setContentHuggingPriority:256 forAxis:UILayoutConstraintAxisHorizontal];
+    [self.playStyleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.playStyleView.mas_left).offset(5);
+        make.right.equalTo(self.playStyleView.mas_right).offset(-5);
+        make.top.equalTo(self.playStyleView.mas_top).offset(2);
+        make.bottom.equalTo(self.playStyleView.mas_bottom).offset(-2);
+    }];
+    [self.roomNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(topView.mas_centerY);
+        make.left.equalTo(self.playStyleView.mas_right).offset(10);
+        make.right.equalTo(topView.mas_right).offset(-70);
+    }
+     ];
     [bottomView addSubview:self.playTimesImageView];
     [bottomView addSubview:self.playTimesLabel];
     [bottomView addSubview:self.likeImage];
@@ -134,5 +161,30 @@
         _giveAGiftImageView.image=[[YxzGetBundleResouceTool shareInstance]getImageWithImageName:@"icon_rank@3x.png"];
     }
     return _giveAGiftImageView;
+}
+-(UILabel *)playStyleLabel{
+    if (!_playStyleLabel) {
+        _playStyleLabel=[self generateLabel];
+        _playStyleLabel.textColor=RGBA_OF(0XEB5A58);
+        _playStyleLabel.text=@"· Live";
+    }
+    return _playStyleLabel;
+}
+-(UIView *)playStyleView{
+    if (!_playStyleView) {
+        _playStyleView=[[UIView alloc]init];
+        _playStyleView.backgroundColor=[UIColor blackColor];
+    }
+    return _playStyleView;
+}
+-(UILabel *)roomNameLabel{
+    if (!_roomNameLabel) {
+        _roomNameLabel=[[UILabel alloc]init];
+        _roomNameLabel.textColor=[UIColor whiteColor];
+        _roomNameLabel.font=[UIFont systemFontOfSize:15];
+        _roomNameLabel.text=@"你的感觉";
+    }
+    return _roomNameLabel;
+    
 }
 @end
