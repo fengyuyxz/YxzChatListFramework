@@ -8,11 +8,24 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "YXZConstant.h"
 #import "TXLiteAVSDK_Professional/TXLivePlayer.h"
 //#import "TXLiteAVSDK_Professional/TXLivePlayListener.h"
 
 @interface LivePlayerController : NSObject
+
+
+
 @property(nonatomic,strong,readonly)TXLivePlayer *livePlayer;
+
+
++ (instancetype)sharedInstance;
++ (void)destorySharedInstance;
+
+
+
+-(void)setRotatStyle:(YxzLiveVideoScreenStyle)style;
+
 -(void)setPlayerViewToContainerView:(UIView *)containerView;
 -(void)play:(NSString *)playUrlStr;
 -(void)stop;

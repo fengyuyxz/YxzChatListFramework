@@ -7,10 +7,40 @@
 //
 
 #import "LivePlayerController.h"
+#import <pthread.h>
 @interface LivePlayerController()<TXLivePlayListener>
 
 @end
 @implementation LivePlayerController
+static LivePlayerController *sharedInstance = nil;
+static pthread_mutex_t sharedInstanceLock;
++ (void)load {
+    pthread_mutex_init(&sharedInstanceLock, NULL);
+}
++ (instancetype)sharedInstance {
+    if (sharedInstance == nil) {
+        pthread_mutex_lock(&sharedInstanceLock);
+        if (sharedInstance == nil) {
+            
+            sharedInstance = [[LivePlayerController alloc] init];
+            NSLog(@"sharedInstance<%p> is created", sharedInstance);
+        }
+        pthread_mutex_unlock(&sharedInstanceLock);
+    }
+    return sharedInstance;
+}
+
++ (void)destorySharedInstance {
+    pthread_mutex_lock(&sharedInstanceLock);
+    if (sharedInstance) {
+        
+        NSLog(@"sharedInstance<%p> is destroyed", sharedInstance);
+        sharedInstance = nil;
+    }
+    pthread_mutex_unlock(&sharedInstanceLock);
+}
+
+
 - (instancetype)init
 {
     self = [super init];
@@ -23,6 +53,15 @@
 -(void)setPlayerViewToContainerView:(UIView *)containerView{
     [self.livePlayer setupVideoWidget:CGRectMake(0, 0, 0, 0) containView:containerView insertIndex:0];
 }
+-(void)setRotatStyle:(YxzLiveVideoScreenStyle)style{
+    TX_Enum_Type_HomeOrientation orentation=HOME_ORIENTATION_DOWN;
+    if (style==YxzLiveVideoScreenStyle_portarait) {
+        orentation=HOME_ORIENTATION_DOWN;
+    }else{
+        orentation=HOME_ORIENTATION_RIGHT;
+    }
+    [self.livePlayer setRenderRotation:orentation];
+}
 -(void)play:(NSString *)playUrlStr{
     [self.livePlayer startPlay:playUrlStr type:PLAY_TYPE_VOD_MP4];
 }
@@ -31,6 +70,7 @@
         [self.livePlayer stopPlay];
     }
     [self.livePlayer removeVideoWidget];
+//    _livePlayer=nil;
 }
 /**
  * 直播事件通知

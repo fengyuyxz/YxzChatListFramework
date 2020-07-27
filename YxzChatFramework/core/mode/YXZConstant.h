@@ -21,6 +21,13 @@ typedef NS_ENUM(NSUInteger, YxzMsgType) {
     YxzMsgType_Subscription,//关注订阅
     YxzMsgType_Announcement,   // 系统公告信息
 };
+
+typedef NS_ENUM(NSUInteger, YxzLiveVideoScreenStyle) {
+    YxzLiveVideoScreenStyle_portarait=0,
+    YxzLiveVideoScreenStyle_landscape,
+};
+
+
 #define inputBoxDefaultHight 50
 
 #define cellLineSpeing  3

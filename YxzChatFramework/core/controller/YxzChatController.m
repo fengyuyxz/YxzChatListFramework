@@ -11,7 +11,7 @@
 #import "YxzLiveVideoContainerView.h"
 #import "LivePlayerController.h"
 #import <Masonry/Masonry.h>
-@interface YxzChatController ()
+@interface YxzChatController ()<LiveRoomOutPageDelegate>
 @property(nonatomic,strong)YxzChatCompleteComponent *chatComponentView;
 @property(nonatomic,strong)YxzLiveVideoContainerView *videoContainerView;
 @property(nonatomic,strong)LivePlayerController *livePlayerController;//直播控制器
@@ -27,14 +27,17 @@
     [self.view addSubview:self.videoContainerView];
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:_chatComponentView];
+    self.videoContainerView.delegate=self;
     [self.livePlayerController setPlayerViewToContainerView:self.videoContainerView.videoContainerView];
      [self layoutSubViewConstraint];
     [self startPlayAndJoinChatRoom];
+    
 }
 
 -(void)startPlayAndJoinChatRoom{
     if (self.roomBaseInfo) {
         [self.livePlayerController play:self.roomBaseInfo.payLiveUrl];
+        
     }
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -63,8 +66,13 @@
 }
 - (BOOL)shouldAutorotate
 {
-return YES;
+return NO;
 }
+
+-(void)zoomRotatStyle:(YxzLiveVideoScreenStyle)style{
+    [self.livePlayerController setRotatStyle:style];
+}
+
 -(YxzLiveVideoContainerView *)videoContainerView{
     if (!_videoContainerView) {
         _videoContainerView=[[YxzLiveVideoContainerView alloc]init];
