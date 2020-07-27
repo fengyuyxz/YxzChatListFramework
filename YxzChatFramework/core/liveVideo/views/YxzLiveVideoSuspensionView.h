@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RoomBaseInfo.h"
 #import "YXZConstant.h"
+#import "YxzChatController.h"
 NS_ASSUME_NONNULL_BEGIN
 //外层界面
 @protocol LiveRoomOutPageDelegate <NSObject>
@@ -19,8 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface YxzLiveVideoSuspensionView : UIView
+@property(nonatomic,weak)UIViewController *parentController;
+@property(nonatomic,strong)YxzChatController *chatController;
 @property(nonatomic,weak)id<LiveRoomOutPageDelegate> delegate;
-@property(nonatomic,strong)RoomBaseInfo *roomBaseInfo;
+
+-(void)showSuspension;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -28,6 +28,9 @@
     
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
+    
+    
+    
     [self.view addSubview:self.videoContainerView];
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:_chatComponentView];
@@ -75,6 +78,13 @@ return YES;
 
 -(void)zoomRotatStyle:(YxzLiveVideoScreenStyle)style{
 //    [self.livePlayerController setRotatStyle:style];
+    self.videoContainerView.videoContainerView.chatController=self;
+    self.videoContainerView.videoContainerView.parentController=self.parentController;
+    [LivePlayerController sharedInstance].isSuspend=YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.videoContainerView.videoContainerView showSuspension];
+    });
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(YxzLiveVideoContainerView *)videoContainerView{

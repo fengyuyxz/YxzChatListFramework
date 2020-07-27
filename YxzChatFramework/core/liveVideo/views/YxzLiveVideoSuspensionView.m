@@ -13,6 +13,7 @@
 #define supsensHight 120
 @interface YxzLiveVideoSuspensionView()
 @property(nonatomic,strong)UIPanGestureRecognizer* panGestureRecognizer;
+@property(nonatomic,strong)UIButton *fullButton;
 @property(nonatomic,strong)UIButton *zoomRotatBut;//最大会 旋转
 @end
 @implementation YxzLiveVideoSuspensionView
@@ -26,11 +27,16 @@
     return self;
 }
 -(void)setupView{
+    [self addSubview:self.fullButton];
     [self addSubview:self.zoomRotatBut];
+    
     [self.zoomRotatBut mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.equalTo(@(40));
         make.right.equalTo(self.mas_right).offset(-10);
         make.bottom.equalTo(self.mas_bottom).offset(-10);
+    }];
+    [self.fullButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self);
     }];
     [[LivePlayerController sharedInstance] setPlayerViewToContainerView:self];
 }
@@ -127,7 +133,15 @@
     paramSender.view.center = center;
     [paramSender setTranslation:CGPointMake(0, 0) inView:[[UIApplication sharedApplication] keyWindow]];
 }
+-(void)fullButtonPressed:(UIButton *)but{
+    [LivePlayerController sharedInstance].isSuspend=NO;
+    [self removeFromSuperview];
+    if (self.parentController&&self.chatController) {
+        [self.parentController presentViewController:self.chatController animated:YES completion:nil];
+    }
+}
 -(void)zoomRotatButPressed:(UIButton *)but{
+    self.fullButton.hidden=YES;
     YxzLiveVideoScreenStyle sytle=YxzLiveVideoScreenStyle_portarait;
     if (!but.selected) {
         sytle=YxzLiveVideoScreenStyle_landscape;
@@ -145,6 +159,7 @@
 }
 -(void)showSuspension{
     [self adPanGuest];
+    self.fullButton.hidden=NO;
     CGRect rect=[UIScreen mainScreen].bounds;
     self.frame=CGRectMake(CGRectGetWidth(rect)-(supsensHight+10), CGRectGetHeight(rect)-supsensWidt-60, supsensWidt, supsensHight);
     
@@ -172,5 +187,13 @@
         [_zoomRotatBut addTarget:self action:@selector(zoomRotatButPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _zoomRotatBut;
+}
+-(UIButton *)fullButton{
+    if (!_fullButton) {
+        _fullButton=[UIButton buttonWithType:UIButtonTypeCustom];
+       
+        [_fullButton addTarget:self action:@selector(fullButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _fullButton;
 }
 @end

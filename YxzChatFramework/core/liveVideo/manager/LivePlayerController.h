@@ -11,6 +11,7 @@
 #import "YXZConstant.h"
 #import "TXLiteAVSDK_Professional/TXLivePlayer.h"
 #import "YxzChatController.h"
+#import "RoomBaseInfo.h"
 //#import "TXLiteAVSDK_Professional/TXLivePlayListener.h"
 
 @interface LivePlayerController : NSObject
@@ -20,7 +21,7 @@
 @property (nonatomic, assign) BOOL isFull;
 
 @property(nonatomic,strong,readonly)TXLivePlayer *livePlayer;
-
+@property(nonatomic,strong)RoomBaseInfo *roomBaseInfo;
 
 
 + (instancetype)sharedInstance;
