@@ -10,18 +10,18 @@
 #import "RoomBaseInfo.h"
 #import "YXZConstant.h"
 #import "YxzChatController.h"
+@class YxzLiveVideoSuspensionView;
 NS_ASSUME_NONNULL_BEGIN
 //外层界面
 @protocol LiveRoomOutPageDelegate <NSObject>
 
 -(void)zoomRotatStyle:(YxzLiveVideoScreenStyle)style;
-
+-(void)isSuspensionWindow:(YxzLiveVideoSuspensionView *)view isSuspens:(BOOL)isSuspens;
 @end
 
 
 @interface YxzLiveVideoSuspensionView : UIView
 @property(nonatomic,weak)UIViewController *parentController;
-@property(nonatomic,strong)YxzChatController *chatController;
 @property(nonatomic,weak)id<LiveRoomOutPageDelegate> delegate;
 
 -(void)showSuspension;

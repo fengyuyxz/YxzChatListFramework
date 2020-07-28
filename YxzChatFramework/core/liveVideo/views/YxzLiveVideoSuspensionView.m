@@ -29,6 +29,10 @@
     }
     return self;
 }
+-(void)dealloc{
+    [[LivePlayerController sharedInstance] removeObserver:self forKeyPath:@"isSuspend"];
+}
+static const NSString * playIsSuspendConext;
 -(void)setupView{
     [self addSubview:self.fullButton];
     [self addSubview:self.zoomRotatBut];
@@ -47,6 +51,20 @@
         make.width.height.equalTo(@(30));
     }];
     [[LivePlayerController sharedInstance] setPlayerViewToContainerView:self];
+    [[LivePlayerController sharedInstance] addObserver:self forKeyPath:@"isSuspend" options:NSKeyValueObservingOptionNew context:&playIsSuspendConext];
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    if (context==&playIsSuspendConext) {
+        if ([LivePlayerController sharedInstance].isSuspend) {
+            self.minBut.hidden=YES;
+            self.zoomRotatBut.hidden=YES;
+            self.fullButton.hidden=NO;
+        }else{
+            self.minBut.hidden=NO;
+            self.zoomRotatBut.hidden=NO;
+            self.fullButton.hidden=YES;
+        }
+    }
 }
 -(void)handlePanGestures:(UIPanGestureRecognizer *)paramSender{
     UIWindow *window=[[UIApplication sharedApplication] keyWindow];
@@ -142,14 +160,12 @@
     [paramSender setTranslation:CGPointMake(0, 0) inView:[[UIApplication sharedApplication] keyWindow]];
 }
 -(void)minButtonPressed:(UIButton *)but{
+    [LivePlayerController sharedInstance].isSuspend=YES;
     
 }
 -(void)fullButtonPressed:(UIButton *)but{
     [LivePlayerController sharedInstance].isSuspend=NO;
-    [self removeFromSuperview];
-    if (self.parentController&&self.chatController) {
-        [self.parentController presentViewController:self.chatController animated:YES completion:nil];
-    }
+   
 }
 -(void)zoomRotatButPressed:(UIButton *)but{
     self.fullButton.hidden=YES;
@@ -202,7 +218,7 @@
 -(UIButton *)fullButton{
     if (!_fullButton) {
         _fullButton=[UIButton buttonWithType:UIButtonTypeCustom];
-       
+        _fullButton.hidden=YES;
         [_fullButton addTarget:self action:@selector(fullButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _fullButton;

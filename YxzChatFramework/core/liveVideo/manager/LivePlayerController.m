@@ -17,6 +17,15 @@ static pthread_mutex_t sharedInstanceLock;
 + (void)load {
     pthread_mutex_init(&sharedInstanceLock, NULL);
 }
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.isSuspend=NO;
+
+    }
+    return self;
+}
 + (instancetype)sharedInstance {
     if (sharedInstance == nil) {
         pthread_mutex_lock(&sharedInstanceLock);
