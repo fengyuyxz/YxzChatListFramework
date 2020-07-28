@@ -8,6 +8,7 @@
 
 #import "YxzLiveVideoSuspensionView.h"
 #import "LivePlayerController.h"
+#import "YxzGetBundleResouceTool.h"
 #import <Masonry/Masonry.h>
 #define supsensWidt 150
 #define supsensHight 120
@@ -15,6 +16,8 @@
 @property(nonatomic,strong)UIPanGestureRecognizer* panGestureRecognizer;
 @property(nonatomic,strong)UIButton *fullButton;
 @property(nonatomic,strong)UIButton *zoomRotatBut;//最大会 旋转
+
+@property(nonatomic,strong)UIButton *minBut;
 @end
 @implementation YxzLiveVideoSuspensionView
 
@@ -29,7 +32,7 @@
 -(void)setupView{
     [self addSubview:self.fullButton];
     [self addSubview:self.zoomRotatBut];
-    
+    [self addSubview:self.minBut];
     [self.zoomRotatBut mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.equalTo(@(40));
         make.right.equalTo(self.mas_right).offset(-10);
@@ -37,6 +40,11 @@
     }];
     [self.fullButton mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.equalTo(self);
+    }];
+    [self.minBut mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_right).offset(-15);
+        make.top.equalTo(self.mas_top).offset(40);
+        make.width.height.equalTo(@(30));
     }];
     [[LivePlayerController sharedInstance] setPlayerViewToContainerView:self];
 }
@@ -133,6 +141,9 @@
     paramSender.view.center = center;
     [paramSender setTranslation:CGPointMake(0, 0) inView:[[UIApplication sharedApplication] keyWindow]];
 }
+-(void)minButtonPressed:(UIButton *)but{
+    
+}
 -(void)fullButtonPressed:(UIButton *)but{
     [LivePlayerController sharedInstance].isSuspend=NO;
     [self removeFromSuperview];
@@ -195,5 +206,13 @@
         [_fullButton addTarget:self action:@selector(fullButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _fullButton;
+}
+-(UIButton *)minBut{
+    if (!_minBut) {
+        _minBut=[UIButton buttonWithType:UIButtonTypeCustom];
+        [_minBut setImage:[[YxzGetBundleResouceTool shareInstance]getImageWithImageName:@"icon_del"] forState:UIControlStateNormal];
+        [_minBut addTarget:self action:@selector(minButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _minBut;
 }
 @end
