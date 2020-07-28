@@ -26,8 +26,9 @@
     YxzChatController *vc=[[YxzChatController alloc]init];
     vc.modalPresentationStyle=UIModalPresentationFullScreen;
     vc.roomBaseInfo=info;
-    vc.parentController=self;
-    [self presentViewController:vc animated:YES completion:nil];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+//    [self presentViewController:vc animated:YES completion:nil];
 }
 
 /*

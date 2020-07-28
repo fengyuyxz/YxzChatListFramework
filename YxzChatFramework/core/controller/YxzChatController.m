@@ -8,21 +8,51 @@
 
 #import "YxzChatController.h"
 #import "YxzChatCompleteComponent.h"
-#import "YxzLiveVideoContainerView.h"
-#import "LivePlayerController.h"
+#import "YxzVideoLooksBasicInfoView.h"
+#import <SuperPlayer/SuperPlayer.h>
 #import <Masonry/Masonry.h>
-@interface YxzChatController ()<LiveRoomOutPageDelegate>
-@property(nonatomic,strong)YxzChatCompleteComponent *chatComponentView;
-@property(nonatomic,strong)YxzLiveVideoContainerView *videoContainerView;
 
+
+
+@interface YxzChatController ()<SuperPlayerDelegate>
+
+@property (strong, nonatomic) SuperPlayerView *playerView;
+
+@property(nonatomic,strong)YxzChatCompleteComponent *chatComponentView;
+@property(nonatomic,strong)UIView *videoContainerView;
+@property(nonatomic,strong)YxzVideoLooksBasicInfoView *basInfoView;
 @end
 
 @implementation YxzChatController
--(void)dealloc{
-    if (![LivePlayerController sharedInstance].isSuspend) {
-        [[LivePlayerController sharedInstance] stop];
+- (instancetype)init {
+    if (SuperPlayerWindowShared.backController) {
+        [SuperPlayerWindowShared hide];
+        YxzChatController *playerViewCtrl = (YxzChatController *)SuperPlayerWindowShared.backController;
+//        playerViewCtrl.danmakuView.clipsToBounds = NO;
+        return playerViewCtrl;
+    } else {
+        if (self = [super init]) {
+            
+        }
+        return self;
     }
+}
+
+-(void)dealloc{
+   NSLog(@"%@释放了",self.class);
     
+}
+- (void)willMoveToParentViewController:(nullable UIViewController *)parent
+{
+    
+}
+- (void)didMoveToParentViewController:(nullable UIViewController *)parent
+{
+    if (parent == nil) {
+        if (!SuperPlayerWindowShared.isShowing) {
+            [self.playerView resetPlayer];
+        }
+    }
 }
 - (void)viewDidLoad {
     
@@ -30,12 +60,11 @@
     self.view.backgroundColor=[UIColor blackColor];
     
     
-    
+    [self.view addSubview:self.basInfoView];
     [self.view addSubview:self.videoContainerView];
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:_chatComponentView];
-    self.videoContainerView.videoContainerView.delegate=self;
-    
+    self.playerView.fatherView = self.videoContainerView;
      [self layoutSubViewConstraint];
     [self startPlayAndJoinChatRoom];
     
@@ -43,7 +72,9 @@
 
 -(void)startPlayAndJoinChatRoom{
     if (self.roomBaseInfo) {
-        [[LivePlayerController sharedInstance] play:self.roomBaseInfo.payLiveUrl];
+        SuperPlayerModel *playerModel = [[SuperPlayerModel alloc] init];
+        playerModel.videoURL         = self.roomBaseInfo.payLiveUrl;
+        [self.playerView playWithModel:playerModel];
         
     }
 }
@@ -58,6 +89,12 @@
     }
 }
 -(void)layoutSubViewConstraint{
+    [self.basInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.equalTo(@(70));
+        make.top.equalTo(self.videoContainerView.mas_bottom);
+    }];
     [self.videoContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
         make.top.equalTo(self.view.mas_top);
@@ -75,16 +112,61 @@
 {
 return YES;
 }
-
--(void)zoomRotatStyle:(YxzLiveVideoScreenStyle)style{
-
+#pragma mark - super Player delegate =====================
+/// 返回事件
+- (void)superPlayerBackAction:(SuperPlayerView *)player{
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    // 是竖屏时候响应关
+    if (orientation == UIInterfaceOrientationPortrait &&
+        (self.playerView.state == StatePlaying)) {
+//        self.danmakuView.clipsToBounds = YES;
+        [SuperPlayerWindowShared setSuperPlayer:self.playerView];
+        [SuperPlayerWindowShared show];
+        SuperPlayerWindowShared.backController = self;
+    } else {
+        [self.playerView resetPlayer];  //非常重要
+        SuperPlayerWindowShared.backController = nil;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
--(YxzLiveVideoContainerView *)videoContainerView{
+/// 全屏改变通知
+- (void)superPlayerFullScreenChanged:(SuperPlayerView *)player{
+    
+}
+/// 播放开始通知
+- (void)superPlayerDidStart:(SuperPlayerView *)player{
+    
+}
+/// 播放结束通知
+- (void)superPlayerDidEnd:(SuperPlayerView *)player{
+    
+}
+/// 播放错误通知
+- (void)superPlayerError:(SuperPlayerView *)player errCode:(int)code errMessage:(NSString *)why{
+    
+}
+-(UIView *)videoContainerView{
     if (!_videoContainerView) {
-        _videoContainerView=[[YxzLiveVideoContainerView alloc]init];
+        _videoContainerView=[[UIView alloc]init];
     }
     return _videoContainerView;
 }
-
+-(YxzVideoLooksBasicInfoView *)basInfoView{
+    if (!_basInfoView) {
+        _basInfoView=[[YxzVideoLooksBasicInfoView alloc]init];
+    }
+    return _basInfoView;
+}
+- (SuperPlayerView *)playerView {
+    if (!_playerView) {
+        _playerView = [[SuperPlayerView alloc] init];
+        
+        // 设置代理
+        _playerView.delegate = self;
+        // demo的时移域名，请根据您项目实际情况修改这里
+//        _playerView.playerConfig.playShiftDomain = @"liteavapp.timeshift.qcloud.com";
+        
+    }
+    return _playerView;
+}
 @end

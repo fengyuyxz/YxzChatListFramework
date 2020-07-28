@@ -7,14 +7,14 @@
 //
 
 #import "LivePlayerInitializeController.h"
-#import "TXLiteAVSDK_Professional/TXLiveBase.h"
+
 @implementation LivePlayerInitializeController
 +(void)loadLivePlayLicenceUrlAndLincenceKey{
     NSString * const licenceURL = @"http://license.vod2.myqcloud.com/license/v1/ad0ddc148ad3cd69ba9cc90a8d5d9df0/TXLiveSDK.licence";
     NSString * const licenceKey = @"5161cd365ccbf389aaade07bc99d2507";
 
     //TXLiveBase 位于 "TXLiveBase.h" 头文件中
-    [TXLiveBase setLicenceURL:licenceURL key:licenceKey];
-    NSLog(@"SDK Version = %@", [TXLiveBase getSDKVersionStr]);
+//    [TXLiveBase setLicenceURL:licenceURL key:licenceKey];
+    
 }
 @end

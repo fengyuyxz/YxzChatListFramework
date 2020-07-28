@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LivePlayerController.h"
+
 #import "RoomBaseInfo.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YxzChatController : UIViewController
-@property(nonatomic,weak)UIViewController *parentController;
+
 @property(nonatomic,strong)RoomBaseInfo *roomBaseInfo;
 @end
 
