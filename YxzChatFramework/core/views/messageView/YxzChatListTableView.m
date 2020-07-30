@@ -448,9 +448,10 @@
        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.scrollEnabled=YES;
         //_tableView.estimatedRowHeight = 40;
         _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive|UIScrollViewKeyboardDismissModeOnDrag;
-        _tableView.bounces = NO;
+        _tableView.bounces = YES;
         _tableView.tableFooterView = [UIView new];
         _tableView.sectionFooterHeight = 0;
         _tableView.sectionHeaderHeight = 0;

@@ -63,7 +63,7 @@
     }];
     [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
-        make.width.equalTo(self.mas_width);
+        make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom).offset(inputBoxDefaultHight);
         make.height.equalTo(@(inputBoxDefaultHight));
     }];

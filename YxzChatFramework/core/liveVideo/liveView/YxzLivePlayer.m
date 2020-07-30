@@ -215,9 +215,7 @@
   
     if (YxzSuperPlayerWindowShared.isShowing)
         return NO;
-    if (touch.view!=self) {
-        return NO;
-    }
+    
     return YES;
 }
 #pragma mark - UIKit Notifications

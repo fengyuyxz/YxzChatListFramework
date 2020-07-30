@@ -81,16 +81,32 @@
 }
 #pragma mark - 旋转相关 方法
 // 设备支持方向
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationPortrait|UIInterfaceOrientationLandscapeLeft;
-}
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+//    return UIInterfaceOrientationPortrait|UIInterfaceOrientationLandscapeLeft;
+//}
 // 默认方向
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait; // 或者其他值 balabala~
-}
+//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+//    return UIInterfaceOrientationPortrait; // 或者其他值 balabala~
+//}
 - (BOOL)shouldAutorotate {
     return YES;
 }
+
+
+#pragma mark 强制横屏(针对present方式)
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return (UIInterfaceOrientationLandscapeRight | UIInterfaceOrientationLandscapeLeft);
+}
+ 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft;
+}
+ 
+//必须有
+-(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
+    return UIInterfaceOrientationLandscapeRight;
+}
+
 - (void)setInterfaceOrientation:(UIDeviceOrientation)orientation {
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:orientation] forKey:@"orientation"];
