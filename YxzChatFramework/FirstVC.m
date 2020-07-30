@@ -9,6 +9,7 @@
 #import "FirstVC.h"
 #import "RoomBaseInfo.h"
 #import "YxzChatController.h"
+#import "LiveRoomViewController.h"
 @interface FirstVC ()
 
 @end
@@ -26,7 +27,10 @@
     YxzChatController *vc=[[YxzChatController alloc]init];
     vc.modalPresentationStyle=UIModalPresentationFullScreen;
     vc.roomBaseInfo=info;
-    
+//    LiveRoomViewController *vc=[[LiveRoomViewController alloc]init];
+//    vc.modalPresentationStyle=UIModalPresentationFullScreen;
+//    vc.roomBaseInfo=info;
+//    
     [self.navigationController pushViewController:vc animated:YES];
 //    [self presentViewController:vc animated:YES completion:nil];
 }

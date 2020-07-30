@@ -113,6 +113,17 @@
 
 
 #pragma mark 强制横屏(针对present方式)
+//支持的方向
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return [SupportedInterfaceOrientations sharedInstance].orientationMask;
+}
+
+//是否可以旋转
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
 
 
 -(void)setupSubView{
@@ -274,11 +285,15 @@
                 
                 NSNumber *orientationValue = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
                 [[UIDevice currentDevice] setValue:orientationValue forKey:@"orientation"];
+                [UIViewController attemptRotationToDeviceOrientation];
             }else{
+                
+                [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIInterfaceOrientationPortrait] forKey:@"orientation"];
                 [SupportedInterfaceOrientations sharedInstance].orientationMask = UIInterfaceOrientationMaskPortrait;
                 
                 NSNumber *orientationValue = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
                 [[UIDevice currentDevice] setValue:orientationValue forKey:@"orientation"];
+                [UIViewController attemptRotationToDeviceOrientation];
 //                [self setInterfaceOrientation:UIDeviceOrientationPortrait];
 //                [self setInterfaceOrientation2:UIInterfaceOrientationPortrait];
                 /*
