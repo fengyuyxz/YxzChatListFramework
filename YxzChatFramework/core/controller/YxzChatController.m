@@ -15,7 +15,7 @@
 
 #import "YxzLivePlayer.h"
 
-@interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate>
+@interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate>
 
 
 @property(nonatomic,strong)UIView *containerView;//容器 用于做旋转
@@ -23,6 +23,14 @@
 @property(nonatomic,strong)UIView *videoContainerView;
 @property(nonatomic,strong)YxzVideoLooksBasicInfoView *basInfoView;
 @property(nonatomic,strong)YxzLivePlayer *livePlayer;
+
+
+/** 单击 */
+@property (nonatomic, strong) UITapGestureRecognizer *singleTap;
+/** 双击 */
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
+
+
 @end
 
 @implementation YxzChatController
@@ -68,7 +76,27 @@
     [self startPlayAndJoinChatRoom];
     
 }
+-(void)addGesture{
+    // 单击
+       self.singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleTapAction:)];
+       self.singleTap.delegate                = self;
+       self.singleTap.numberOfTouchesRequired = 1; //手指数
+       self.singleTap.numberOfTapsRequired    = 1;
+       [self.chatComponentView addGestureRecognizer:self.singleTap];
+       
+       // 双击(播放/暂停)
+       self.doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTapAction:)];
+       self.doubleTap.delegate                = self;
+       self.doubleTap.numberOfTouchesRequired = 1; //手指数
+       self.doubleTap.numberOfTapsRequired    = 2;
+     [self.chatComponentView addGestureRecognizer:self.doubleTap];
 
+       // 解决点击当前view时候响应其他控件事件
+       [self.singleTap setDelaysTouchesBegan:YES];
+       [self.doubleTap setDelaysTouchesBegan:YES];
+       // 双击失败响应单击事件
+       [self.singleTap requireGestureRecognizerToFail:self.doubleTap];
+}
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 
@@ -108,6 +136,7 @@
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
     [self.containerView addSubview:_chatComponentView];
     self.livePlayer.fatherView=self.videoContainerView;
+    [self addGesture];
 }
 -(void)startPlayAndJoinChatRoom{
     if (self.roomBaseInfo) {
@@ -154,7 +183,83 @@
             make.right.equalTo(self.containerView.mas_right);
             make.top.equalTo(self.containerView.mas_top).offset(90);
         }];
+    }else{
+        [self.videoContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.containerView.mas_left);
+            make.top.equalTo(self.containerView.mas_top);
+            make.right.equalTo(self.containerView.mas_right);
+            make.height.equalTo(@(320));
+        }];
+        [self.chatComponentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.containerView.mas_left);
+            make.top.equalTo(self.videoContainerView.mas_bottom);
+                   make.right.equalTo(self.containerView.mas_right);
+            make.bottom.equalTo(self.containerView.mas_bottom);
+        }];
     }
+}
+/**
+ *   轻拍方法
+ *
+ *  @param gesture UITapGestureRecognizer
+ */
+- (void)singleTapAction:(UIGestureRecognizer *)gesture {
+    if (self.livePlayer.isFullScreen) {
+        if (gesture.state == UIGestureRecognizerStateRecognized) {
+           
+            
+            
+          
+            if (YxzSuperPlayerWindowShared.isShowing)
+                return;
+            
+            if (self.livePlayer.controlView.hidden) {
+                [[self.livePlayer.controlView fadeShow] fadeOut:5];
+            } else {
+                [self.livePlayer.controlView fadeOut:0.2];
+            }
+        }
+    }
+    
+}
+
+/**
+ *  双击播放/暂停
+ *
+ *  @param gesture UITapGestureRecognizer
+ */
+- (void)doubleTapAction:(UIGestureRecognizer *)gesture {
+    if (self.livePlayer.isFullScreen) {
+        if (self.livePlayer.playDidEnd) { return;  }
+           // 显示控制层
+        [self.livePlayer.controlView fadeShow];
+        if (self.livePlayer.isPauseByUser) {
+            [self.livePlayer resume];
+           } else {
+               [self.livePlayer pause];
+           }
+    }
+   
+}
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    
+
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        if (self.livePlayer.playDidEnd){
+            return NO;
+        }
+    }
+
+    if ([touch.view isKindOfClass:[UISlider class]] || [touch.view.superview isKindOfClass:[UISlider class]]) {
+        return NO;
+    }
+  
+    if (YxzSuperPlayerWindowShared.isShowing)
+        return NO;
+    
+    return YES;
 }
 #pragma mark - 更多信息  小窗播放 delegate =============
 -(void)suspensionClick{

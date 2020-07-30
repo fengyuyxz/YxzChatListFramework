@@ -19,6 +19,9 @@
 @property(nonatomic,strong)UIButton *addMoreFaceBut;
 @property(nonatomic,strong)UICollectionView *collectionView;
 @property(nonatomic,strong)NSMutableArray<YxzFaceItem *> *faceDataSouce;
+
+
+
 @end
 @implementation YxzFaceContainerView
 

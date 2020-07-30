@@ -18,6 +18,7 @@
 @property(nonatomic,assign)CGFloat defaultINputBoxHight;
 
 @property(nonatomic,copy)HiddenKeyboardAndFaceViewCompletion hiddenKyboardFaceBlock;
+
 @end
 @implementation YxzChatCompleteComponent
 - (instancetype)init
@@ -51,15 +52,12 @@
     [self layoutSubViewConstraint];
     
 }
+
 -(void)layoutSubViewConstraint{
     [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.top.equalTo(self.mas_top);
-        if ([self isPortrait]) {
-            make.right.equalTo(self.mas_right);
-        }else{
-            make.width.equalTo(@(MsgTableViewWidth));
-        }
+        make.width.equalTo(@(MsgTableViewWidth));
         make.bottom.equalTo(self.mas_bottom);
     }];
     [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -86,18 +84,12 @@
 //    [self layoutSubViewFrame];
     
 }
--(void)layoutSubViewFrame{
-    /*
-    CGRect frame =CGRectMake(0, CGRectGetHeight(self.bounds)-self.inputBoxHight, device_sceen_width, self.inputBoxHight);
+
+- (void)setIsLeft:(BOOL)isLeft{
+    _isLeft=isLeft;
     
-    
-    self.inputboxView.frame=frame;
-    CGRect listTabeFrame=self.listTableView.frame;
-    listTabeFrame.size.height=CGRectGetHeight(self.bounds)-CGRectGetHeight(frame);
-    self.listTableView.frame=listTabeFrame;
-    
-    */
 }
+
 -(void)hiddenTheKeyboardAndFace:(HiddenKeyboardAndFaceViewCompletion)block{
     self.hiddenKyboardFaceBlock=block;
     if (self.inputboxView.inputStatus==YxzInputStatus_keyborad) {

@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YxzChatCompleteComponent : UIView
+@property(nonatomic,assign)BOOL isLeft;
 typedef void(^HiddenKeyboardAndFaceViewCompletion)(void);
 -(void)hiddenTheKeyboardAndFace:(HiddenKeyboardAndFaceViewCompletion)block;
 @end

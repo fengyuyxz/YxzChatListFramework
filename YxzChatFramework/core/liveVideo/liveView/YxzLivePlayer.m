@@ -448,7 +448,7 @@
 }
 /** 播放器全屏 */
 - (void)controlViewChangeScreen:(UIView *)controlView withFullScreen:(BOOL)isFullScreen{
-    [self endEditing:NO];
+    _isFullScreen=isFullScreen;
     if ([self.delegate respondsToSelector:@selector(controlViewChangeScreen:withFullScreen:)]) {
         [self.delegate controlViewChangeScreen:controlView withFullScreen:isFullScreen];
     }
