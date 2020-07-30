@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "YxzLevelManager.h"
 #import "LivePlayerInitializeController.h"
+#import "SupportedInterfaceOrientations.h"
 @interface AppDelegate ()
 
 @end
@@ -19,7 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YxzLevelManager sharedInstance]setup];
-    [LivePlayerInitializeController loadLivePlayLicenceUrlAndLincenceKey];
+//    [LivePlayerInitializeController loadLivePlayLicenceUrlAndLincenceKey];
     return YES;
 }
 
@@ -27,8 +28,12 @@
 
 #pragma mark - InterfaceOrientation //应用支持的方向
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-    return UIInterfaceOrientationMaskAllButUpsideDown;//UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskLandscapeLeft;
+
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application
+  supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return [SupportedInterfaceOrientations sharedInstance].orientationMask;
 }
 
 @end

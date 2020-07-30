@@ -11,6 +11,7 @@
 #import "YxzVideoLooksBasicInfoView.h"
 #import "SuspensionWindow.h"
 #import "YXZConstant.h"
+#import "SupportedInterfaceOrientations.h"
 #import <Masonry/Masonry.h>
 
 #import "YxzLivePlayer.h"
@@ -69,8 +70,10 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
     [self setupSubView];
-    
-   
+    /*
+    [[SupportedInterfaceOrientations sharedInstance]beginSupport];
+    [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationPortrait];
+   */
 //    self.playerView.fatherView = self.videoContainerView;
      [self layoutSubViewConstraint];
     [self startPlayAndJoinChatRoom];
@@ -107,28 +110,11 @@
         [self.navigationController setNavigationBarHidden:YES animated:NO];
     }
 }
-#pragma mark - 旋转相关 方法
-// 设备支持方向
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationPortrait|UIInterfaceOrientationLandscapeLeft;
-}
-// 默认方向
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait; // 或者其他值 balabala~
-}
-- (BOOL)shouldAutorotate {
-    return YES;
-}
 
 
 #pragma mark 强制横屏(针对present方式)
 
 
-- (void)setInterfaceOrientation:(UIDeviceOrientation)orientation {
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
-        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:orientation] forKey:@"orientation"];
-    }
-}
 -(void)setupSubView{
     [self.view addSubview:self.containerView];
     [self.containerView addSubview:self.basInfoView];
@@ -274,12 +260,31 @@
 /** 播放器全屏 */
 - (void)controlViewChangeScreen:(UIView *)controlView withFullScreen:(BOOL)isFullScreen{
     [self modifyLeftSapcen:isFullScreen];
+    
     [self.chatComponentView hiddenTheKeyboardAndFace:^{
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
             if (isFullScreen) {
-                [self setInterfaceOrientation:UIDeviceOrientationLandscapeLeft];
+//                [self setInterfaceOrientation2:UIInterfaceOrientationLandscapeLeft];
+                /*
+                [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationLandscapeLeft];
+                 */
+                [SupportedInterfaceOrientations sharedInstance].orientationMask = UIInterfaceOrientationMaskLandscape;
+                
+                NSNumber *orientationValue = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
+                [[UIDevice currentDevice] setValue:orientationValue forKey:@"orientation"];
             }else{
-                [self setInterfaceOrientation:UIDeviceOrientationPortrait];
+                [SupportedInterfaceOrientations sharedInstance].orientationMask = UIInterfaceOrientationMaskPortrait;
+                
+                NSNumber *orientationValue = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+                [[UIDevice currentDevice] setValue:orientationValue forKey:@"orientation"];
+//                [self setInterfaceOrientation:UIDeviceOrientationPortrait];
+//                [self setInterfaceOrientation2:UIInterfaceOrientationPortrait];
+                /*
+                [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationPortrait];
+                 */
+                
             }
         });
     }];
