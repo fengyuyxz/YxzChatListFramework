@@ -9,7 +9,7 @@
 #import "SupportedInterfaceOrientations.h"
 
 @implementation SupportedInterfaceOrientations
-/*
+
 + (SupportedInterfaceOrientations *)sharedInstance {
     static SupportedInterfaceOrientations *instance = nil;
     static dispatch_once_t predicate;
@@ -27,17 +27,9 @@
     }
     return self;
 }
- */
-+ (SupportedInterfaceOrientations *)sharedInstance {
-    static SupportedInterfaceOrientations *instance = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        instance = [[self alloc] init];
-        instance.orientationMask = UIInterfaceOrientationMaskPortrait;  // 默认竖屏
-    });
-    return instance;
-}
-/*
+ 
+
+
 -(void)setInterFaceOrientation:(UIInterfaceOrientation)interface{
     [self beginSupport];
     _orientationMask=UIInterfaceOrientationMaskPortrait;
@@ -60,13 +52,13 @@
     }
     NSNumber *orientationValue = [NSNumber numberWithInt:interface];
     [[UIDevice currentDevice] setValue:orientationValue forKey:@"orientation"];
-}*/
-/*
+}
+ 
 -(void)beginSupport{
     _isSwitchDirection=YES;
 }
 -(void)endSupport{
     _isSwitchDirection=NO;
-}*/
+}
 
 @end

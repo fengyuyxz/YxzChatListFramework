@@ -9,7 +9,7 @@
 #import "FirstVC.h"
 #import "RoomBaseInfo.h"
 #import "YxzChatController.h"
-#import "LiveRoomViewController.h"
+//#import "LiveRoomViewController.h"
 @interface FirstVC ()
 
 @end

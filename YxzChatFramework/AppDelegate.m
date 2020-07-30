@@ -34,7 +34,11 @@
   supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     NSLog(@"%lu",(unsigned long)[SupportedInterfaceOrientations sharedInstance].orientationMask);
-    return [SupportedInterfaceOrientations sharedInstance].orientationMask;
+    if ([SupportedInterfaceOrientations sharedInstance].isSwitchDirection) {
+        return [SupportedInterfaceOrientations sharedInstance].orientationMask;
+    }
+        
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

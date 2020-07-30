@@ -13,17 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SupportedInterfaceOrientations : NSObject
 + (SupportedInterfaceOrientations *)sharedInstance;
 
-@property (assign, nonatomic) UIInterfaceOrientationMask orientationMask;
--(void)setInterFaceOrientation:(UIInterfaceOrientationMask)interface;
-/*
-+ (SupportedInterfaceOrientations *)sharedInstance;
+
+
 //是否开始切换方向 NO时为 之前支持什么就支持什么
 @property(nonatomic,assign,readonly)BOOL isSwitchDirection;
 @property (assign, nonatomic,readonly) UIInterfaceOrientationMask orientationMask;
 -(void)setInterFaceOrientation:(UIInterfaceOrientation)interface;
 -(void)beginSupport;
 -(void)endSupport;
- */
+ 
 @end
 
 NS_ASSUME_NONNULL_END

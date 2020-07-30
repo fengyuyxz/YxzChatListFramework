@@ -70,10 +70,10 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
     [self setupSubView];
-    /*
+    
     [[SupportedInterfaceOrientations sharedInstance]beginSupport];
     [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationPortrait];
-   */
+   
 //    self.playerView.fatherView = self.videoContainerView;
      [self layoutSubViewConstraint];
     [self startPlayAndJoinChatRoom];
@@ -160,7 +160,7 @@
         make.left.equalTo(self.containerView.mas_left);
         make.top.equalTo(self.containerView.mas_top);
         make.right.equalTo(self.containerView.mas_right);
-        make.height.equalTo(@(320));
+        make.height.equalTo(@(280));
     }];
     [self.chatComponentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.containerView.mas_left);
@@ -185,7 +185,7 @@
             make.left.equalTo(self.containerView.mas_left);
             make.top.equalTo(self.containerView.mas_top);
             make.right.equalTo(self.containerView.mas_right);
-            make.height.equalTo(@(320));
+            make.height.equalTo(@(280));
         }];
         [self.chatComponentView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.containerView.mas_left);
@@ -278,16 +278,18 @@
             
             if (isFullScreen) {
 //                [self setInterfaceOrientation2:UIInterfaceOrientationLandscapeLeft];
-                /*
+                
                 [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationLandscapeLeft];
-                 */
+                 
+                /*
                 [SupportedInterfaceOrientations sharedInstance].orientationMask = UIInterfaceOrientationMaskLandscape;
                 
                 NSNumber *orientationValue = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
                 [[UIDevice currentDevice] setValue:orientationValue forKey:@"orientation"];
                 [UIViewController attemptRotationToDeviceOrientation];
+                 */
             }else{
-                
+                /*
                 [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIInterfaceOrientationPortrait] forKey:@"orientation"];
                 [SupportedInterfaceOrientations sharedInstance].orientationMask = UIInterfaceOrientationMaskPortrait;
                 
@@ -296,9 +298,9 @@
                 [UIViewController attemptRotationToDeviceOrientation];
 //                [self setInterfaceOrientation:UIDeviceOrientationPortrait];
 //                [self setInterfaceOrientation2:UIInterfaceOrientationPortrait];
-                /*
+                */
                 [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationPortrait];
-                 */
+                 
                 
             }
         });
