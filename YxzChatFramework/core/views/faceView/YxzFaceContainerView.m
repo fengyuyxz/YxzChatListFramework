@@ -46,6 +46,7 @@
     [self.collectionView reloadData];
 }
 -(void)setupSubViews{
+    self.userInteractionEnabled=YES;
     [self addSubview:self.bottomFaceTool];
     [self addSubview:self.collectionView];
     UIView *line=[self lineView];

@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YxzChatCompleteComponent : UIView
--(void)hiddenTheKeyboardAndFace;
+typedef void(^HiddenKeyboardAndFaceViewCompletion)(void);
+-(void)hiddenTheKeyboardAndFace:(HiddenKeyboardAndFaceViewCompletion)block;
 @end
 
 NS_ASSUME_NONNULL_END

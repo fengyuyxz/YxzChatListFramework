@@ -161,6 +161,7 @@
     [self reset];
 }
 -(void)setupUI{
+    self.userInteractionEnabled=YES;
     //_mutex = PTHREAD_MUTEX_INITIALIZER;
            pthread_mutex_init(&_mutex, NULL);
            _AllHeight = 15;

@@ -152,13 +152,17 @@
 /** 播放器全屏 */
 - (void)controlViewChangeScreen:(UIView *)controlView withFullScreen:(BOOL)isFullScreen{
     
-    [self.chatComponentView hiddenTheKeyboardAndFace];
+    [self.chatComponentView hiddenTheKeyboardAndFace:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (isFullScreen) {
+                [self setInterfaceOrientation:UIDeviceOrientationLandscapeLeft];
+            }else{
+                [self setInterfaceOrientation:UIDeviceOrientationPortrait];
+            }
+        });
+    }];
     
-    if (isFullScreen) {
-        [self setInterfaceOrientation:UIDeviceOrientationLandscapeLeft];
-    }else{
-        [self setInterfaceOrientation:UIDeviceOrientationPortrait];
-    }
+    
 }
 #pragma mark -getter  ===============
 -(UIView *)videoContainerView{

@@ -166,6 +166,8 @@
  */
 - (void)singleTapAction:(UIGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateRecognized) {
+       
+        
         
         if (self.playDidEnd) {
             return;
@@ -180,6 +182,7 @@
         }
     }
 }
+
 /**
  *  双击播放/暂停
  *
@@ -212,7 +215,9 @@
   
     if (YxzSuperPlayerWindowShared.isShowing)
         return NO;
-
+    if (touch.view!=self) {
+        return NO;
+    }
     return YES;
 }
 #pragma mark - UIKit Notifications

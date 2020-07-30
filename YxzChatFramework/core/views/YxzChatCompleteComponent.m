@@ -16,6 +16,8 @@
 @property(nonatomic,strong)YxzInputBoxView *inputboxView;
 @property(nonatomic,assign)CGFloat inputBoxHight;
 @property(nonatomic,assign)CGFloat defaultINputBoxHight;
+
+@property(nonatomic,copy)HiddenKeyboardAndFaceViewCompletion hiddenKyboardFaceBlock;
 @end
 @implementation YxzChatCompleteComponent
 - (instancetype)init
@@ -35,6 +37,7 @@
     return self;
 }
 -(void)setupSubViews{
+    self.userInteractionEnabled=YES;
     self.inputBoxHight=inputBoxDefaultHight;
     _listTableView=[[YxzChatListTableView alloc]initWithFrame:CGRectZero];
     _listTableView.delegate=self;
@@ -94,10 +97,20 @@
     
     */
 }
--(void)hiddenTheKeyboardAndFace{
-    
-    [self.inputboxView hiddenInput];
-    [self.inputboxView hiddenFace];
+-(void)hiddenTheKeyboardAndFace:(HiddenKeyboardAndFaceViewCompletion)block{
+    self.hiddenKyboardFaceBlock=block;
+    if (self.inputboxView.inputStatus==YxzInputStatus_keyborad) {
+         [self.inputboxView hiddenInput];
+    }else if(self.inputboxView.inputStatus==YxzInputStatus_showFace){
+         [self.inputboxView hiddenFace];
+    }else{
+        if (self.hiddenKyboardFaceBlock) {
+            self.hiddenKyboardFaceBlock();
+            self.hiddenKyboardFaceBlock=nil;
+        }
+    }
+   
+   
     
 }
 #pragma mark - YxzListViewInputDelegate =================
@@ -128,6 +141,7 @@
 
         }];
     }else if (toStatus==YxzInputStatus_nothing){
+       
         [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom).offset(inputBoxDefaultHight);
             make.height.equalTo(@(inputBoxDefaultHight));
@@ -135,11 +149,15 @@
         [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
                    make.bottom.equalTo(self.mas_bottom).offset(0);
                }];
-        [UIView animateWithDuration:.5 animations:^{
-
+        [UIView animateWithDuration:0.25 animations:^{
             [self layoutIfNeeded];
-
+        } completion:^(BOOL finished) {
+            if (self.hiddenKyboardFaceBlock) {
+                self.hiddenKyboardFaceBlock();
+                self.hiddenKyboardFaceBlock=nil;
+            }
         }];
+        
     }
 }
 //发送消息

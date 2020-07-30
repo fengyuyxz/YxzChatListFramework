@@ -59,6 +59,7 @@
 }
 
 -(void)setupSubViews{
+    self.userInteractionEnabled=YES;
     self.backgroundColor=[UIColor whiteColor];
     self.inputStatus=YxzInputStatus_nothing;
 
@@ -137,10 +138,14 @@
     [self endEditing:YES];
     self.faceImage=nil;
     [self.showSelectedFaceView removeFromSuperview];
+    [self.faceContainerView removeFromSuperview];
     self.faceBut.selected=NO;
     self.inputStatus=YxzInputStatus_nothing;
     if (self.faceBut.selected) {
         [self faceButPressed:self.faceBut];
+    }
+    if ([self.delegate respondsToSelector:@selector(inputBoxStatusChange:changeFromStatus:toStatus:changeHight:)]) {
+        [self.delegate inputBoxStatusChange:self changeFromStatus:self.lastInputStatus toStatus:self.inputStatus changeHight:inputBoxDefaultHight];
     }
 }
 -(void)hiddenInput{
