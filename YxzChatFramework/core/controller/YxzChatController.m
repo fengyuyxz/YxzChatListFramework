@@ -81,31 +81,20 @@
 }
 #pragma mark - 旋转相关 方法
 // 设备支持方向
-//- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-//    return UIInterfaceOrientationPortrait|UIInterfaceOrientationLandscapeLeft;
-//}
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationPortrait|UIInterfaceOrientationLandscapeLeft;
+}
 // 默认方向
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-//    return UIInterfaceOrientationPortrait; // 或者其他值 balabala~
-//}
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait; // 或者其他值 balabala~
+}
 - (BOOL)shouldAutorotate {
     return YES;
 }
 
 
 #pragma mark 强制横屏(针对present方式)
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return (UIInterfaceOrientationLandscapeRight | UIInterfaceOrientationLandscapeLeft);
-}
- 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft;
-}
- 
-//必须有
--(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
-    return UIInterfaceOrientationLandscapeRight;
-}
+
 
 - (void)setInterfaceOrientation:(UIDeviceOrientation)orientation {
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
@@ -154,7 +143,19 @@
         make.bottom.equalTo(self.containerView.mas_bottom);
     }];
 }
-
+-(void)modifyLeftSapcen:(BOOL)isFull{
+    if (isFull) {
+        [self.videoContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.top.equalTo(self.containerView);
+        }];
+        [self.chatComponentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.containerView.mas_left);
+            make.bottom.equalTo(self.containerView.mas_bottom).offset(-60);
+            make.right.equalTo(self.containerView.mas_right);
+            make.top.equalTo(self.containerView.mas_top).offset(90);
+        }];
+    }
+}
 #pragma mark - 更多信息  小窗播放 delegate =============
 -(void)suspensionClick{
     YxzSuperPlayerWindowShared.superPlayer=self.livePlayer;
@@ -167,7 +168,7 @@
 }
 /** 播放器全屏 */
 - (void)controlViewChangeScreen:(UIView *)controlView withFullScreen:(BOOL)isFullScreen{
-    
+    [self modifyLeftSapcen:isFullScreen];
     [self.chatComponentView hiddenTheKeyboardAndFace:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isFullScreen) {

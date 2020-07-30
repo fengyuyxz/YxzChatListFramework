@@ -46,6 +46,7 @@
     [self addSubview:_listTableView];
     _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectZero];
     _inputboxView.delegate=self;
+    _inputboxView.hidden=YES;
     [self addSubview:_inputboxView];
     [self layoutSubViewConstraint];
     
@@ -128,6 +129,7 @@
 -(void)inputBoxStatusChange:(YxzInputBoxView *)boxView changeFromStatus:(YxzInputStatus)fromStatus toStatus:(YxzInputStatus)toStatus changeHight:(CGFloat)hight{
     self.inputBoxHight=hight;
     if (toStatus==YxzInputStatus_keyborad||toStatus==YxzInputStatus_showFace) {
+        _inputboxView.hidden=NO;
         [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom).offset(0);
             make.height.equalTo(@(hight));
@@ -141,7 +143,7 @@
 
         }];
     }else if (toStatus==YxzInputStatus_nothing){
-       
+        _inputboxView.hidden=YES;
         [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom).offset(inputBoxDefaultHight);
             make.height.equalTo(@(inputBoxDefaultHight));

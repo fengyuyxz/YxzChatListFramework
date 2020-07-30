@@ -37,7 +37,7 @@
     return self;
 }
 -(void)setupView{
-    self.backgroundColor=[UIColor whiteColor];
+    self.backgroundColor=[UIColor clearColor];
     [self addSubview:self.containerView];
     [self.containerView addSubview:self.faceBut];
     [self.containerView addSubview:self.inputTextLabel];
