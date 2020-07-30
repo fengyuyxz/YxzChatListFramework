@@ -11,6 +11,10 @@
 		1C2CBE0C24CE65280079BFD1 /* LivePlayerInitializeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE0B24CE65280079BFD1 /* LivePlayerInitializeController.m */; };
 		1C2CBE6224CE9EC20079BFD1 /* FirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE6124CE9EC20079BFD1 /* FirstVC.m */; };
 		1C2CBE6624CEA03E0079BFD1 /* RoomBaseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBE6524CEA03E0079BFD1 /* RoomBaseInfo.m */; };
+		1C2CBED624D257A00079BFD1 /* YxzLivePlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBED024D257A00079BFD1 /* YxzLivePlayerControlView.m */; };
+		1C2CBED724D257A00079BFD1 /* SuspensionWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBED324D257A00079BFD1 /* SuspensionWindow.m */; };
+		1C2CBED824D257A10079BFD1 /* YxzLivePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBED424D257A00079BFD1 /* YxzLivePlayer.m */; };
+		1C2CBEDB24D2585F0079BFD1 /* YxzPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */; };
 		1CB2B44124C940B80056107A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44024C940B80056107A /* AppDelegate.m */; };
 		1CB2B44724C940B80056107A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44624C940B80056107A /* ViewController.m */; };
 		1CB2B44A24C940B80056107A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB2B44824C940B80056107A /* Main.storyboard */; };
@@ -57,6 +61,14 @@
 		1C2CBE6124CE9EC20079BFD1 /* FirstVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstVC.m; sourceTree = "<group>"; };
 		1C2CBE6424CEA03E0079BFD1 /* RoomBaseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBaseInfo.h; sourceTree = "<group>"; };
 		1C2CBE6524CEA03E0079BFD1 /* RoomBaseInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomBaseInfo.m; sourceTree = "<group>"; };
+		1C2CBED024D257A00079BFD1 /* YxzLivePlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YxzLivePlayerControlView.m; sourceTree = "<group>"; };
+		1C2CBED124D257A00079BFD1 /* YxzLivePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzLivePlayer.h; sourceTree = "<group>"; };
+		1C2CBED224D257A00079BFD1 /* SuspensionWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuspensionWindow.h; sourceTree = "<group>"; };
+		1C2CBED324D257A00079BFD1 /* SuspensionWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuspensionWindow.m; sourceTree = "<group>"; };
+		1C2CBED424D257A00079BFD1 /* YxzLivePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YxzLivePlayer.m; sourceTree = "<group>"; };
+		1C2CBED524D257A00079BFD1 /* YxzLivePlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzLivePlayerControlView.h; sourceTree = "<group>"; };
+		1C2CBED924D2585F0079BFD1 /* YxzPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzPlayerModel.h; sourceTree = "<group>"; };
+		1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YxzPlayerModel.m; sourceTree = "<group>"; };
 		1CB2B43C24C940B80056107A /* YxzChatFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YxzChatFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB2B43F24C940B80056107A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1CB2B44024C940B80056107A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -151,6 +163,14 @@
 		1C0D9B0624CD2E1300F4F017 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				1C2CBED924D2585F0079BFD1 /* YxzPlayerModel.h */,
+				1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */,
+				1C2CBED224D257A00079BFD1 /* SuspensionWindow.h */,
+				1C2CBED324D257A00079BFD1 /* SuspensionWindow.m */,
+				1C2CBED124D257A00079BFD1 /* YxzLivePlayer.h */,
+				1C2CBED424D257A00079BFD1 /* YxzLivePlayer.m */,
+				1C2CBED524D257A00079BFD1 /* YxzLivePlayerControlView.h */,
+				1C2CBED024D257A00079BFD1 /* YxzLivePlayerControlView.m */,
 				1C0D9B0724CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.h */,
 				1C0D9B0824CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m */,
 			);
@@ -518,6 +538,7 @@
 				1CB2B48524C940E00056107A /* YxzLevelManager.m in Sources */,
 				1C0D9B0924CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m in Sources */,
 				1CB2B4B924CBDED90056107A /* NSString+Empty.m in Sources */,
+				1C2CBED724D257A00079BFD1 /* SuspensionWindow.m in Sources */,
 				1CB2B49524C979F10056107A /* YxzInputBoxView.m in Sources */,
 				1CB2B48A24C940E00056107A /* YxzChatBaseCell.m in Sources */,
 				1CB2B48424C940E00056107A /* YxzMsgAttributeModel.m in Sources */,
@@ -532,6 +553,7 @@
 				1CB2B49024C953900056107A /* YxzAdjustPositionButton.m in Sources */,
 				1CB2B48224C940DF0056107A /* YxzAttributeMsgFactory.m in Sources */,
 				1CB2B48C24C940E00056107A /* YxzLeveBgView.m in Sources */,
+				1C2CBED624D257A00079BFD1 /* YxzLivePlayerControlView.m in Sources */,
 				1CB2B48324C940DF0056107A /* YxzUserModel.m in Sources */,
 				1CB2B44124C940B80056107A /* AppDelegate.m in Sources */,
 				1CB2B48124C940DF0056107A /* YXZMessageModel.m in Sources */,
@@ -542,9 +564,11 @@
 				1CB2B45224C940B90056107A /* main.m in Sources */,
 				1CB2B47F24C940DF0056107A /* UIView+Frame.m in Sources */,
 				1CB2B48024C940DF0056107A /* YxzGiftModel.m in Sources */,
+				1C2CBEDB24D2585F0079BFD1 /* YxzPlayerModel.m in Sources */,
 				1CB2B48824C940E00056107A /* YxzMsgJoinCell.m in Sources */,
 				1C2CBE6624CEA03E0079BFD1 /* RoomBaseInfo.m in Sources */,
 				1CB2B4A524CA7EB60056107A /* YxzCalculateTextSizeTool.m in Sources */,
+				1C2CBED824D257A10079BFD1 /* YxzLivePlayer.m in Sources */,
 				1C2CBE0C24CE65280079BFD1 /* LivePlayerInitializeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

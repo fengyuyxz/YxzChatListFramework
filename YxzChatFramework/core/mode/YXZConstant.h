@@ -35,6 +35,21 @@ typedef NS_ENUM(NSUInteger, YxzLiveVideoScreenStyle) {
 
 #define device_sceen_width [UIScreen mainScreen].bounds.size.width
 
+// 颜色值RGB
+#define RGBA(r,g,b,a)                       [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+
+
+// 图片路径
+#define YxzSuperPlayerImage(file)              [UIImage imageNamed:[@"YxzChatResouce.bundle" stringByAppendingPathComponent:file]]
+#define TintColor RGBA(252, 89, 81, 1)
+
+
+// 小窗单例
+#define YxzSuperPlayerWindowShared             [SuspensionWindow shareInstance]
+
+
+
+
 #define MsgTableViewWidth 300
 #define MsgTableViewHeight 400
 #define RGBA_OF(rgbValue)   [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
