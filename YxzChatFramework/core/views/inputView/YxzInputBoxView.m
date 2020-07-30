@@ -133,6 +133,16 @@
     }
     self.showSelectedFaceView.imageURLStr=faceImg;
 }
+-(void)hiddenFace{
+    [self endEditing:YES];
+    self.faceImage=nil;
+    [self.showSelectedFaceView removeFromSuperview];
+    self.faceBut.selected=NO;
+    self.inputStatus=YxzInputStatus_nothing;
+    if (self.faceBut.selected) {
+        [self faceButPressed:self.faceBut];
+    }
+}
 -(void)hiddenInput{
     [self endEditing:YES];
     self.inputStatus=YxzInputStatus_nothing;

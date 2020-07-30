@@ -94,6 +94,12 @@
     
     */
 }
+-(void)hiddenTheKeyboardAndFace{
+    
+    [self.inputboxView hiddenInput];
+    [self.inputboxView hiddenFace];
+    
+}
 #pragma mark - YxzListViewInputDelegate =================
 -(void)faceClick{
     [self.inputboxView clickFace];

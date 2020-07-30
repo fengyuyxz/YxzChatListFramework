@@ -18,7 +18,7 @@
 
 
 
-@interface YxzLivePlayer()<TXLivePlayListener,TXVodPlayListener,UIGestureRecognizerDelegate,YxzPlayerControlViewDelegate>
+@interface YxzLivePlayer()<TXLivePlayListener,TXVodPlayListener,UIGestureRecognizerDelegate,YxzPlayerControlViewDelegate,YxzLiveRoomControlDelegate>
 
 
 /** 单击 */
@@ -158,7 +158,7 @@
     [self addGestureRecognizer:panRecognizer];
 }
 #pragma mark - Action
-
+-(void)panDirection:(UIPanGestureRecognizer *)pan{}
 /**
  *   轻拍方法
  *
@@ -498,6 +498,7 @@
     }
     return self.vodPlayer.duration;
 }
+
 #pragma mark - 调拨
 - (void)seekToTime:(NSInteger)dragedSeconds {
     if (!self.isLoaded || self.state == StateStopped) {
@@ -698,6 +699,10 @@
     }
 }
 #pragma mark - getterr ========
+
+-(void)setRoomControlDelegate:(id<YxzLiveRoomControlDelegate>)roomControlDelegate{
+    self.controlView.roomControlDelegate=roomControlDelegate;
+}
 - (UIButton *)repeatBtn {
     if (!_repeatBtn) {
         _repeatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -722,6 +727,7 @@
     if (!_controlView) {
         _controlView=[[YxzLivePlayerControlView alloc]init];
         _controlView.delegate=self;
+        _controlView.roomControlDelegate=self.roomControlDelegate;
     }
     return _controlView;
 }

@@ -69,6 +69,7 @@
 		1C2CBED524D257A00079BFD1 /* YxzLivePlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzLivePlayerControlView.h; sourceTree = "<group>"; };
 		1C2CBED924D2585F0079BFD1 /* YxzPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzPlayerModel.h; sourceTree = "<group>"; };
 		1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YxzPlayerModel.m; sourceTree = "<group>"; };
+		1C2CBEDE24D295A30079BFD1 /* YxzLiveRoomControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzLiveRoomControlDelegate.h; sourceTree = "<group>"; };
 		1CB2B43C24C940B80056107A /* YxzChatFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YxzChatFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB2B43F24C940B80056107A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1CB2B44024C940B80056107A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -154,6 +155,7 @@
 		1C0D9B0224CD2D8300F4F017 /* liveVideo */ = {
 			isa = PBXGroup;
 			children = (
+				1C2CBEDD24D2955F0079BFD1 /* liveView */,
 				1C2CBE0D24CE6C370079BFD1 /* manager */,
 				1C0D9B0624CD2E1300F4F017 /* views */,
 			);
@@ -163,14 +165,6 @@
 		1C0D9B0624CD2E1300F4F017 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				1C2CBED924D2585F0079BFD1 /* YxzPlayerModel.h */,
-				1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */,
-				1C2CBED224D257A00079BFD1 /* SuspensionWindow.h */,
-				1C2CBED324D257A00079BFD1 /* SuspensionWindow.m */,
-				1C2CBED124D257A00079BFD1 /* YxzLivePlayer.h */,
-				1C2CBED424D257A00079BFD1 /* YxzLivePlayer.m */,
-				1C2CBED524D257A00079BFD1 /* YxzLivePlayerControlView.h */,
-				1C2CBED024D257A00079BFD1 /* YxzLivePlayerControlView.m */,
 				1C0D9B0724CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.h */,
 				1C0D9B0824CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m */,
 			);
@@ -200,6 +194,22 @@
 				1C2CBE6524CEA03E0079BFD1 /* RoomBaseInfo.m */,
 			);
 			path = foreign;
+			sourceTree = "<group>";
+		};
+		1C2CBEDD24D2955F0079BFD1 /* liveView */ = {
+			isa = PBXGroup;
+			children = (
+				1C2CBEDE24D295A30079BFD1 /* YxzLiveRoomControlDelegate.h */,
+				1C2CBED924D2585F0079BFD1 /* YxzPlayerModel.h */,
+				1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */,
+				1C2CBED224D257A00079BFD1 /* SuspensionWindow.h */,
+				1C2CBED324D257A00079BFD1 /* SuspensionWindow.m */,
+				1C2CBED124D257A00079BFD1 /* YxzLivePlayer.h */,
+				1C2CBED424D257A00079BFD1 /* YxzLivePlayer.m */,
+				1C2CBED524D257A00079BFD1 /* YxzLivePlayerControlView.h */,
+				1C2CBED024D257A00079BFD1 /* YxzLivePlayerControlView.m */,
+			);
+			path = liveView;
 			sourceTree = "<group>";
 		};
 		1CB2B43324C940B80056107A = {
