@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger level;
 // 0：男    1：女
 @property (nonatomic, assign) NSInteger gender;
+
+@property(nonatomic,copy)NSString *headerImageUrl;
 @end
 
 NS_ASSUME_NONNULL_END

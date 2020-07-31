@@ -14,6 +14,17 @@
 @property(nonatomic,copy)NSString *subTitle;
 @end
 
+@interface RoomSettingHeadeModel : NSObject
+@property(nonatomic,copy)NSString *headerImgUrlStr;
+@property(nonatomic,copy)NSString *m_title;
+@property(nonatomic,copy)NSString *s_title;
+@end
+
+@interface LiveRoomSettingHeadeView : UIView
+@property(nonatomic,strong)RoomSettingHeadeModel *headeModel;
+@end
+
+
 @interface LiveRoomSettingCell : UITableViewCell
 @property(nonatomic,strong)RoomSettingModel *settingModel;
 @end
@@ -21,7 +32,7 @@
 
 @interface YxzLiveRoomSettingView : UIView
 @property(nonatomic,strong)NSMutableArray<RoomSettingModel *> *dataSouce;
--(void)setPlayRate:(NSString *)playRate sharpness:(NSString *)sharpness;
+-(void)setHeader:(RoomSettingHeadeModel *)model sharpness:(NSString *)sharpness;
 @end
 
 

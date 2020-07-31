@@ -303,7 +303,11 @@
     
     [self.chatComponentView hiddenTheKeyboardAndFace:^{
         YxzLiveRoomSettingView *view=[[YxzLiveRoomSettingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height*0.45)];
-         [view setPlayRate:@"" sharpness:@""];
+        RoomSettingHeadeModel *headerModel=[RoomSettingHeadeModel new];
+        headerModel.headerImgUrlStr=@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596198002372&di=9f36c7199fb31f01eed130acdae394ec&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F7Po3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F267f9e2f07082838685c484ab999a9014c08f11f.jpg";
+        headerModel.s_title=@"add";
+        headerModel.m_title=@"天下无贼";
+        [view setHeader:headerModel sharpness:@"标准"];
         
          YxzPopView *popView=[[YxzPopView alloc]initWithFrame:self.view.bounds];
          [popView show:view superView:self.view];
