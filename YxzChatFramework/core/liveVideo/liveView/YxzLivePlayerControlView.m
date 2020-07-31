@@ -26,8 +26,8 @@
     [self addSubview:self.topView];
     [self addSubview:self.bottomView];
     
-    [self.topView addSubview:self.moreBut];
-    [self.topView addSubview:self.suspensionBut];
+//    [self.topView addSubview:self.moreBut];
+//    [self.topView addSubview:self.suspensionBut];
     
 //    [self addSubview:self.centerPlayBtn];
     
@@ -35,7 +35,7 @@
     [self.bottomView addSubview:self.currentTimeLabel];
     [self.bottomView addSubview:self.totalTimeLabel];
     [self.bottomView addSubview:self.videoSlider];
-    [self addSubview:self.fullScreenBtn];
+//    [self addSubview:self.fullScreenBtn];
     [self makeSubViewsConstraints];
 }
 -(void)makeSubViewsConstraints{
@@ -52,16 +52,16 @@
 //        make.width.height.equalTo(@(50));
 //    }];
     
-    [self.suspensionBut mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.topView.mas_bottom);
-        make.right.equalTo(self.topView.mas_right).offset(-10);
-        make.width.height.mas_equalTo(30);
-    }];
-    [self.moreBut mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.topView.mas_bottom);
-        make.right.equalTo(self.suspensionBut.mas_left).offset(-10);
-        make.width.height.mas_equalTo(30);
-    }];
+//    [self.suspensionBut mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.topView.mas_bottom);
+//        make.right.equalTo(self.topView.mas_right).offset(-10);
+//        make.width.height.mas_equalTo(30);
+//    }];
+//    [self.moreBut mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.topView.mas_bottom);
+//        make.right.equalTo(self.suspensionBut.mas_left).offset(-10);
+//        make.width.height.mas_equalTo(30);
+//    }];
     
     [self.startBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.bottomView.mas_leading).offset(5);
@@ -86,11 +86,11 @@
            make.width.mas_equalTo(50);
        }];
     
-    [self.fullScreenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right).offset(-10);
-        make.bottom.equalTo(self.mas_bottom).offset(-8);
-        make.width.height.mas_equalTo(40);
-    }];
+//    [self.fullScreenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.mas_right).offset(-10);
+//        make.bottom.equalTo(self.mas_bottom).offset(-8);
+//        make.width.height.mas_equalTo(40);
+//    }];
     
 }
 -(void)playBtnClick:(UIButton *)sender{

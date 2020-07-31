@@ -72,5 +72,13 @@ view.layer.masksToBounds = YES;
 // 背景颜色 黑色 透明度0.24
 #define NormalBgColor   RGBAOF(0x000000, 0.24)
 
+
+#define IPHONE_X \
+({BOOL isPhoneX = NO;\
+if (@available(iOS 11.0, *)) {\
+isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0.0;\
+}\
+(isPhoneX);})
+
 #endif /* YXZConstant_h */
 
