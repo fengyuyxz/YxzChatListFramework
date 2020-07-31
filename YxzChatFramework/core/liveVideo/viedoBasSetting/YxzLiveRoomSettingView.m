@@ -61,12 +61,13 @@
     [self.tableView reloadData];
 }
 -(void)setupView{
-    self.backgroundColor=[UIColor clearColor];
+    self.userInteractionEnabled=YES;
+    self.backgroundColor=[UIColor whiteColor];
     [self addSubview:self.containerView];
     [self.containerView addSubview:self.tableView];
     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self);
-        make.height.equalTo(self.mas_height).multipliedBy(0.45);
+        make.left.right.top.bottom.equalTo(self);
+//        make.height.equalTo(self.mas_height).multipliedBy(0.45);
     }];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.equalTo(self.containerView);

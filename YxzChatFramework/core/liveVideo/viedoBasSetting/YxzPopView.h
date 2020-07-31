@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YxzPopView : UIView
-
+-(void)show:(UIView *)contentView superView:(UIView *)supView;
+-(void)dismiss;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,7 +15,7 @@
 #import <Masonry/Masonry.h>
 #import "YxzLiveRoomSettingView.h"
 #import "YxzLivePlayer.h"
-#import <KLCPopup/KLCPopup.h>
+#import "YxzPopView.h"
 @interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate>
 
 
@@ -301,16 +301,22 @@
 
 -(void)moreBtuPressed:(UIButton *)but{
     
-    YxzLiveRoomSettingView *view=[[YxzLiveRoomSettingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-    [view setPlayRate:@"" sharpness:@""];
-   KLCPopup *pop= [KLCPopup popupWithContentView:view showType:KLCPopupShowTypeSlideInFromBottom dismissType:KLCPopupDismissTypeBounceOutToBottom maskType:KLCPopupMaskTypeDimmed dismissOnBackgroundTouch:YES dismissOnContentTouch:NO];
-    [pop show];
+    [self.chatComponentView hiddenTheKeyboardAndFace:^{
+        YxzLiveRoomSettingView *view=[[YxzLiveRoomSettingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height*0.45)];
+         [view setPlayRate:@"" sharpness:@""];
+        
+         YxzPopView *popView=[[YxzPopView alloc]initWithFrame:self.view.bounds];
+         [popView show:view superView:self.view];
+    }];
+    
+    
 }
 -(void)fullScreenBtnClick:(UIButton *)but{
     but.selected=!but.selected;
     self.livePlayer.isFullScreen=but.selected;
     self.isFullScreen=but.selected;
-    [self modifyLeftSapcen:self.isFullScreen];
+    
+      [self modifyLeftSapcen:self.isFullScreen];
        
        [self.chatComponentView hiddenTheKeyboardAndFace:^{
            dispatch_async(dispatch_get_main_queue(), ^{
