@@ -31,7 +31,17 @@
 
 
 @interface YxzLiveRoomSettingView : UIView
+
+typedef NS_ENUM(NSUInteger, LiveRoomSeetingEnum) {
+     liveRoomSeeting_separation=0,//分辨率
+    liveRoomSeeting_share,
+    liveRoomSeeting_report,//举报
+};
+typedef void(^SettingCompelation)(LiveRoomSeetingEnum setting);
 @property(nonatomic,strong)NSMutableArray<RoomSettingModel *> *dataSouce;
+
+@property(nonatomic,copy)SettingCompelation block;
+
 -(void)setHeader:(RoomSettingHeadeModel *)model sharpness:(NSString *)sharpness;
 @end
 

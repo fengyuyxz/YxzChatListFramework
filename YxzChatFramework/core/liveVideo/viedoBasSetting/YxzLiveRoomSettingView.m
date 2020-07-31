@@ -83,7 +83,7 @@
     self.headerView.frame=CGRectMake(0, 0, self.tableView.bounds.size.width, 64);
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 55;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.dataSouce) {
@@ -97,7 +97,20 @@
     cell.settingModel=model;
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    int row=indexPath.row;
+    LiveRoomSeetingEnum sett=liveRoomSeeting_separation;
+    if (row==0) {
+        sett=liveRoomSeeting_separation;
+    }else if(row==1){
+        sett=liveRoomSeeting_share;
+    }else if (row==2){
+        sett=liveRoomSeeting_report;
+    }
+    if (self.block) {
+        self.block(sett);
+    }
+}
 -(UITableView *)tableView{
     if (!_tableView) {
        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -197,7 +210,7 @@
     if (!_subTitleLabel) {
         _subTitleLabel=[[UILabel alloc]init];
         _subTitleLabel.font=[UIFont systemFontOfSize:12];
-        _subTitleLabel.textColor=RGBA_OF(0x75759);
+        _subTitleLabel.textColor=RGBAOF(0x757579,1);
     }
     return _subTitleLabel;
 }
@@ -285,7 +298,7 @@
     if (!_userSubTitle) {
         _userSubTitle=[[UILabel alloc]init];
         _userSubTitle.font=[UIFont systemFontOfSize:11];
-        _userSubTitle.textColor=RGBA_OF(0x75759);
+        _userSubTitle.textColor=RGBA_OF(0x757579);
     }
     return _userSubTitle;
 }

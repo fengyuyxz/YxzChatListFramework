@@ -310,6 +310,9 @@
         [view setHeader:headerModel sharpness:@"标准"];
         
          YxzPopView *popView=[[YxzPopView alloc]initWithFrame:self.view.bounds];
+        view.block = ^(LiveRoomSeetingEnum setting) {
+            [popView dismiss];
+        };
          [popView show:view superView:self.view];
     }];
     
