@@ -16,6 +16,7 @@
 		1C2CBED824D257A10079BFD1 /* YxzLivePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBED424D257A00079BFD1 /* YxzLivePlayer.m */; };
 		1C2CBEDB24D2585F0079BFD1 /* YxzPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBEDA24D2585F0079BFD1 /* YxzPlayerModel.m */; };
 		1C2CBEE424D2CFCD0079BFD1 /* SupportedInterfaceOrientations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBEE324D2CFCD0079BFD1 /* SupportedInterfaceOrientations.m */; };
+		1C2CBF2224D3062D0079BFD1 /* YxzLiveRoomSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2CBF2124D3062D0079BFD1 /* YxzLiveRoomSettingView.m */; };
 		1CB2B44124C940B80056107A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44024C940B80056107A /* AppDelegate.m */; };
 		1CB2B44724C940B80056107A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B44624C940B80056107A /* ViewController.m */; };
 		1CB2B44A24C940B80056107A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB2B44824C940B80056107A /* Main.storyboard */; };
@@ -73,6 +74,8 @@
 		1C2CBEDE24D295A30079BFD1 /* YxzLiveRoomControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YxzLiveRoomControlDelegate.h; sourceTree = "<group>"; };
 		1C2CBEE224D2CFCD0079BFD1 /* SupportedInterfaceOrientations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupportedInterfaceOrientations.h; sourceTree = "<group>"; };
 		1C2CBEE324D2CFCD0079BFD1 /* SupportedInterfaceOrientations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupportedInterfaceOrientations.m; sourceTree = "<group>"; };
+		1C2CBF2024D3062D0079BFD1 /* YxzLiveRoomSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YxzLiveRoomSettingView.h; sourceTree = "<group>"; };
+		1C2CBF2124D3062D0079BFD1 /* YxzLiveRoomSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzLiveRoomSettingView.m; sourceTree = "<group>"; };
 		1CB2B43C24C940B80056107A /* YxzChatFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YxzChatFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB2B43F24C940B80056107A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1CB2B44024C940B80056107A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -158,6 +161,7 @@
 		1C0D9B0224CD2D8300F4F017 /* liveVideo */ = {
 			isa = PBXGroup;
 			children = (
+				1C2CBF1F24D305B40079BFD1 /* viedoBasSetting */,
 				1C2CBEDD24D2955F0079BFD1 /* liveView */,
 				1C2CBE0D24CE6C370079BFD1 /* manager */,
 				1C0D9B0624CD2E1300F4F017 /* views */,
@@ -215,6 +219,15 @@
 				1C2CBED024D257A00079BFD1 /* YxzLivePlayerControlView.m */,
 			);
 			path = liveView;
+			sourceTree = "<group>";
+		};
+		1C2CBF1F24D305B40079BFD1 /* viedoBasSetting */ = {
+			isa = PBXGroup;
+			children = (
+				1C2CBF2024D3062D0079BFD1 /* YxzLiveRoomSettingView.h */,
+				1C2CBF2124D3062D0079BFD1 /* YxzLiveRoomSettingView.m */,
+			);
+			path = viedoBasSetting;
 			sourceTree = "<group>";
 		};
 		1CB2B43324C940B80056107A = {
@@ -566,6 +579,7 @@
 				1C2CBE6224CE9EC20079BFD1 /* FirstVC.m in Sources */,
 				1CB2B48924C940E00056107A /* YxzNormalCell.m in Sources */,
 				1CB2B49024C953900056107A /* YxzAdjustPositionButton.m in Sources */,
+				1C2CBF2224D3062D0079BFD1 /* YxzLiveRoomSettingView.m in Sources */,
 				1C2CBEE424D2CFCD0079BFD1 /* SupportedInterfaceOrientations.m in Sources */,
 				1CB2B48224C940DF0056107A /* YxzAttributeMsgFactory.m in Sources */,
 				1CB2B48C24C940E00056107A /* YxzLeveBgView.m in Sources */,
