@@ -13,9 +13,9 @@
 #import "YXZConstant.h"
 #import "SupportedInterfaceOrientations.h"
 #import <Masonry/Masonry.h>
-
+#import "YxzLiveRoomSettingView.h"
 #import "YxzLivePlayer.h"
-
+#import <KLCPopup/KLCPopup.h>
 @interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate>
 
 
@@ -301,6 +301,10 @@
 
 -(void)moreBtuPressed:(UIButton *)but{
     
+    YxzLiveRoomSettingView *view=[[YxzLiveRoomSettingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    [view setPlayRate:@"" sharpness:@""];
+   KLCPopup *pop= [KLCPopup popupWithContentView:view showType:KLCPopupShowTypeSlideInFromBottom dismissType:KLCPopupDismissTypeBounceOutToBottom maskType:KLCPopupMaskTypeDimmed dismissOnBackgroundTouch:YES dismissOnContentTouch:NO];
+    [pop show];
 }
 -(void)fullScreenBtnClick:(UIButton *)but{
     but.selected=!but.selected;

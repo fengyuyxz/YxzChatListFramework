@@ -33,7 +33,7 @@
 - (UIInterfaceOrientationMask)application:(UIApplication *)application
   supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    NSLog(@"%lu",(unsigned long)[SupportedInterfaceOrientations sharedInstance].orientationMask);
+    
     if ([SupportedInterfaceOrientations sharedInstance].isSwitchDirection) {
         return [SupportedInterfaceOrientations sharedInstance].orientationMask;
     }

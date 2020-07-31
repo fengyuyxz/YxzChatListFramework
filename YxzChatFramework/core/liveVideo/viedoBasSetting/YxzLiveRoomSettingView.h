@@ -8,13 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@interface RoomSettingModel : NSObject
+@property(nonatomic,copy)NSString *logImg;
+@property(nonatomic,copy)NSString *title;
+@property(nonatomic,copy)NSString *subTitle;
+@end
+
+@interface LiveRoomSettingCell : UITableViewCell
+@property(nonatomic,strong)RoomSettingModel *settingModel;
+@end
 
 
 @interface YxzLiveRoomSettingView : UIView
-
+@property(nonatomic,strong)NSMutableArray<RoomSettingModel *> *dataSouce;
+-(void)setPlayRate:(NSString *)playRate sharpness:(NSString *)sharpness;
 @end
 
 
-@interface LiveRoomSettingCell : UITableViewCell
 
-@end

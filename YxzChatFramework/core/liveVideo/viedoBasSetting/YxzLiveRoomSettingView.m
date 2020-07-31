@@ -9,13 +9,22 @@
 #import "YxzLiveRoomSettingView.h"
 #import <Masonry/Masonry.h>
 #import "YXZConstant.h"
+#import "NSString+Empty.h"
 @interface YxzLiveRoomSettingView()<UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic,strong)UIView *containerView;
 @property(nonatomic,strong)UITableView *tableView;
 @end
 @implementation YxzLiveRoomSettingView
 
 
-
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setupView];
+    }
+    return self;
+}
 
 - (instancetype)init
 {
@@ -25,24 +34,64 @@
     }
     return self;
 }
+-(void)setPlayRate:(NSString *)playRate sharpness:(NSString *)sharpness{
+    _dataSouce=[[NSMutableArray alloc]init];
+    RoomSettingModel *sharpnesM=[[RoomSettingModel alloc]init];
+    sharpnesM.title=@"分辨率";
+    sharpnesM.logImg=@"setting";
+    if (![NSString isEmpty:sharpness]) {
+        sharpnesM.subTitle=sharpness;
+    }
+    [_dataSouce addObject:sharpnesM];
+    RoomSettingModel *playM=[[RoomSettingModel alloc]init];
+    playM.title=@"播放速度";
+    playM.logImg=@"bofang";
+    if (![NSString isEmpty:sharpness]) {
+        playM.subTitle=sharpness;
+    }
+    [_dataSouce addObject:playM];
+    RoomSettingModel *shareM=[[RoomSettingModel alloc]init];
+    shareM.title=@"分享";
+    shareM.logImg=@"share";
+    [_dataSouce addObject:shareM];
+    RoomSettingModel *jubaoM=[[RoomSettingModel alloc]init];
+    jubaoM.title=@"举报";
+    jubaoM.logImg=@"jubao";
+    [_dataSouce addObject:jubaoM];
+    [self.tableView reloadData];
+}
 -(void)setupView{
-    self.backgroundColor=baseBlackColor;
-    [self addSubview:self.tableView];
+    self.backgroundColor=[UIColor clearColor];
+    [self addSubview:self.containerView];
+    [self.containerView addSubview:self.tableView];
+    [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self);
+        make.height.equalTo(self.mas_height).multipliedBy(0.45);
+    }];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.bottom.equalTo(self);
+        make.left.top.right.bottom.equalTo(self.containerView);
     }];
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.dataSouce) {
+        return self.dataSouce.count;
+    }
     return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     LiveRoomSettingCell *cell=[tableView dequeueReusableCellWithIdentifier:@"LiveRoomSettingCell"];
+    RoomSettingModel *model=self.dataSouce[indexPath.row];
+    cell.settingModel=model;
     return cell;
 }
 
 -(UITableView *)tableView{
     if (!_tableView) {
        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor=baseBlackColor;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.scrollEnabled=YES;
@@ -55,10 +104,18 @@
         
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        
+        [_tableView registerClass:[LiveRoomSettingCell class] forCellReuseIdentifier:@"LiveRoomSettingCell"];
     
     }
     return _tableView;
+}
+-(UIView *)containerView{
+    if (!_containerView) {
+        _containerView=[[UIView alloc]init];
+        _containerView.backgroundColor=baseBlackColor;
+        _containerView.userInteractionEnabled=YES;
+    }
+    return _containerView;
 }
 @end
 
@@ -78,6 +135,7 @@
     return self;
 }
 -(void)setupView{
+    self.backgroundColor=baseBlackColor;
     [self addSubview:self.logImageView];
     [self addSubview:self.mTitleLable];
     [self addSubview:self.subTitleLabel];
@@ -97,6 +155,12 @@
         
         make.left.equalTo(self.mTitleLable.mas_right).offset(10);
     }];
+}
+-(void)setSettingModel:(RoomSettingModel *)settingModel{
+    _settingModel=settingModel;
+    self.logImageView.image=YxzSuperPlayerImage(settingModel.logImg);
+    self.mTitleLable.text=settingModel.title;
+    self.subTitleLabel.text=settingModel.subTitle?settingModel.subTitle:@"";
 }
 -(UIImageView *)logImageView{
     if (!_logImageView) {
@@ -120,4 +184,7 @@
     }
     return _subTitleLabel;
 }
+@end
+@implementation RoomSettingModel
+
 @end
