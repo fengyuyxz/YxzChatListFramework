@@ -52,6 +52,7 @@
 		1CB2B4B324CB21350056107A /* face.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B224CB21350056107A /* face.bundle */; };
 		1CB2B4B624CBB4430056107A /* YxzShowSelectedFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B524CBB4430056107A /* YxzShowSelectedFaceView.m */; };
 		1CB2B4B924CBDED90056107A /* NSString+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB2B4B824CBDED90056107A /* NSString+Empty.m */; };
+		1CBEB35B24D4535D0090F277 /* LiveRoomSettingSeparationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBEB35A24D4535D0090F277 /* LiveRoomSettingSeparationView.m */; };
 		2119FA2EE144B62C9AE3277E /* libPods-YxzChatFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +145,8 @@
 		1CB2B4B524CBB4430056107A /* YxzShowSelectedFaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YxzShowSelectedFaceView.m; sourceTree = "<group>"; };
 		1CB2B4B724CBDED90056107A /* NSString+Empty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Empty.h"; sourceTree = "<group>"; };
 		1CB2B4B824CBDED90056107A /* NSString+Empty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Empty.m"; sourceTree = "<group>"; };
+		1CBEB35924D4535D0090F277 /* LiveRoomSettingSeparationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LiveRoomSettingSeparationView.h; sourceTree = "<group>"; };
+		1CBEB35A24D4535D0090F277 /* LiveRoomSettingSeparationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveRoomSettingSeparationView.m; sourceTree = "<group>"; };
 		2B31DE6BC0D9AE3CC00C490F /* libPods-YxzChatFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YxzChatFramework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2426B8A82B2879D2C96842 /* Pods-YxzChatFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.debug.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		F9A1EAF48E617D568F370A21 /* Pods-YxzChatFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YxzChatFramework.release.xcconfig"; path = "Target Support Files/Pods-YxzChatFramework/Pods-YxzChatFramework.release.xcconfig"; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 			children = (
 				1C2CBF2024D3062D0079BFD1 /* YxzLiveRoomSettingView.h */,
 				1C2CBF2124D3062D0079BFD1 /* YxzLiveRoomSettingView.m */,
+				1CBEB35924D4535D0090F277 /* LiveRoomSettingSeparationView.h */,
+				1CBEB35A24D4535D0090F277 /* LiveRoomSettingSeparationView.m */,
 				1C2CC06D24D3FF320079BFD1 /* YxzPopView.h */,
 				1C2CC06E24D3FF320079BFD1 /* YxzPopView.m */,
 			);
@@ -571,6 +576,7 @@
 				1CB2B48524C940E00056107A /* YxzLevelManager.m in Sources */,
 				1C0D9B0924CD2ED400F4F017 /* YxzVideoLooksBasicInfoView.m in Sources */,
 				1C2CC06F24D3FF320079BFD1 /* YxzPopView.m in Sources */,
+				1CBEB35B24D4535D0090F277 /* LiveRoomSettingSeparationView.m in Sources */,
 				1CB2B4B924CBDED90056107A /* NSString+Empty.m in Sources */,
 				1C2CBED724D257A00079BFD1 /* SuspensionWindow.m in Sources */,
 				1CB2B49524C979F10056107A /* YxzInputBoxView.m in Sources */,
