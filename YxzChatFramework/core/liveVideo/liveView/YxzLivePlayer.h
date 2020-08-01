@@ -59,6 +59,17 @@ typedef NS_ENUM(NSInteger, YxzButtonAction) {
 
 @property(nonatomic,weak)id<YxzPlayerDelegate> delegate;
 
+
+
+//=================直播相关
+@property CGFloat maxLiveProgressTime;    // 直播最大进度/总时间
+@property CGFloat liveProgressTime;       // 直播播放器回调过来的时间
+@property CGFloat liveProgressBase;       // 直播播放器超出时移的最大时间
+#define YXZ_MAX_SHIFT_TIME  (2*60*60)
+//===================
+
+
+
 /** 进入后台*/
 @property (nonatomic, assign) BOOL                   didEnterBackground;
 @property (nonatomic, assign) BOOL                   playDidEnd;
@@ -86,7 +97,8 @@ typedef NS_ENUM(NSInteger, YxzButtonAction) {
 @property (nonatomic, weak) UIView *fatherView;
 
 @property(nonatomic,strong)YxzLivePlayerControlView *controlView;
-
+/// 播放器配置
+@property SuperPlayerViewConfig *playerConfig;
 /// 视频总时长
 @property (nonatomic) CGFloat playDuration;
 /// 原始视频总时长，主要用于试看场景下显示总时长

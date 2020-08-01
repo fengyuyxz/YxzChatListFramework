@@ -8,6 +8,7 @@
 
 #import "YxzLivePlayer.h"
 #import "SuspensionWindow.h"
+#import <SuperPlayer/TXCUrl.h>
 #import "YXZConstant.h"
 #import <Masonry/Masonry.h>
 #import <SuperPlayer/SuperPlayerModel.h>
@@ -69,6 +70,7 @@
 - (void)initializeThePlayer {
     self.netWatcher = [[NetWatcher alloc] init];
      self.autoPlay = YES;
+    _playerConfig = [[SuperPlayerViewConfig alloc] init];
     [self addNotifications];
     [self createGesture];
 }
@@ -375,17 +377,18 @@
 
 -(void)startPaly{
     if (self.isLive) {
-        TXLivePlayConfig *config = [[TXLivePlayConfig alloc] init];
-        config.bAutoAdjustCacheTime = NO;
-        config.maxAutoAdjustCacheTime = 5.0f;
-        config.minAutoAdjustCacheTime = 5.0f;
+//        TXLivePlayConfig *config = [[TXLivePlayConfig alloc] init];
+//        config.bAutoAdjustCacheTime = NO;
+//        config.maxAutoAdjustCacheTime = 5.0f;
+//        config.minAutoAdjustCacheTime = 5.0f;
 //        config.headers = self.playerConfig.headers;
-        [self.livePlayer setConfig:config];
+//        [self.livePlayer setConfig:config];
         
         int liveType = [self livePlayerType];
-//        self.livePlayer.enableHWAcceleration = self.playerConfig.hwAcceleration;
+        self.livePlayer.enableHWAcceleration = self.playerConfig.hwAcceleration;
         [self.livePlayer startPlay:self.playerModel.videoURL type:liveType];
-       
+//        TXCUrl *curl = [[TXCUrl alloc] initWithString:self.playerModel.videoURL];
+//        [self.livePlayer prepareLiveSeek:self.playerConfig.playShiftDomain bizId:curl.bizid];
         
 //        [self.livePlayer setMute:self.playerConfig.mute];
 //        [self.livePlayer setRenderMode:self.playerConfig.renderMode];
@@ -396,16 +399,31 @@
 }
 //初始化 播放器
 -(void)configTXPlayer{
-    [self.vodPlayer stopPlay];
-    [self.vodPlayer removeVideoWidget];
-    [self.vodPlayer setupVideoWidget:self insertIndex:0];
+    [self getThePlayIsLive];
+   [self.vodPlayer stopPlay];
+   [self.vodPlayer removeVideoWidget];
+    
+    [self.livePlayer stopPlay];
+    [self.livePlayer removeVideoWidget];
+    
+    if (self.isLive) {
+        [self.livePlayer setupVideoWidget:CGRectMake(0, 0, 0, 0) containView:self insertIndex:0];
+    }else{
+        
+        [self.vodPlayer setupVideoWidget:self insertIndex:0];
+    }
+    
     self.isPauseByUser = NO;
     self.playDidEnd = NO;
-    [self getThePlayIsLive];
+    
     [self startPaly];
     self.repeatBtn.hidden = YES;
     self.repeatBackBtn.hidden = YES;
     [self.controlView fadeShow];
+    
+    
+
+    
     [self resetControlViewWithLive:self.isLive
     shiftPlayback:NO
         isPlaying:YES];
@@ -552,6 +570,83 @@
         [self.vodPlayer seek:dragedSeconds];
         [self.controlView setPlayState:YES];
     }*/
+}
+#pragma mark - 直播回调
+
+- (void)onPlayEvent:(int)EvtID withParam:(NSDictionary *)param {
+    NSDictionary* dict = param;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (EvtID != PLAY_EVT_PLAY_PROGRESS) {
+            NSString *desc = [param description];
+            NSLog(@"%@", [NSString stringWithCString:[desc cStringUsingEncoding:NSUTF8StringEncoding] encoding:NSNonLossyASCIIStringEncoding]);
+        }
+        
+        if (EvtID == PLAY_EVT_PLAY_BEGIN || EvtID == PLAY_EVT_RCV_FIRST_I_FRAME) {
+            if (!self.isLoaded) {
+                [self setNeedsLayout];
+                [self layoutIfNeeded];
+                self.isLoaded = YES;
+                [self _removeOldPlayer];
+                [self.livePlayer setupVideoWidget:CGRectZero containView:self insertIndex:0];
+                [self layoutSubviews];  // 防止横屏状态下添加view显示不全
+                self.state = YxzStatePlaying;
+                
+                if ([self.delegate respondsToSelector:@selector(superPlayerDidStart:)]) {
+                    [self.delegate superPlayerDidStart:self];
+                }
+            }
+            
+            if (self.state == StateBuffering)
+                self.state = YxzStatePlaying;
+            [self.netWatcher loadingEndEvent];
+        } else if (EvtID == PLAY_EVT_PLAY_END) {
+            [self moviePlayDidEnd];
+        } else if (EvtID == PLAY_ERR_NET_DISCONNECT) {
+//            if (self.isShiftPlayback) {
+//                [self controlViewReload:self.controlView];
+//                [self showMiddleBtnMsg:kStrTimeShiftFailed withAction:YxzActionRetry];
+//                [self.middleBlackBtn fadeOut:2];
+//            } else {
+                [self showMiddleBtnMsg:kStrBadNetRetry withAction:YxzActionRetry];
+                self.state = YxzStateFailed;
+//            }
+            if ([self.delegate respondsToSelector:@selector(superPlayerError:errCode:errMessage:)]) {
+                [self.delegate superPlayerError:self errCode:EvtID errMessage:param[EVT_MSG]];
+            }
+        } else if (EvtID == PLAY_EVT_PLAY_LOADING){
+            // 当缓冲是空的时候
+            self.state = YxzStateBuffering;
+//            if (!self.isShiftPlayback) {
+//                [self.netWatcher loadingEvent];
+//            }
+        } else if (EvtID == PLAY_EVT_STREAM_SWITCH_SUCC) {
+            [self showMiddleBtnMsg:[@"已切换为" stringByAppendingString:self.playerModel.playingDefinition] withAction:YxzActionNone];
+            [self.middleBlackBtn fadeOut:1];
+        } else if (EvtID == PLAY_ERR_STREAM_SWITCH_FAIL) {
+            [self showMiddleBtnMsg:kStrHDSwitchFailed withAction:YxzActionRetry];
+            self.state = StateFailed;
+        } else if (EvtID == PLAY_EVT_PLAY_PROGRESS) {
+            if (self.state == StateStopped)
+                return;
+            NSInteger progress = [dict[EVT_PLAY_PROGRESS] intValue];
+            self.liveProgressTime = progress;
+            self.maxLiveProgressTime = MAX(self.maxLiveProgressTime, self.liveProgressTime);
+            
+//            if (self.isShiftPlayback) {
+//                CGFloat sv = 0;
+//                if (self.maxLiveProgressTime > MAX_SHIFT_TIME) {
+//                    CGFloat base = self.maxLiveProgressTime - MAX_SHIFT_TIME;
+//                    sv = (self.liveProgressTime - base) / MAX_SHIFT_TIME;
+//                } else {
+//                    sv = self.liveProgressTime / (self.maxLiveProgressTime + 1);
+//                }
+//                [self.controlView setProgressTime:self.liveProgressTime totalTime:-1 progressValue:sv playableValue:0];
+//            } else {
+//                [self.controlView setProgressTime:self.maxLiveProgressTime totalTime:-1 progressValue:1 playableValue:0];
+//            }
+        }
+    });
 }
 
 #pragma mark - 点播进度条

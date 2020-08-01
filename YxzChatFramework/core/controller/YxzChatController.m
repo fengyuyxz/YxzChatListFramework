@@ -417,6 +417,7 @@
         _livePlayer=[[YxzLivePlayer alloc]init];
         _livePlayer.roomControlDelegate=self;
         _livePlayer.delegate=self;
+        _livePlayer.playerConfig.playShiftDomain = @"liteavapp.timeshift.qcloud.com";
     }
     return _livePlayer;
 }
