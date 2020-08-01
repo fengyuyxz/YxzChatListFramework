@@ -10,6 +10,7 @@
 #import "YxzChatListTableView.h"
 #import "YxzInputBoxView.h"
 #import "YXZConstant.h"
+#import "YxzAnimationControl.h"
 #import <Masonry/Masonry.h>
 @interface YxzChatCompleteComponent()<YxzInputViewDelegate,YxzListViewInputDelegate,RoomMsgListDelegate>
 @property(nonatomic,strong)YxzChatListTableView *listTableView;
@@ -19,6 +20,7 @@
 
 @property(nonatomic,copy)HiddenKeyboardAndFaceViewCompletion hiddenKyboardFaceBlock;
 
+@property(nonatomic,strong)UIImageView *animationImgView;
 
 @property(nonatomic,strong)UIButton *firworkBut;
 
@@ -47,17 +49,22 @@
     _listTableView.delegate=self;
     _listTableView.listInputView.delegate=self;
     _listTableView.reloadType=YxzReloadLiveMsgRoom_Time;
+    [self addSubview:self.animationImgView];
     [self addSubview:_listTableView];
     _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectZero];
     _inputboxView.delegate=self;
     _inputboxView.hidden=YES;
     [self addSubview:_inputboxView];
+    
     [self addSubview:self.firworkBut];
     [self layoutSubViewConstraint];
 
 }
 
 -(void)layoutSubViewConstraint{
+    [self.animationImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.bottom.equalTo(self);
+    }];
     [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.top.equalTo(self.mas_top);
@@ -118,7 +125,8 @@
 }
 #pragma mark - 发送烟花 按钮事件 ======
 -(void)firworkButPressed:(UIButton *)but{
-    
+   NSString *typeNum= [YxzAnimationControl generateAnimationNums];
+    [YxzAnimationControl beginAnimation:typeNum animationImageView:self.animationImgView];
 }
 #pragma mark - YxzListViewInputDelegate =================
 -(void)faceClick{
@@ -199,5 +207,11 @@
         [_firworkBut addTarget:self action:@selector(firworkButPressed:) forControlEvents:UIControlEventTouchUpInside];
        }
     return _firworkBut;
+}
+-(UIImageView *)animationImgView{
+    if (!_animationImgView) {
+        _animationImgView=[[UIImageView alloc]init];
+    }
+    return _animationImgView;
 }
 @end
