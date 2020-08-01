@@ -32,7 +32,7 @@
 @property(nonatomic,strong)UIButton *moreBut;
 @property(nonatomic,strong)UIButton *suspensionBut;
 @property(nonatomic,strong)UIButton *fullScreenBtn;
-
+@property(nonatomic,strong)UIButton *backBut;
 /** 单击 */
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
 /** 双击 */
@@ -69,8 +69,8 @@
 - (void)didMoveToParentViewController:(nullable UIViewController *)parent
 {
     if (parent == nil) {
-        if (!SuperPlayerWindowShared.isShowing) {
-//            [self.playerView resetPlayer];
+        if (!YxzSuperPlayerWindowShared.isShowing) {
+            [self.livePlayer resetPlayer];
         }
     }
 }
@@ -148,7 +148,7 @@
     [self.topToolView addSubview:self.moreBut];
     [self.topToolView addSubview:self.suspensionBut];
     [self.containerView addSubview:self.fullScreenBtn];
-    
+    [self.topToolView addSubview:self.backBut];
 }
 -(void)setRoomBaseInfo:(RoomBaseInfo *)roomBaseInfo{
     _roomBaseInfo=roomBaseInfo;
@@ -187,7 +187,7 @@
     }];
     [self.chatComponentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.containerView.mas_left);
-        make.top.equalTo(self.videoContainerView.mas_bottom);
+        make.top.equalTo(self.videoContainerView.mas_bottom).offset(70);
                make.right.equalTo(self.containerView.mas_right);
         make.bottom.equalTo(self.containerView.mas_bottom);
     }];
@@ -202,18 +202,24 @@
     }];
     [self.suspensionBut mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.topToolView.mas_bottom).offset(-10);
-        make.right.equalTo(self.topToolView.mas_right).offset(-10);
-        make.width.height.mas_equalTo(25);
+        make.right.equalTo(self.topToolView.mas_right).offset(-15);
+        make.height.mas_equalTo(25);
+        make.width.mas_equalTo(20);
     }];
     [self.moreBut mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.suspensionBut.mas_centerY);
         make.width.height.mas_equalTo(25);
-        make.right.equalTo(self.suspensionBut.mas_left).offset(-10);
+        make.right.equalTo(self.suspensionBut.mas_left).offset(-15);
     }];
     [self.fullScreenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(25);
         make.right.equalTo(self.containerView.mas_right).offset(-10);
         make.bottom.equalTo(self.videoContainerView.mas_bottom).offset(-10);
+    }];
+    [self.backBut mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.suspensionBut.mas_centerY);
+        make.width.height.mas_equalTo(25);
+        make.left.equalTo(self.topToolView.mas_left).offset(15);
     }];
 }
 -(void)modifyLeftSapcen:(BOOL)isFull{
@@ -236,7 +242,7 @@
         }];
         [self.chatComponentView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.containerView.mas_left);
-            make.top.equalTo(self.videoContainerView.mas_bottom);
+            make.top.equalTo(self.videoContainerView.mas_bottom).offset(70);
                    make.right.equalTo(self.containerView.mas_right);
             make.bottom.equalTo(self.containerView.mas_bottom);
         }];
@@ -312,7 +318,20 @@
     [YxzSuperPlayerWindowShared show];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+-(void)backButPressed:(UIButton *)but{
+    if (self.isFullScreen) {
+        self.fullScreenBtn.selected=!self.fullScreenBtn.selected;
+        self.isFullScreen=self.fullScreenBtn.selected;
+        [self switchFull:self.isFullScreen compelation:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [self.navigationController popViewControllerAnimated:YES];
+            });
+        }];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
 -(void)moreBtuPressed:(UIButton *)but{
     
     [self.chatComponentView hiddenTheKeyboardAndFace:^{
@@ -365,8 +384,9 @@
     self.livePlayer.isFullScreen=but.selected;
     self.isFullScreen=but.selected;
     
-      [self modifyLeftSapcen:self.isFullScreen];
-       
+    [self switchFull:self.isFullScreen compelation:nil];
+       /*
+         [self modifyLeftSapcen:self.isFullScreen];
        [self.chatComponentView hiddenTheKeyboardAndFace:^{
            dispatch_async(dispatch_get_main_queue(), ^{
                
@@ -384,7 +404,33 @@
                    
                }
            });
-       }];
+       }];*/
+}
+
+-(void)switchFull:(BOOL)isFull compelation:(void(^)(void))block{
+    [self modifyLeftSapcen:isFull];
+    
+    [self.chatComponentView hiddenTheKeyboardAndFace:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
+            if (isFull) {
+
+                
+                [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationLandscapeLeft];
+                 
+               
+            }else{
+               
+                [[SupportedInterfaceOrientations sharedInstance]setInterFaceOrientation:UIInterfaceOrientationPortrait];
+                 
+                
+            }
+            if (block) {
+                block();
+            }
+        });
+    }];
 }
 /** 播放器全屏 */
 - (void)controlViewChangeScreen:(UIView *)controlView withFullScreen:(BOOL)isFullScreen{
@@ -417,7 +463,7 @@
         _livePlayer=[[YxzLivePlayer alloc]init];
         _livePlayer.roomControlDelegate=self;
         _livePlayer.delegate=self;
-        _livePlayer.playerConfig.playShiftDomain = @"liteavapp.timeshift.qcloud.com";
+//        _livePlayer.playerConfig.playShiftDomain = @"liteavapp.timeshift.qcloud.com";
     }
     return _livePlayer;
 }
@@ -435,7 +481,7 @@
 -(UIButton *)moreBut{
     if (!_moreBut) {
         _moreBut=[UIButton buttonWithType:UIButtonTypeCustom];
-        [_moreBut setImage:YxzSuperPlayerImage(@"more_pressed") forState:UIControlStateNormal];
+        [_moreBut setImage:YxzSuperPlayerImage(@"gengduo") forState:UIControlStateNormal];
         [_moreBut addTarget:self action:@selector(moreBtuPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _moreBut;
@@ -444,10 +490,18 @@
     if (!_suspensionBut) {
         
         _suspensionBut=[UIButton buttonWithType:UIButtonTypeCustom];
-        [_suspensionBut setImage:YxzSuperPlayerImage(@"back_full") forState:UIControlStateNormal];
+        [_suspensionBut setImage:YxzSuperPlayerImage(@"xiangxia") forState:UIControlStateNormal];
         [_suspensionBut addTarget:self action:@selector(suspensionButPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _suspensionBut;
+}
+-(UIButton *)backBut{
+    if (!_backBut) {
+        _backBut=[UIButton buttonWithType:UIButtonTypeCustom];
+        [_backBut setImage:YxzSuperPlayerImage(@"back_full") forState:UIControlStateNormal];
+        [_backBut addTarget:self action:@selector(backButPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _backBut;
 }
 -(UIView *)topToolView{
     if (!_topToolView) {

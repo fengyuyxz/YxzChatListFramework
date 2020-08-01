@@ -117,6 +117,11 @@ typedef NS_ENUM(NSInteger, YxzButtonAction) {
 /// 播放配置
 @property SuperPlayerViewConfig *plaConfig;
 
+/**
+ *  重置player
+ */
+- (void)resetPlayer;
+
 - (void)playWithModel:(YxzPlayerModel *)playerModel;
 
 /**

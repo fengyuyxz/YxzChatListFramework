@@ -43,8 +43,11 @@
     
     return self;
 }
+-(void)setIsShowing:(BOOL)isShowing{
+    _isShowing=isShowing;
+}
 -(void)setupView{
-    _isShowing=NO;
+    self.isShowing=NO;
     CGSize size=[UIScreen mainScreen].bounds.size;
     _firstRect=CGRectMake(size.width-sus_w, size.height-sus_h-60, sus_w, sus_h);
     _contianerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, sus_w, sus_h)];
@@ -90,7 +93,7 @@
     }
 }
 -(void)hidden{
-    _isShowing=NO;
+    self.isShowing=NO;
     [self.superPlayer.controlView isSuspensionPlay:NO];
     [self removeFromSuperview];
     
@@ -101,11 +104,11 @@
     
     self.superPlayer.fatherView = self.origFatherView;
     
-    _isShowing = NO;
+    self.isShowing = NO;
     
 }
 -(void)show{
-    _isShowing=YES;
+    self.isShowing=YES;
     self.hidden=NO;
     self.frame=_firstRect;
     self.origFatherView = self.superPlayer.fatherView;

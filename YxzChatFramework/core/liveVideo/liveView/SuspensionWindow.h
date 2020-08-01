@@ -19,7 +19,7 @@ typedef void(^SuspensionWindowEventHandler)(void);
 @property YxzLivePlayer *superPlayer;
 @property UIViewController *backController;
 /// 小窗是否显示
-@property (readonly) BOOL isShowing;  //
+@property (nonatomic,assign) BOOL isShowing;  //
 
 +(instancetype)shareInstance;
 -(void)show;
