@@ -84,7 +84,10 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+   RoomSeparationModel *model=self.dataSouce[indexPath.row];
+    if (self.block) {
+        self.block(model.title, model.videoUrl);
+    }
 }
 -(UITableView *)tableView{
     if (!_tableView) {
@@ -155,14 +158,14 @@
     }else{
         self.checkImage.image=nil;
         _titleLabel.font=[UIFont systemFontOfSize:14];
-        _titleLabel.textColor=RGBA_OF(0x222222);
+        _titleLabel.textColor=RGBA_OF(0x999999);
     }
 }
 -(UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel=[[UILabel alloc]init];
         _titleLabel.font=[UIFont systemFontOfSize:14];
-        _titleLabel.textColor=RGBA_OF(0x222222);
+        _titleLabel.textColor=RGBA_OF(0x999999);
     }
     return _titleLabel;
 }

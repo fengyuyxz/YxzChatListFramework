@@ -346,6 +346,16 @@
         LiveRoomSettingSeparationView *separationView=[[LiveRoomSettingSeparationView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180)];
         separationView.playerModel=self.playerModel;
         YxzPopView *popView=[[YxzPopView alloc]initWithFrame:self.view.bounds];
+        __weak typeof(self) weakSelf =self;
+        separationView.block = ^(NSString *title, NSString *url) {
+            __strong typeof(weakSelf) strongSelf =weakSelf;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                strongSelf.playerModel.playingDefinition=title;
+                
+                [popView dismiss];
+            });
+        };
+        
         [popView show:separationView superView:self.view];
     }
 }

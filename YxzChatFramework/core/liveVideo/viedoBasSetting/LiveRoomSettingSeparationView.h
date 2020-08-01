@@ -21,6 +21,9 @@
 
 
 @interface LiveRoomSettingSeparationView : UIView
+
+typedef void(^SeparationCompelation)(NSString *title,NSString *url);
+@property(nonatomic,copy)SeparationCompelation block;
 @property(nonatomic,strong)YxzPlayerModel *playerModel;
 @property(nonatomic,strong)NSArray *dataSouce;
 @end
