@@ -115,6 +115,10 @@ typedef NS_ENUM(NSInteger, YxzButtonAction) {
  * 暂停
  */
 - (void)pause;
+/***
+ *切换清晰度
+ */
+-(void)switchSeparation:(NSString *)separationTitle;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -350,8 +350,8 @@
         separationView.block = ^(NSString *title, NSString *url) {
             __strong typeof(weakSelf) strongSelf =weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
-                strongSelf.playerModel.playingDefinition=title;
-                
+//                strongSelf.playerModel.playingDefinition=title;
+                [strongSelf.livePlayer switchSeparation:title];
                 [popView dismiss];
             });
         };

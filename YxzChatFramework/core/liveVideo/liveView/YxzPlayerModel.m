@@ -27,5 +27,14 @@
     }
     return url;
 }
+- (NSInteger)playingDefinitionIndex
+{
+    for (int i = 0; i < self.multiVideoURLs.count; i++) {
+        if ([self.multiVideoURLs[i].title isEqualToString:self.playingDefinition]) {
+            return i;
+        }
+    }
+    return 0;
+}
 
 @end

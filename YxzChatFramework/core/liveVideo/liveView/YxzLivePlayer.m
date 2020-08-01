@@ -374,7 +374,25 @@
 }
 
 -(void)startPaly{
-    [self.vodPlayer startPlay:self.playerModel.videoURL];
+    if (self.isLive) {
+        TXLivePlayConfig *config = [[TXLivePlayConfig alloc] init];
+        config.bAutoAdjustCacheTime = NO;
+        config.maxAutoAdjustCacheTime = 5.0f;
+        config.minAutoAdjustCacheTime = 5.0f;
+//        config.headers = self.playerConfig.headers;
+        [self.livePlayer setConfig:config];
+        
+        int liveType = [self livePlayerType];
+//        self.livePlayer.enableHWAcceleration = self.playerConfig.hwAcceleration;
+        [self.livePlayer startPlay:self.playerModel.videoURL type:liveType];
+       
+        
+//        [self.livePlayer setMute:self.playerConfig.mute];
+//        [self.livePlayer setRenderMode:self.playerConfig.renderMode];
+    }else{
+        [self.vodPlayer startPlay:self.playerModel.videoURL];
+    }
+    
 }
 //初始化 播放器
 -(void)configTXPlayer{
@@ -669,7 +687,22 @@
         [_vodPlayer resume];
     }
 }
-
+-(void)switchSeparation:(NSString *)separationTitle{
+    self.playerModel.playingDefinition = separationTitle;
+    NSString *url = self.playerModel.playingDefinitionUrl;
+    if (self.isLive) {
+        [self.livePlayer switchStream:url];
+        [self showMiddleBtnMsg:[NSString stringWithFormat:@"正在切换到%@...", separationTitle] withAction:YxzActionNone];
+    } else {
+        if ([self.vodPlayer supportedBitrates].count > 1) {
+            [self.vodPlayer setBitrateIndex:self.playerModel.playingDefinitionIndex];
+        } else {
+            CGFloat startTime = [self.vodPlayer currentPlaybackTime];
+            [self.vodPlayer setStartTime:startTime];
+            [self.vodPlayer startPlay:url];
+        }
+    }
+}
 - (void)moviePlayDidEnd {
     self.state = YxzStateStopped;
     self.playDidEnd = YES;

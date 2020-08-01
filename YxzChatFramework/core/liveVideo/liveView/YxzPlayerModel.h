@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 指定多码率情况下，默认播放的连接Index
 @property (nonatomic, assign) NSUInteger defaultPlayIndex;
-
+@property(nonatomic,assign)NSInteger playingDefinitionIndex;
 @property(nonatomic,copy)NSString *playingDefinition;//当前播放的url 清晰度
 - (NSString *)playingDefinitionUrl;
 @end
