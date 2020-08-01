@@ -19,6 +19,9 @@
 
 @property(nonatomic,copy)HiddenKeyboardAndFaceViewCompletion hiddenKyboardFaceBlock;
 
+
+@property(nonatomic,strong)UIButton *firworkBut;
+
 @end
 @implementation YxzChatCompleteComponent
 - (instancetype)init
@@ -49,8 +52,9 @@
     _inputboxView.delegate=self;
     _inputboxView.hidden=YES;
     [self addSubview:_inputboxView];
+    [self addSubview:self.firworkBut];
     [self layoutSubViewConstraint];
-    
+
 }
 
 -(void)layoutSubViewConstraint{
@@ -65,6 +69,12 @@
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom).offset(inputBoxDefaultHight);
         make.height.equalTo(@(inputBoxDefaultHight));
+    }];
+    [self.firworkBut mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_right).offset(-20);
+        make.width.mas_equalTo(30);
+        make.height.mas_equalTo(40);
+        make.bottom.equalTo(self.mas_bottom).offset(-5);
     }];
 }
 
@@ -104,6 +114,10 @@
     }
    
    
+    
+}
+#pragma mark - 发送烟花 按钮事件 ======
+-(void)firworkButPressed:(UIButton *)but{
     
 }
 #pragma mark - YxzListViewInputDelegate =================
@@ -177,5 +191,13 @@
     CGRect listTabeFrame=self.listTableView.frame;
     listTabeFrame.size.height=CGRectGetHeight(self.bounds)-CGRectGetHeight(frame);
     self.listTableView.frame=listTabeFrame;
+}
+-(UIButton *)firworkBut{
+    if (!_firworkBut) {
+           _firworkBut=[UIButton buttonWithType:UIButtonTypeCustom];
+        [_firworkBut setImage:YxzSuperPlayerImage(@"fireworks") forState:UIControlStateNormal];
+        [_firworkBut addTarget:self action:@selector(firworkButPressed:) forControlEvents:UIControlEventTouchUpInside];
+       }
+    return _firworkBut;
 }
 @end
