@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YxzPlayerModel.h"
 @interface RoomSeparationModel : NSObject
 @property(nonatomic,copy)NSString *title;
 @property(nonatomic,copy)NSString *videoUrl;
@@ -21,6 +21,7 @@
 
 
 @interface LiveRoomSettingSeparationView : UIView
+@property(nonatomic,strong)YxzPlayerModel *playerModel;
 @property(nonatomic,strong)NSArray *dataSouce;
 @end
 

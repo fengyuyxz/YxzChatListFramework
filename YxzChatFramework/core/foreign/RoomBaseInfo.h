@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@interface RoomPlayUrlModel : NSObject
+@property(nonatomic,copy)NSString *title;
+@property(nonatomic,copy)NSString *playUrl;
+@end
 
 @interface RoomBaseInfo : NSObject
 @property(nonatomic,copy)NSString *payLiveUrl;
+@property(nonatomic,strong)NSArray<RoomPlayUrlModel *> *playList;
 @end
 
-NS_ASSUME_NONNULL_END
+

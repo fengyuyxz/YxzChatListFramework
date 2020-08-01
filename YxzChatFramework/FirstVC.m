@@ -22,8 +22,22 @@
     // Do any additional setup after loading the view.
 }
 - (IBAction)pushRoom:(id)sender {
+    
+    RoomPlayUrlModel *pM=[[RoomPlayUrlModel alloc]init];
+    pM.title=@"高清";
+    pM.playUrl=@"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f30.mp4";
+    RoomPlayUrlModel *pM2=[[RoomPlayUrlModel alloc]init];
+    pM2.title=@"标清";
+    pM2.playUrl=@"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f20.mp4";
+    RoomPlayUrlModel *pM3=[[RoomPlayUrlModel alloc]init];
+    pM3.title=@"流畅";
+    pM3.playUrl=@"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f10.mp4";
+    
+    
+    
     RoomBaseInfo *info=[[RoomBaseInfo alloc]init];
-    info.payLiveUrl=@"http://200024424.vod.myqcloud.com/200024424_810ea00ebdf811e6ad39991f76a4df69.f30.mp4";
+    info.payLiveUrl=@"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f30.mp4";
+    info.playList=@[pM,pM2,pM3];
     YxzChatController *vc=[[YxzChatController alloc]init];
     vc.modalPresentationStyle=UIModalPresentationFullScreen;
     vc.roomBaseInfo=info;

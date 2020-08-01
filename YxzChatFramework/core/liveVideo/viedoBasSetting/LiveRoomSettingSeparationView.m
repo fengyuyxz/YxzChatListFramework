@@ -16,7 +16,22 @@
 
 
 @implementation LiveRoomSettingSeparationView
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setupView];
+    }
+    return self;
+}
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setupView];
+    }
+    return self;
+}
 -(void)setupView{
     self.userInteractionEnabled=YES;
     self.backgroundColor=[UIColor whiteColor];
@@ -35,6 +50,24 @@
     [super layoutSubviews];
     
 }
+-(void)setPlayerModel:(YxzPlayerModel *)playerModel{
+    _playerModel=playerModel;
+    NSMutableArray *array=[NSMutableArray array];
+    for (SuperPlayerUrl *pu in _playerModel.multiVideoURLs) {
+        RoomSeparationModel *m=[RoomSeparationModel new];
+        m.title=pu.title;
+        m.videoUrl=pu.url;
+        if ([_playerModel.playingDefinition isEqualToString:pu.title]) {
+            m.isCheck=YES;
+        }else{
+            m.isCheck=NO;
+        }
+        [array addObject:m];
+    }
+    self.dataSouce=array;
+    [self.tableView reloadData];
+    
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 55;
 }
@@ -45,8 +78,10 @@
     return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return nil;
+    LiveRoomSeparationCell *cell=[tableView dequeueReusableCellWithIdentifier:@"LiveRoomSeparationCell"];
+    RoomSeparationModel *model=self.dataSouce[indexPath.row];
+    cell.model=model;
+    return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    
@@ -67,7 +102,7 @@
         
         _tableView.delegate = self;
         _tableView.dataSource = self;
-//        [_tableView registerClass:[LiveRoomSettingCell class] forCellReuseIdentifier:@"LiveRoomSettingCell"];
+        [_tableView registerClass:[LiveRoomSeparationCell class] forCellReuseIdentifier:@"LiveRoomSeparationCell"];
     
     }
     return _tableView;
@@ -97,6 +132,7 @@
     return self;
 }
 -(void)setupView{
+     self.selectionStyle  = UITableViewCellSelectionStyleNone;
     [self addSubview:self.titleLabel];
     [self addSubview:self.checkImage];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

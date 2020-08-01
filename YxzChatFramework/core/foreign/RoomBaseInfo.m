@@ -11,3 +11,8 @@
 @implementation RoomBaseInfo
 
 @end
+@implementation RoomPlayUrlModel
+
+
+
+@end

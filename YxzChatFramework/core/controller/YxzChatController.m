@@ -16,6 +16,7 @@
 #import "YxzLiveRoomSettingView.h"
 #import "YxzLivePlayer.h"
 #import "YxzPopView.h"
+#import "LiveRoomSettingSeparationView.h"
 @interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate>
 
 
@@ -37,6 +38,8 @@
 /** 双击 */
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 
+
+@property(nonatomic,strong)YxzPlayerModel *playerModel;
 
 @end
 
@@ -147,13 +150,24 @@
     [self.containerView addSubview:self.fullScreenBtn];
     
 }
+-(void)setRoomBaseInfo:(RoomBaseInfo *)roomBaseInfo{
+    _roomBaseInfo=roomBaseInfo;
+    _playerModel=[[YxzPlayerModel alloc]init];
+    _playerModel.videoURL=self.roomBaseInfo.payLiveUrl;
+    NSMutableArray *paArray=[NSMutableArray array];
+           for (RoomPlayUrlModel *p in self.roomBaseInfo.playList) {
+               SuperPlayerUrl * sp=[SuperPlayerUrl new];
+               sp.title=p.title;
+               sp.url=p.playUrl;
+               [paArray addObject:sp];
+           }
+    _playerModel.multiVideoURLs=paArray;
+}
 -(void)startPlayAndJoinChatRoom{
-    if (self.roomBaseInfo) {
-        YxzPlayerModel *payModel=[[YxzPlayerModel alloc]init];
-        payModel.videoURL=self.roomBaseInfo.payLiveUrl;
-        [self.livePlayer playWithModel:payModel];
+   
+    [self.livePlayer playWithModel:self.playerModel];
         
-    }
+    
 }
 -(void)layoutSubViewConstraint{
     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -310,14 +324,32 @@
         [view setHeader:headerModel sharpness:@"标准"];
         
          YxzPopView *popView=[[YxzPopView alloc]initWithFrame:self.view.bounds];
+        __weak typeof(self) weakSelf =self;
         view.block = ^(LiveRoomSeetingEnum setting) {
-            [popView dismiss];
+            __strong typeof(weakSelf) strongSelf =weakSelf;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [popView dismiss];
+                if (setting==liveRoomSeeting_separation) {
+                    [strongSelf popSeparationView];
+                }
+            });
+            
         };
          [popView show:view superView:self.view];
     }];
     
     
 }
+
+-(void)popSeparationView{
+    if (self.playerModel.multiVideoURLs&&self.playerModel.multiVideoURLs.count>1) {
+        LiveRoomSettingSeparationView *separationView=[[LiveRoomSettingSeparationView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180)];
+        separationView.playerModel=self.playerModel;
+        YxzPopView *popView=[[YxzPopView alloc]initWithFrame:self.view.bounds];
+        [popView show:separationView superView:self.view];
+    }
+}
+
 -(void)fullScreenBtnClick:(UIButton *)but{
     but.selected=!but.selected;
     self.livePlayer.isFullScreen=but.selected;
