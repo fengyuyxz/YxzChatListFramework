@@ -35,6 +35,7 @@
 @property(nonatomic,strong)YxzShowSelectedFaceView *showSelectedFaceView;
 
 @property(nonatomic,copy)NSString *faceImage;
+
 @end
 @implementation YxzInputBoxView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -156,8 +157,9 @@
     }
 }
 #pragma mark - 键盘通知事件 ============
--(void)keyboardWillShow:(NSNotification *)notify{
-    
+-(void)keyboardWillShow:(NSNotification *)notification{
+//    self.keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    NSLog(@"keyboard h = %f",self.keyboardFrame.size.height);
 }
 -(void)keyboardWillHide:(NSNotification *)notify{
     

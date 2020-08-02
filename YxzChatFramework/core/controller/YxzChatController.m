@@ -18,7 +18,7 @@
 #import "YxzPopView.h"
 #import "LiveRoomSettingSeparationView.h"
 #import "VoteView.h"
-@interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate>
+@interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate,ChateCompletionDelegate>
 
 
 @property(nonatomic,strong)UIView *containerView;//容器 用于做旋转
@@ -141,6 +141,7 @@
     [self.containerView addSubview:self.basInfoView];
     [self.containerView addSubview:self.videoContainerView];
     _chatComponentView=[[YxzChatCompleteComponent alloc]initWithFrame:self.view.bounds];
+    _chatComponentView.delegate=self;
     [self.containerView addSubview:_chatComponentView];
     self.livePlayer.fatherView=self.videoContainerView;
     [self addGesture];
@@ -312,6 +313,25 @@
     
     return YES;
 }
+-(void)showKeyBorad:(BOOL)isShow{
+    if (self.isFullScreen) {
+        if (isShow) {
+            [self.chatComponentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.containerView.mas_left);
+                make.bottom.equalTo(self.containerView.mas_bottom).offset(0);
+                make.right.equalTo(self.containerView.mas_right);
+                make.top.equalTo(self.containerView.mas_top).offset(90);
+            }];
+        }else{
+             [self.chatComponentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                           make.left.equalTo(self.containerView.mas_left);
+                           make.bottom.equalTo(self.containerView.mas_bottom).offset(-60);
+                           make.right.equalTo(self.containerView.mas_right);
+                           make.top.equalTo(self.containerView.mas_top).offset(90);
+                       }];
+        }
+    }
+}
 #pragma mark - 更多信息  小窗播放 delegate =============
 -(void)suspensionButPressed:(UIButton *)but{
     YxzSuperPlayerWindowShared.superPlayer=self.livePlayer;
@@ -448,6 +468,7 @@
                  
                 
             }
+            [UIViewController attemptRotationToDeviceOrientation];
             if (block) {
                 block();
             }

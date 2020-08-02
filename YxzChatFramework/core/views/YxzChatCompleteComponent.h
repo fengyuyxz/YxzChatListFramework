@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol ChateCompletionDelegate <NSObject>
+
+-(void)showKeyBorad:(BOOL)isShow;
+
+@end
+
 
 @interface YxzChatCompleteComponent : UIView
-@property(nonatomic,assign)BOOL isLeft;
+
+@property(nonatomic,assign)id<ChateCompletionDelegate> delegate;
+@property(nonatomic,assign)BOOL isFull;
 typedef void(^HiddenKeyboardAndFaceViewCompletion)(void);
 -(void)hiddenTheKeyboardAndFace:(HiddenKeyboardAndFaceViewCompletion)block;
 @end
 
-NS_ASSUME_NONNULL_END
+

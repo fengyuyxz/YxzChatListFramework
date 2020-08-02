@@ -78,7 +78,7 @@
    
     self.backgroundColor=[UIColor blackColor];
     [self addSubview:self.repeatBtn];
-    [self addSubview:self.repeatBackBtn];
+//    [self addSubview:self.repeatBackBtn];s
     [self addSubview:self.controlView];
     
     [self makeSubViewsConstraints];
@@ -806,6 +806,7 @@
         [SuperPlayerWindowShared hide];
         [self resetPlayer];
     }
+    self.controlView.hidden=YES;
     [self.controlView fadeOut:0.2];
     
 //    [self.netWatcher stopWatch];

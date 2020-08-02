@@ -38,7 +38,7 @@
     RoomBaseInfo *info=[[RoomBaseInfo alloc]init];
 //    info.payLiveUrl=@"rtmp://3891.liveplay.myqcloud.com/live/3891_user_0f8c29be_1da0";
     info.payLiveUrl=@"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f30.mp4";
-//    info.playList=@[pM,pM2,pM3];
+    info.playList=@[pM,pM2,pM3];
     YxzChatController *vc=[[YxzChatController alloc]init];
     vc.modalPresentationStyle=UIModalPresentationFullScreen;
     vc.roomBaseInfo=info;

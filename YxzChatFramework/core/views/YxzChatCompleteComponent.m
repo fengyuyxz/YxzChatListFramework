@@ -102,10 +102,7 @@
     
 }
 
-- (void)setIsLeft:(BOOL)isLeft{
-    _isLeft=isLeft;
-    
-}
+
 
 -(void)hiddenTheKeyboardAndFace:(HiddenKeyboardAndFaceViewCompletion)block{
     self.hiddenKyboardFaceBlock=block;
@@ -156,6 +153,9 @@
             [self layoutIfNeeded];
 
         }];
+        if ([self.delegate respondsToSelector:@selector(showKeyBorad:)]) {
+            [self.delegate showKeyBorad:YES];
+        }
     }else if (toStatus==YxzInputStatus_nothing){
         _inputboxView.hidden=YES;
         [self.inputboxView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -173,7 +173,9 @@
                 self.hiddenKyboardFaceBlock=nil;
             }
         }];
-        
+        if ([self.delegate respondsToSelector:@selector(showKeyBorad:)]) {
+            [self.delegate showKeyBorad:NO];
+        }
     }
 }
 //发送消息
