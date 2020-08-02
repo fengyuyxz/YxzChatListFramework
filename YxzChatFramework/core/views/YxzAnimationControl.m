@@ -25,11 +25,11 @@
     
     return animationNums;
 }
-+(void)beginAnimation:(NSString *)animationNum animationImageView:(UIImageView *)animaitnImageView{
-    
++(void)beginAnimation:(NSString *)animationNum animationImageView:(UIView *)animaitnImageView{
+    __block NSMutableArray<NSMutableArray *> *imgeArray=[[NSMutableArray alloc]init];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          NSMutableArray<UIImage *> *allImageList=[[NSMutableArray alloc]init];
-        float animationDuration =0.9;
+          
+        float animationDuration =2;
         @autoreleasepool {
             NSArray<NSString *> *animationList;
                if ([animationNum containsString:@","]) {
@@ -41,7 +41,8 @@
               
                
                for (NSString *animtionType in animationList) {
-                   animationDuration+=0.5;
+                   NSMutableArray<UIImage *> *allImageList=[[NSMutableArray alloc]init];
+                   
                    NSString *key=[NSString stringWithFormat:@"0%@",animtionType];
                    NSString *folderName=[NSString stringWithFormat:@"0%@png",animtionType];
                    NSString *imageNums=animationfolder[key];
@@ -57,16 +58,44 @@
                            }
                        }
                    }
+                   [imgeArray addObject:allImageList];
                }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            animaitnImageView.animationImages = allImageList;
-            animaitnImageView.animationDuration = animationDuration;
-            animaitnImageView.animationRepeatCount = 1;
-            [animaitnImageView startAnimating];
+            for (int i=0;i<imgeArray.count;i++) {
+                UIImageView *img=animaitnImageView.subviews[i];
+                img.animationImages = imgeArray[i];
+                img.animationDuration = animationDuration;
+                img.animationRepeatCount = 1;
+                [img startAnimating];
+                
+            }
+            [self checkIsAnimation:animaitnImageView.subviews animationCount:imgeArray.count imgArray:imgeArray];
         });
     });
     
    
+}
++(void)checkIsAnimation:(NSArray<UIImageView *> *)list animationCount:(NSInteger)count imgArray:(NSMutableArray<NSMutableArray *> *)array{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSInteger subCount=count;
+        for (int i=0; i<array.count; i++) {
+            UIImageView *imageView=list[i];
+            if (!imageView.isAnimating) {
+                [imageView stopAnimating];
+                imageView.animationImages=nil;
+                subCount--;
+            }
+        }
+        if (subCount==0) {
+            for (NSMutableArray *mArr in array) {
+                [mArr removeAllObjects];
+            }
+            [array removeAllObjects];
+            NSLog(@"===释放 图片 =====");
+        }else{
+            [self checkIsAnimation:list animationCount:count imgArray:array];
+        }
+    });
 }
 @end

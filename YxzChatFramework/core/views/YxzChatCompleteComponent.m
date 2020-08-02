@@ -20,7 +20,7 @@
 
 @property(nonatomic,copy)HiddenKeyboardAndFaceViewCompletion hiddenKyboardFaceBlock;
 
-@property(nonatomic,strong)UIImageView *animationImgView;
+@property(nonatomic,strong)UIView *animationView;
 
 @property(nonatomic,strong)UIButton *firworkBut;
 
@@ -49,7 +49,7 @@
     _listTableView.delegate=self;
     _listTableView.listInputView.delegate=self;
     _listTableView.reloadType=YxzReloadLiveMsgRoom_Time;
-    [self addSubview:self.animationImgView];
+    [self addSubview:self.animationView];
     [self addSubview:_listTableView];
     _inputboxView=[[YxzInputBoxView alloc]initWithFrame:CGRectZero];
     _inputboxView.delegate=self;
@@ -62,7 +62,7 @@
 }
 
 -(void)layoutSubViewConstraint{
-    [self.animationImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.animationView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.equalTo(self);
     }];
     [self.listTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -126,7 +126,7 @@
 #pragma mark - 发送烟花 按钮事件 ======
 -(void)firworkButPressed:(UIButton *)but{
    NSString *typeNum= [YxzAnimationControl generateAnimationNums];
-    [YxzAnimationControl beginAnimation:typeNum animationImageView:self.animationImgView];
+    [YxzAnimationControl beginAnimation:typeNum animationImageView:self.animationView];
 }
 #pragma mark - YxzListViewInputDelegate =================
 -(void)faceClick{
@@ -208,10 +208,17 @@
        }
     return _firworkBut;
 }
--(UIImageView *)animationImgView{
-    if (!_animationImgView) {
-        _animationImgView=[[UIImageView alloc]init];
+-(UIView *)animationView{
+    if (!_animationView) {
+        _animationView=[[UIImageView alloc]init];
+        for(int i=0;i<6;i++){
+            UIImageView *imgView=[[UIImageView alloc]init];
+            [_animationView addSubview:imgView];
+            [imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.top.bottom.equalTo(_animationView);
+            }];
+        }
     }
-    return _animationImgView;
+    return _animationView;
 }
 @end
