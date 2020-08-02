@@ -101,6 +101,7 @@
             }
             [self removeFromSuperview];
             self.contentView=nil;
+            self.supView=nil;
         }];
     }];
 }

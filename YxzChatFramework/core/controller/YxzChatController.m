@@ -17,6 +17,7 @@
 #import "YxzLivePlayer.h"
 #import "YxzPopView.h"
 #import "LiveRoomSettingSeparationView.h"
+#import "VoteView.h"
 @interface YxzChatController ()<YxzLiveRoomControlDelegate,YxzPlayerDelegate,UIGestureRecognizerDelegate>
 
 
@@ -350,6 +351,8 @@
                 [popView dismiss];
                 if (setting==liveRoomSeeting_separation) {
                     [strongSelf popSeparationView];
+                }else if(setting==liveRoomSeeting_share){
+                    [strongSelf popVote];
                 }
             });
             
@@ -359,7 +362,26 @@
     
     
 }
-
+-(void)popVote{
+    
+    VoteItemModel *item1=[VoteItemModel new];
+    item1.title=@"唱歌";
+    item1.imgeUrlStr=@"https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1596951525&t=3ce06a68d37777a94af82d99bb56c185";
+    VoteItemModel *item2=[VoteItemModel new];
+    item2.title=@"唱歌";
+    item2.imgeUrlStr=@"https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1596951525&t=3ce06a68d37777a94af82d99bb56c185";
+    VoteItemModel *item3=[VoteItemModel new];
+    item3.title=@"唱歌";
+    item3.imgeUrlStr=@"https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1596951525&t=3ce06a68d37777a94af82d99bb56c185";
+    
+    VoteView *vote=[[VoteView alloc] initWithFrame:CGRectMake(0, 0, 300, 400)];
+    vote.dataSouce=[@[item1,item2,item3]mutableCopy];
+    PopVoteView *pop=[[PopVoteView alloc]initWithFrame:self.view.bounds];
+    vote.block = ^{
+        [pop dismiss];
+    };
+    [pop show:vote superView:self.view];
+}
 -(void)popSeparationView{
     if (self.playerModel.multiVideoURLs&&self.playerModel.multiVideoURLs.count>1) {
         LiveRoomSettingSeparationView *separationView=[[LiveRoomSettingSeparationView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180)];
