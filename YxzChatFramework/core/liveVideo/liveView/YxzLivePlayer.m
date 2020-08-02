@@ -90,12 +90,12 @@
     [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.equalTo(self);
     }];
-    [self.repeatBackBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).offset(15);
-        make.top.equalTo(self).offset(15);
-        make.width.mas_equalTo(@30);
-    }];
-    
+//    [self.repeatBackBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self).offset(15);
+//        make.top.equalTo(self).offset(15);
+//        make.width.mas_equalTo(@30);
+//    }];
+//    
     [self.repeatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
         make.width.mas_equalTo(40);
